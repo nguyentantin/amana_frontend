@@ -1,11 +1,27 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Route, Switch } from 'react-router-dom'
 import { map } from 'lodash'
 
-export default class AppRoutes extends Component {
+export default class AppRoutes extends PureComponent {
   static propTypes = {
     routes: PropTypes.oneOfType([PropTypes.array]).isRequired,
+  }
+
+  renderRoute(route) {
+    const RouteComponent = route.component
+
+    if (route.layout) {
+      const LayoutComponent = route.layout
+
+      return (
+        <LayoutComponent>
+          <RouteComponent/>
+        </LayoutComponent>
+      )
+    }
+
+    return <RouteComponent/>
   }
 
   render() {
@@ -19,7 +35,9 @@ export default class AppRoutes extends Component {
               key={key}
               path={route.path}
               exact={route.exact}
-              component={route.component}
+              render={() => (
+                this.renderRoute(route)
+              )}
             />
           ))
         }

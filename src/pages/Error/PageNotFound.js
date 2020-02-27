@@ -11,7 +11,7 @@ class PageNotFound extends React.PureComponent {
         status="404"
         title="404"
         subTitle={t('sorry_page_you_visited_does_not_exist')}
-        extra={<Link to='/'><Button type="primary">Back Home</Button></Link>}
+        extra={<Link to='/'><Button type="primary">{t('back_home')}</Button></Link>}
       />
     )
   }
