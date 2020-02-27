@@ -7,7 +7,7 @@ import RestrictedRoute from './RestrictedRoute'
 import loadable from '../utils/loadable'
 import LoadingPage from '../components/LoadingPage/LoadingPage'
 
-const PageNotFound = loadable(() => import('../pages/PageNotFound'), {
+const PageNotFound = loadable(() => import('../pages/Error/PageNotFound'), {
   fallback: <LoadingPage/>,
 })
 
@@ -39,7 +39,7 @@ export {
 }
 
 export default [
-  {path: '/', component: HomePage},
+  {path: '/', exact: true, component: HomePage},
   ...modulesRoute(),
   {path: '/404', component: PageNotFound},
   {path: '*', component: PageNotFound},

@@ -1,4 +1,5 @@
 {
   "login": "Login",
-  "register": "Register"
+  "register": "Register",
+  "sorry_page_you_visited_does_not_exist": "Sorry, the page you visited does not exist."
 }
