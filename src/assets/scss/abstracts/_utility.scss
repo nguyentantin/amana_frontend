@@ -1,0 +1,22 @@
+// utility
+//
+.container {
+  width: 1170px;
+  margin: 0 auto;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (max-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
