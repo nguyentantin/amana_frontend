@@ -8,14 +8,12 @@ import 'normalize.css'
 import 'toastr/toastr.scss'
 import 'antd/dist/antd.css'
 import '../src/assets/scss/main.scss'
-
+import { GlobalStyle } from './styles'
 import history from './utils/history'
 import { configure } from './store'
 import i18n from './i18n'
 import AppRoutes from './components/Application/AppRoutes'
 import route from './routes'
-import WebFontLoader from './components/WebFontLoader'
-import { GOOGLE_WEB_FONT } from "./config/constants"
 
 /**
  * Main Application class.
@@ -38,8 +36,8 @@ class Application {
       <I18nextProvider i18n={i18n}>
         <Provider store={store}>
           <ConnectedRouter history={history}>
+            <GlobalStyle/>
             <AppRoutes routes={route}/>
-            <WebFontLoader config={GOOGLE_WEB_FONT} onStatus={() => null}/>
           </ConnectedRouter>
         </Provider>
       </I18nextProvider>
