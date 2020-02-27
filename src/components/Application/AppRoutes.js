@@ -19,9 +19,7 @@ export default class AppRoutes extends Component {
               key={key}
               path={route.path}
               exact={route.exact}
-              render={props => (
-                <route.component {...props} route={route} routes={route.routes}/>
-              )}
+              component={route.component}
             />
           ))
         }

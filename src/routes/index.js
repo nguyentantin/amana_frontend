@@ -1,11 +1,11 @@
 import React from 'react'
 
+import PrivateRoute from './PrivateRoute'
+import RedirectRoute from './RedirectRoute'
+import RestrictedRoute from './RestrictedRoute'
+
 import loadable from '../utils/loadable'
 import LoadingPage from '../components/LoadingPage/LoadingPage'
-
-const Application = loadable(() => import('../components/Application/Application'), {
-  fallback: <LoadingPage/>,
-})
 
 const PageNotFound = loadable(() => import('../pages/PageNotFound'), {
   fallback: <LoadingPage/>,
@@ -28,14 +28,14 @@ const modulesRoute = () => {
   return modules
 }
 
-export default [
-  {
-    component: Application,
+export {
+  PrivateRoute,
+  RestrictedRoute,
+  RedirectRoute
+}
 
-    routes: [
-      ...modulesRoute(),
-      {path: '/404', component: PageNotFound},
-      {path: '*', component: PageNotFound},
-    ]
-  },
+export default [
+  ...modulesRoute(),
+  {path: '/404', component: PageNotFound},
+  {path: '*', component: PageNotFound},
 ]

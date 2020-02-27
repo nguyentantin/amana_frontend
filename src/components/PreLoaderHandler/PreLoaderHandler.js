@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 
 import PreLoader from '../PreLoader'
 
-export default @observer
+@observer
 class PreLoaderHandler extends Component {
   @observable loaded = false
 
@@ -44,3 +44,5 @@ class PreLoaderHandler extends Component {
     )
   }
 }
+
+export default PreLoaderHandler

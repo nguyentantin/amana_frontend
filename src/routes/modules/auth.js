@@ -4,12 +4,19 @@ import loadable from '../../utils/loadable'
 import LoadingPage from '../../components/LoadingPage/LoadingPage'
 
 
-const PageNotFound = loadable(() => import('../../pages/PageNotFound'), {
+const PageNotFound = loadable(() => import('../../pages/SignIn'), {
   fallback: <LoadingPage/>,
 })
 
 export default [
-  {path: '/login', component: PageNotFound},
-  {path: '/send-email-reset', component: PageNotFound},
-  {path: '/reset-password', component: PageNotFound},
+  {
+    path: 'auth/sign-in',
+    component: PageNotFound,
+    exact: true,
+  },
+  {
+    path: 'auth/sign-up',
+    component: PageNotFound,
+    exact: true
+  },
 ]

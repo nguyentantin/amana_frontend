@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
@@ -12,8 +12,9 @@ import history from './utils/history'
 import { configure } from './store'
 import i18n from './i18n'
 import AppRoutes from './components/Application/AppRoutes'
-import routes from './routes'
-import PreLoader from './components/PreLoader'
+import route from './routes'
+import WebFontLoader from './components/WebFontLoader'
+import { GOOGLE_WEB_FONT } from "./config/constants"
 
 /**
  * Main Application class.
@@ -24,7 +25,6 @@ class Application {
   }
 
   initStore() {
-    // Create redux store with history.
     const initialState = {}
 
     return configure(initialState, history)
@@ -37,9 +37,8 @@ class Application {
       <I18nextProvider i18n={i18n}>
         <Provider store={store}>
           <ConnectedRouter history={history}>
-            <Suspense fallback={<PreLoader/>}>
-              <AppRoutes routes={routes}/>
-            </Suspense>
+            <AppRoutes routes={route}/>
+            <WebFontLoader config={GOOGLE_WEB_FONT} onStatus={() => null}/>
           </ConnectedRouter>
         </Provider>
       </I18nextProvider>
