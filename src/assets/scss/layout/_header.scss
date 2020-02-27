@@ -1,0 +1,16 @@
+// header
+//
+
+.header {
+  background: #fff;
+  padding: 0;
+  border-bottom: 1px solid #e7eaec !important;
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,0.2);
+  position: fixed;
+  z-index: 3;
+  width: 100%;
+  height: 66px;
+  .ant-menu {
+    font-size: 18px;
+  }
+}

@@ -7,6 +7,7 @@ import { I18nextProvider } from 'react-i18next'
 import 'normalize.css'
 import 'toastr/toastr.scss'
 import 'antd/dist/antd.css'
+import '../src/assets/scss/main.scss'
 
 import history from './utils/history'
 import { configure } from './store'

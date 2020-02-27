@@ -1,0 +1,18 @@
+@charset "UTF-8";
+
+// 1. Vendors
+
+// 2. Configuration and helpers
+@import "abstracts/utility";
+
+// 3. Base stuff
+
+// 4. components
+
+// 5. Layout-related sections
+@import "layout/header";
+@import "layout/slide";
+@import "layout/footer";
+
+// 6. Page-specific styles
+@import "pages/common";
