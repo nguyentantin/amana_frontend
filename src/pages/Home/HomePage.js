@@ -30,7 +30,7 @@ class HomePage extends React.Component {
           </div>
         </Header>
 
-        <Content style={{padding: '0', marginTop: 66, minHeight: 'calc(100vh + 135px)'}}>
+        <Content style={{padding: '0', marginTop: 64, minHeight: 'calc(100vh - 133px)'}}>
           <div className="content">
             <div className="ScreenSlide">
               <div className="videoDiv">
