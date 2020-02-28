@@ -48,7 +48,7 @@ class GuestLayout extends Component {
           <HeaderWrapper>
             <div className="container flex-center">
               <LogoWrapper>
-                <img src={AppLogo} alt="Logo"/>
+                <Link to='/'><img src={AppLogo} alt="Logo"/></Link>
               </LogoWrapper>
 
               <div>
