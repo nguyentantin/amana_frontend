@@ -54,12 +54,12 @@ class SignInPage extends React.PureComponent {
       <ContainerRow className="container">
         <Col span={12}>
           <h1 className="row-title">Log in<br/>
-            <small>to DeployGate</small>
+            <small>to Build Automation</small>
           </h1>
           <AuthButton>
             <Col span={20} id="github_login_button" className="auth_button col-sm-10">
               <Button type="primary" shape="round" icon="github" size='large'>
-                Log in with GitHub
+                Log in with Github
               </Button>
             </Col>
             <Col span={20} id="google_login_button" className="auth_button col-sm-10">
@@ -99,7 +99,7 @@ class SignInPage extends React.PureComponent {
                   <Link to='/'>Forgot your password?</Link>
                 </span>
                 <Button style={{width: '300px'}} shape="round" type="primary" size='large'>Sign-In</Button>
-                <Link to='/' style={{display: 'block', marginTop: '15px'}}>No account? Sign up here.</Link>
+                <Link to='/sign-up' style={{display: 'block', marginTop: '15px'}}>No account? Sign up here.</Link>
               </div>
             </Form>
           </Card>

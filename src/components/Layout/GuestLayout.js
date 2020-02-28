@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Layout, Menu } from 'antd'
 import { withRouter } from 'react-router'
@@ -16,8 +16,6 @@ const {Header, Content} = Layout
 const HeaderWrapper = styled(Header)`
   background: #fff !important;
   padding: 0;
-  border-bottom: 2px solid #e7eaec !important;
-  box-shadow: 0 1px 2px 0 rgba(0,0,0,0.2);
   position: fixed;
   z-index: 3;
   width: 100%;
@@ -28,12 +26,9 @@ const HeaderWrapper = styled(Header)`
   .ant-menu {
     font-size: 18px;
   }
-  .ant-menu-horizontal > .ant-menu-item {
-    border-bottom: 2px solid #e7eaec;
-  }
 `
 
-class GuestLayout extends Component {
+class GuestLayout extends PureComponent {
   static propTypes = {
     children: PropTypes.node.isRequired,
   }

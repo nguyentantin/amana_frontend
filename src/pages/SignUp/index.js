@@ -8,7 +8,7 @@ import injectReducer from '../../store/injectReducer'
 import injectSaga from '../../store/injectSaga'
 import reducer from '../../store/modules/auth/reducers'
 import saga from '../../store/modules/auth/sagas'
-import styled from "styled-components";
+import styled from "styled-components"
 
 const key = 'auth'
 
@@ -67,8 +67,8 @@ class SignUpPage extends React.PureComponent {
               </Button>
             </Col>
             <Col span={20} id="saml_login_button" className="auth_button col-sm-10">
-              <Button type="primary" shape="round" size='large'>
-                Sign up with SAML Authentication
+              <Button type="primary" shape="round" size='large' icon='mail'>
+                Sign up with Email
               </Button>
             </Col>
           </AuthButton>
