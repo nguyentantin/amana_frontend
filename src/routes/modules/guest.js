@@ -10,5 +10,10 @@ const HomePage = loadable(() => import('../../pages/Home/HomePage'), {
 })
 
 export default [
-  {path: '/', exact: true, component: HomePage, layout: GuestLayout},
+  {
+    path: '/',
+    exact: true,
+    component: HomePage,
+    layout: GuestLayout
+  },
 ]

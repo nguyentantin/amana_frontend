@@ -1,7 +1,6 @@
 import React from 'react'
 import { Button } from 'antd'
 
-import './style.scss'
 import video1 from '../../assets/video/video.mp4'
 import video2 from '../../assets/video/video.webm'
 

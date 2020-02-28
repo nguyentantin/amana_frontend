@@ -36,3 +36,9 @@ export const DashboardLayoutWrapper = styled.div`
   flex-direction: row;
   min-height: 100vh;
 `
+
+export const LogoWrapper = styled.span`
+  img {
+    width: 150px;
+  }
+`

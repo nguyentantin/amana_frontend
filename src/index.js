@@ -3,12 +3,14 @@ import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
 import { I18nextProvider } from 'react-i18next'
+import { ThemeProvider } from 'styled-components'
 
 import 'normalize.css'
 import 'toastr/toastr.scss'
 import 'antd/dist/antd.css'
 import '../src/assets/scss/main.scss'
 import { GlobalStyle } from './styles'
+import theme from './styles/theme'
 import history from './utils/history'
 import { configure } from './store'
 import i18n from './i18n'
@@ -36,8 +38,10 @@ class Application {
       <I18nextProvider i18n={i18n}>
         <Provider store={store}>
           <ConnectedRouter history={history}>
-            <GlobalStyle/>
-            <AppRoutes routes={route}/>
+            <ThemeProvider theme={theme}>
+              <GlobalStyle/>
+              <AppRoutes routes={route}/>
+            </ThemeProvider>
           </ConnectedRouter>
         </Provider>
       </I18nextProvider>
