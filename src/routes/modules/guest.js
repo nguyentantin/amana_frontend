@@ -13,6 +13,10 @@ const dashboard = loadable(() => import('../../pages/Dashboard'), {
   fallback: <LoadingPage/>,
 })
 
+const apps = loadable(() => import('../../pages/Apps'), {
+  fallback: <LoadingPage/>,
+})
+
 export default [
   {
     path: '/',
@@ -24,6 +28,12 @@ export default [
     path: '/dashboard',
     exact: true,
     component: dashboard,
+    layout: GuestLayout
+  },
+  {
+    path: '/apps',
+    exact: true,
+    component: apps,
     layout: GuestLayout
   },
 ]
