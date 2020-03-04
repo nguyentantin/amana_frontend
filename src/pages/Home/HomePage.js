@@ -1,8 +1,8 @@
 import React from 'react'
 import { Button } from 'antd'
 
-import video1 from '../../assets/video/video.mp4'
-import video2 from '../../assets/video/video.webm'
+import video1 from '../../assets/video/amana.mp4'
+import poster from '../../assets/images/thumb_amana.png'
 
 class HomePage extends React.Component {
   render() {
@@ -15,10 +15,9 @@ class HomePage extends React.Component {
               autoPlay="autoplay"
               loop="loop"
               muted
-              poster="https://deploygate.com/assets/enterprises/video-background-07e40de43c00197372f8ea19959c134e.jpg"
+              poster={poster}
             >
               <source src={video1} type="video/mp4"/>
-              <source src={video2} type="video/webm"/>
             </video>
           </div>
           <div className="messageBox">
