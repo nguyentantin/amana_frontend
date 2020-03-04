@@ -1,21 +1,18 @@
 import React, { memo } from 'react'
 import { Redirect, Route } from 'react-router-dom'
-import PropTypes from 'prop-types'
 
-const RedirectRoute = ({redirectPath, ...rest}) => {
+import helpers from '../utils/helpers'
+
+const PrivateRoute = ({component: Component, ...rest}) => {
+  const isAuthenticated = helpers.getAccessToken()
+
+  if (isAuthenticated) {
+    return <Route {...rest} render={props => <Component/>}/>
+  }
+
   return (
-    <Route {...rest} render={props => (
-      <Redirect to={{
-        pathname: redirectPath,
-        state: {from: props.location}
-      }}/>
-    )}/>
+    <Route {...rest} render={props => <Redirect to={{pathname: '/login', state: {from: props.location}}}/>}/>
   )
 }
 
-RedirectRoute.propTypes = {
-  location: PropTypes.object,
-  redirectPath: PropTypes.string.isRequired,
-}
-
-export default memo(RedirectRoute)
+export default memo(PrivateRoute)

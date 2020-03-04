@@ -1,21 +1,25 @@
 import React, { memo } from 'react'
 import { Redirect, Route } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import helpers from '../utils/helpers'
 
-const RedirectRoute = ({redirectPath, ...rest}) => {
+const RestrictedRoute = ({component: Component, ...rest}) => {
+  const isAuthenticated = helpers.getAccessToken()
+
   return (
     <Route {...rest} render={props => (
-      <Redirect to={{
-        pathname: redirectPath,
-        state: {from: props.location}
-      }}/>
+      isAuthenticated ? <Redirect
+        to={{
+          pathname: '/dashboard',
+          state: {from: props.location}
+        }}
+      /> : <Route {...rest} render={props => <Component/>}/>
     )}/>
   )
 }
 
-RedirectRoute.propTypes = {
+RestrictedRoute.propTypes = {
   location: PropTypes.object,
-  redirectPath: PropTypes.string.isRequired,
 }
 
-export default memo(RedirectRoute)
+export default memo(RestrictedRoute)

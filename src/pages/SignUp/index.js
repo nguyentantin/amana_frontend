@@ -1,51 +1,16 @@
 import React from 'react'
 import { compose } from 'redux'
 import { Field, reduxForm } from 'redux-form'
-import { Col, Row, Card, Form, Button } from 'antd'
+import { Col, Card, Form, Button } from 'antd'
 
 import { AInput } from '../../components/FormUI'
 import injectReducer from '../../store/injectReducer'
 import injectSaga from '../../store/injectSaga'
 import reducer from '../../store/modules/auth/reducers'
 import saga from '../../store/modules/auth/sagas'
-import styled from "styled-components"
+import { ContainerRow, AuthButton } from './styled'
 
 const key = 'auth'
-
-const ContainerRow = styled(Row)`
-  margin-top: 40px !important;
-  display: flex !important;
-  .row-two {
-    display: flex !important;
-    .ant-card {
-      width: 100%;
-      background-color: whitesmoke;
-      border: 1px solid #e3e3e3;
-      border-radius: 4px;
-      -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
-      box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
-    }
-    .ant-form-item-label {
-      margin-top: 8px;
-    }
-  }
-  .row-title {
-    font-size: 36px;
-    margin-bottom: 0;
-    small {
-    color: #777777;
-  }
-`
-
-const AuthButton = styled.div`
-  .auth_button {
-    margin-top: 25px;
-    .ant-btn {
-      width: 100%;
-      display: block;
-    }
-  }
-`
 
 class SignUpPage extends React.PureComponent {
   render() {

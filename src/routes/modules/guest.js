@@ -22,18 +22,20 @@ export default [
     path: '/',
     exact: true,
     component: HomePage,
-    layout: GuestLayout
+    layout: GuestLayout,
   },
   {
     path: '/dashboard',
     exact: true,
     component: dashboard,
-    layout: GuestLayout
+    layout: GuestLayout,
+    requiredAuth: true
   },
   {
     path: '/apps',
     exact: true,
     component: apps,
-    layout: GuestLayout
+    layout: GuestLayout,
+    requiredAuth: true
   },
 ]

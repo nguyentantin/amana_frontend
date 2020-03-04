@@ -23,6 +23,6 @@ export default [
     path: '/sign-up',
     component: SignUpPage,
     layout: GuestLayout,
-    exact: true
+    exact: true,
   },
 ]

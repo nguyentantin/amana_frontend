@@ -1,7 +1,6 @@
 import React from 'react'
 
 import PrivateRoute from './PrivateRoute'
-import RedirectRoute from './RedirectRoute'
 import RestrictedRoute from './RestrictedRoute'
 
 import loadable from '../utils/loadable'
@@ -31,7 +30,6 @@ const modulesRoute = () => {
 export {
   PrivateRoute,
   RestrictedRoute,
-  RedirectRoute
 }
 
 export default [
