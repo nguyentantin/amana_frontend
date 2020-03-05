@@ -9,6 +9,8 @@ import MasterLayout from './MasterLayout'
 import Footer from './Footer'
 import AppLogo from '../../assets/images/App_logo.png'
 import { LogoWrapper } from './styled'
+import { isEmpty } from 'lodash'
+import helpers from '../../utils/helpers'
 
 const {Header, Content} = Layout
 
@@ -58,35 +60,42 @@ const ContentPage = styled(Content)` {
 
 class GuestLayout extends PureComponent {
   constructor(props) {
-    super(props);
-    this.state = {activeClass: ''};
+    super(props)
+    this.state = {activeClass: ''}
   }
 
-  _isMounted = false;
+  _isMounted = false
 
   static propTypes = {
     children: PropTypes.node.isRequired,
   }
 
-  componentDidMount(){
-    this._isMounted = true;
+
+  isAuthenticated = () => {
+    return !isEmpty(helpers.getAccessToken())
+  }
+
+  componentDidMount() {
+    this._isMounted = true
     window.addEventListener('scroll', () => {
       if (this._isMounted) {
-        let activeClass = 'normal';
-        if(window.scrollY === 0){
-          activeClass = 'top';
+        let activeClass = 'normal'
+        if (window.scrollY === 0) {
+          activeClass = 'top'
         }
-        this.setState({ activeClass });
+        this.setState({activeClass})
       }
-    });
+    })
   }
 
   componentWillUnmount() {
-    this._isMounted = false;
+    this._isMounted = false
   }
 
   render() {
     const {children, location} = this.props
+    const isAuthenticated = this.isAuthenticated()
+
     const childrenWithProps = React.Children.map(children, child => React.cloneElement(child, {}))
     const isActive = window.location.pathname
     let className
@@ -110,8 +119,14 @@ class GuestLayout extends PureComponent {
                   <Menu.Item key='/'><Link to='/'>Features</Link></Menu.Item>
                   <Menu.Item key='/develop-tools'><Link to='/develop-tools'>Developer Tools</Link></Menu.Item>
                   <Menu.Item key='/support'><Link to='/support'>Support</Link></Menu.Item>
-                  <Menu.Item key='/sign-in'><Link to='/sign-in'>SignIn</Link></Menu.Item>
-                  <Menu.Item key='/sign-up'><Link to='/sign-up'>SignUp</Link></Menu.Item>
+
+                  {
+                    isAuthenticated && <Menu.Item key='/dashboard'><Link to='/dashboard'>Dashboard</Link></Menu.Item>
+                  }
+
+                  {
+                    !isAuthenticated && <Menu.Item key='/sign-in'><Link to='/sign-in'>Sign-in</Link></Menu.Item>
+                  }
                 </Menu>
               </div>
             </div>

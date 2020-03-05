@@ -1,11 +1,18 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Route, Switch } from 'react-router-dom'
-import { map } from 'lodash'
+import { map, isEmpty } from 'lodash'
+import { withRouter } from 'react-router'
 
-export default class AppRoutes extends PureComponent {
+import helpers from '../../utils/helpers'
+
+class AppRoutes extends PureComponent {
   static propTypes = {
     routes: PropTypes.oneOfType([PropTypes.array]).isRequired,
+  }
+
+  isAuthenticated = () => {
+    return !isEmpty(helpers.getAccessToken())
   }
 
   renderRoute(route) {
@@ -25,7 +32,9 @@ export default class AppRoutes extends PureComponent {
   }
 
   render() {
-    const {routes} = this.props
+    const {routes, history} = this.props
+    console.log(this.props)
+    const isAuthenticated = this.isAuthenticated()
 
     return (
       <Switch>
@@ -35,9 +44,17 @@ export default class AppRoutes extends PureComponent {
               key={key}
               path={route.path}
               exact={route.exact}
-              render={() => (
-                this.renderRoute(route)
-              )}
+              render={() => {
+                if (route.requiredAuth && !isAuthenticated) {
+                  return history.push('/sign-in')
+                }
+
+                if (route.restricted && isAuthenticated) {
+                  return history.push('/dashboard')
+                }
+
+                return this.renderRoute(route)
+              }}
             />
           ))
         }
@@ -45,3 +62,5 @@ export default class AppRoutes extends PureComponent {
     )
   }
 }
+
+export default withRouter(AppRoutes)

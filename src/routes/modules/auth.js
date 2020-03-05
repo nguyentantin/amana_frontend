@@ -18,11 +18,13 @@ export default [
     component: SignInPage,
     layout: GuestLayout,
     exact: true,
+    restricted: true
   },
   {
     path: '/sign-up',
     component: SignUpPage,
     layout: GuestLayout,
     exact: true,
+    restricted: true
   },
 ]
