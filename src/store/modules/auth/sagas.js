@@ -6,10 +6,10 @@ import { REQUEST_LOGIN, REQUEST_REGISTER } from './constants'
 import { loginSuccess } from './actions'
 import AuthRequest from '../../../api/Request/AuthRequest'
 
-function* login(payload) {
+function* login(action) {
   try {
-    const username = yield call(AuthRequest.login(payload.credentials))
-    yield put(loginSuccess(username))
+    const {data} = yield call(AuthRequest.login.bind(AuthRequest), action.credentials)
+    yield put(loginSuccess(data))
     yield put(push('/dashboard'))
     success('Login is successfully!')
   } catch (err) {
@@ -17,9 +17,9 @@ function* login(payload) {
   }
 }
 
-function* register(payload) {
+function* register(action) {
   try {
-    yield call(AuthRequest.register(payload.user))
+    yield call(AuthRequest.register.bind(AuthRequest), action.user)
     yield put(push('/login'))
     success('Register is successfully!')
   } catch (err) {

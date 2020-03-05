@@ -13,7 +13,6 @@ const reducer = (state = initialState, action) =>
       case LOGIN_SUCCESS:
         draft.loading = true
         draft.error = false
-        draft.userData.repositories = false
         break
 
       case LOGIN_ERROR:
