@@ -97,8 +97,16 @@ class SignUpPage extends React.PureComponent {
               />
 
               <div style={{textAlign: 'center', paddingLeft: '44px'}}>
-                <Button style={{width: '300px'}} shape="round" type="primary" size='large' htmlType="submit"
-                        loading={loading}>Sign-up</Button>
+                <Button
+                  style={{width: '300px'}}
+                  shape="round"
+                  type="primary"
+                  size='large'
+                  htmlType="submit"
+                  loading={loading}
+                >
+                  Sign-up
+                </Button>
               </div>
             </Form>
           </Card>
