@@ -121,14 +121,12 @@ class GuestLayout extends PureComponent {
                   <Menu.Item key='/support'><Link to='/support'>Support</Link></Menu.Item>
 
                   {
-                    isAuthenticated ? (<Menu.Item key='/sign-in'><Link to='/dashboard'>Dashboard</Link></Menu.Item>) : (
-                      <Fragment>
-                        <Menu.Item key='/sign-in'><Link to='/sign-in'>SignIn</Link></Menu.Item>
-                        <Menu.Item key='/sign-up'><Link to='/sign-up'>SignUp</Link></Menu.Item>
-                      </Fragment>
-                    )
+                    isAuthenticated && <Menu.Item key='/dashboard'><Link to='/dashboard'>Dashboard</Link></Menu.Item>
                   }
 
+                  {
+                    !isAuthenticated && <Menu.Item key='/sign-in'><Link to='/sign-in'>Sign-in</Link></Menu.Item>
+                  }
                 </Menu>
               </div>
             </div>
