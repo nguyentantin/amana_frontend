@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import { Col, Card, Form, Button } from 'antd'
 import { Link } from 'react-router-dom'
+import _ from 'lodash'
 
 import { AInput } from '../../components/FormUI'
 import injectReducer from '../../store/injectReducer'
@@ -28,7 +29,7 @@ class SignInPage extends React.PureComponent {
   }
 
   render() {
-    const {handleSubmit} = this.props
+    const {handleSubmit, loading} = this.props
 
     return (
       <ContainerRow className="container">
@@ -83,8 +84,16 @@ class SignInPage extends React.PureComponent {
                   <Link to='/'>Forgot your password?</Link>
                 </span>
 
-                <Button style={{width: '300px'}} shape="round" type="primary" size='large'
-                        htmlType="submit">Sign-In</Button>
+                <Button
+                  style={{width: '300px'}}
+                  shape="round"
+                  type="primary"
+                  size='large'
+                  htmlType="submit"
+                  loading={loading}
+                >
+                  Sign-In
+                </Button>
                 <Link to='/sign-up' style={{display: 'block', marginTop: '15px'}}>No account? Sign up here.</Link>
               </div>
             </Form>
@@ -95,10 +104,16 @@ class SignInPage extends React.PureComponent {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    loading: _.get(state, 'auth.loading', false)
+  }
+}
+
 const mapDispatchToProps = {requestLogin}
 
 export default compose(
-  connect(null, mapDispatchToProps),
+  connect(mapStateToProps, mapDispatchToProps),
   injectReducer({key: 'auth', reducer}),
   injectSaga({key: 'auth', saga}),
   reduxForm({

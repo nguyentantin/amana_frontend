@@ -12,6 +12,7 @@ import saga from '../../store/modules/auth/sagas'
 import { ContainerRow, AuthButton } from './styled'
 import { required, email, confirmPassword } from '../../utils/validations'
 import { requestRegister } from '../../store/modules/auth/actions'
+import _ from 'lodash'
 
 class SignUpPage extends React.PureComponent {
   constructor(props) {
@@ -27,7 +28,7 @@ class SignUpPage extends React.PureComponent {
   }
 
   render() {
-    const {handleSubmit} = this.props
+    const {handleSubmit, loading} = this.props
 
     return (
       <ContainerRow className="container">
@@ -96,7 +97,8 @@ class SignUpPage extends React.PureComponent {
               />
 
               <div style={{textAlign: 'center', paddingLeft: '44px'}}>
-                <Button style={{width: '300px'}} shape="round" type="primary" size='large' htmlType="submit">Sign-up</Button>
+                <Button style={{width: '300px'}} shape="round" type="primary" size='large' htmlType="submit"
+                        loading={loading}>Sign-up</Button>
               </div>
             </Form>
           </Card>
@@ -106,8 +108,15 @@ class SignUpPage extends React.PureComponent {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    loading: _.get(state, 'auth.loading', false)
+  }
+}
+
+
 export default compose(
-  connect(null, {requestRegister}),
+  connect(mapStateToProps, {requestRegister}),
   injectReducer({key: 'auth', reducer}),
   injectSaga({key: 'auth', saga}),
   reduxForm({
