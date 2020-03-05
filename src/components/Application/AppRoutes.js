@@ -46,7 +46,7 @@ class AppRoutes extends PureComponent {
               exact={route.exact}
               render={() => {
                 if (route.requiredAuth && !isAuthenticated) {
-                  return history.push('/login')
+                  return history.push('/sign-in')
                 }
 
                 if (route.restricted && isAuthenticated) {

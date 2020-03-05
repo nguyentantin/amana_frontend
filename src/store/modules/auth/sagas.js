@@ -22,7 +22,7 @@ function* login(action) {
 function* register(action) {
   try {
     yield call(AuthRequest.register.bind(AuthRequest), action.user)
-    yield put(push('/login'))
+    yield put(push('/sign-in'))
     success('Register is successfully!')
   } catch (err) {
     error('Register is failed!')
