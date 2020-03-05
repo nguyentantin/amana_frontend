@@ -1,5 +1,12 @@
 import produce from 'immer'
-import { LOGIN_SUCCESS, REQUEST_LOGIN, REQUEST_REGISTER, REGISTER_SUCCESS } from './constants'
+import {
+  LOGIN_SUCCESS,
+  REQUEST_LOGIN,
+  REQUEST_REGISTER,
+  REGISTER_SUCCESS,
+  LOGIN_ERROR,
+  REGISTER_ERROR
+} from './constants'
 
 const initialState = {
   loading: false,
@@ -16,10 +23,17 @@ const reducer = (state = initialState, action) =>
         draft.authInfo = action.authInfo
         draft.loading = false
         break
+      case LOGIN_ERROR:
+        draft.loading = false
+        draft.authInfo = {}
+        break
       case REQUEST_REGISTER:
         draft.loading = true
         break
       case REGISTER_SUCCESS:
+        draft.loading = false
+        break
+      case REGISTER_ERROR:
         draft.loading = false
         break
       default:

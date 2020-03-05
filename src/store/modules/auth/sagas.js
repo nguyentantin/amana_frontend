@@ -3,7 +3,7 @@ import { push } from 'connected-react-router'
 
 import { error, success } from '../../../utils/toastr'
 import { REQUEST_LOGIN, REQUEST_REGISTER } from './constants'
-import { loginSuccess } from './actions'
+import { loginSuccess, loginError, registerError, registerSuccess } from './actions'
 import AuthRequest from '../../../api/Request/AuthRequest'
 import helpers from '../../../utils/helpers'
 
@@ -15,6 +15,8 @@ function* login(action) {
     yield put(push('/dashboard'))
     success('Login is successfully!')
   } catch (err) {
+    yield put(loginError())
+
     error('Login is failed!')
   }
 }
@@ -23,8 +25,10 @@ function* register(action) {
   try {
     yield call(AuthRequest.register.bind(AuthRequest), action.user)
     yield put(push('/sign-in'))
+    yield put(registerSuccess())
     success('Register is successfully!')
   } catch (err) {
+    yield put(registerError())
     error('Register is failed!')
   }
 }
