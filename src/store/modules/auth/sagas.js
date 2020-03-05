@@ -5,10 +5,11 @@ import { error, success } from '../../../utils/toastr'
 import { REQUEST_LOGIN, REQUEST_REGISTER } from './constants'
 import { loginSuccess } from './actions'
 import AuthRequest from '../../../api/Request/AuthRequest'
-
+import helpers from '../../../utils/helpers'
 function* login(action) {
   try {
-    const {data} = yield call(AuthRequest.login.bind(AuthRequest), action.credentials)
+    const data = yield call(AuthRequest.login.bind(AuthRequest), action.credentials)
+    helpers.saveToken(data)
     yield put(loginSuccess(data))
     yield put(push('/dashboard'))
     success('Login is successfully!')

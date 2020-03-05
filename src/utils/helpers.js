@@ -10,8 +10,8 @@ export default {
   },
 
   saveToken: (payload) => {
-    localStorage.setItem(STORAGE_KEY.ACCESS_TOKEN, payload.access_token)
-    localStorage.setItem(STORAGE_KEY.REFRESH_TOKEN, payload.refresh_token)
+    localStorage.setItem(STORAGE_KEY.ACCESS_TOKEN, payload.accessToken)
+    localStorage.setItem(STORAGE_KEY.REFRESH_TOKEN, payload.refreshToken)
   },
 
   removeToken: () => {
