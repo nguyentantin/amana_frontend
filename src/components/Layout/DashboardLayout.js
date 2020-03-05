@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { Layout, Menu } from 'antd'
+import { Layout, Menu, Dropdown, Avatar } from 'antd'
 import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
@@ -9,6 +9,7 @@ import MasterLayout from './MasterLayout'
 import Footer from './Footer'
 import AppLogo from '../../assets/images/App_logo.png'
 import { LogoWrapper } from './styled'
+import helpers from '../../utils/helpers'
 
 const {Header, Content} = Layout
 
@@ -59,6 +60,8 @@ class DashboardLayout extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {activeClass: ''}
+
+    this.logout = this.logout.bind(this)
   }
 
   _isMounted = false
@@ -84,16 +87,37 @@ class DashboardLayout extends PureComponent {
     this._isMounted = false
   }
 
+  logout() {
+    const {history} = this.props
+    helpers.removeToken()
+
+    history.push('/sign-in')
+
+  }
+
   render() {
     const {children, location} = this.props
     const childrenWithProps = React.Children.map(children, child => React.cloneElement(child, {}))
     const isActive = window.location.pathname
     let className
+
     if (isActive === '/') {
       className = 'active'
     } else {
       className = ''
     }
+
+    const overlay = (
+      <Menu>
+        <Menu.Item key="0" onClick={this.logout}>
+          Logout
+        </Menu.Item>
+
+        <Menu.Item key="0">
+          Profile
+        </Menu.Item>
+      </Menu>
+    )
 
     return (
       <MasterLayout>
@@ -109,6 +133,10 @@ class DashboardLayout extends PureComponent {
                   <Menu.Item key='/'><Link to='/dashboard'>Dashboard</Link></Menu.Item>
                   <Menu.Item key='/develop-tools'><Link to='/projects'>Projects</Link></Menu.Item>
                   <Menu.Item key='/support'><Link to='/apps'>Apps</Link></Menu.Item>
+
+                  <Dropdown overlay={overlay}>
+                    <Avatar size={30} icon="user"/>
+                  </Dropdown>
                 </Menu>
               </div>
             </div>
