@@ -1,4 +1,4 @@
-import { STORAGE_KEY, HTTP_CODE } from '../config/constants'
+import { STORAGE_KEY } from '../config/constants'
 
 export default {
   getAccessToken: () => {

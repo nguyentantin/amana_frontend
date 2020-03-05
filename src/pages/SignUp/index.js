@@ -1,5 +1,6 @@
 import React from 'react'
 import { compose } from 'redux'
+import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import { Col, Card, Form, Button } from 'antd'
 
@@ -9,11 +10,25 @@ import injectSaga from '../../store/injectSaga'
 import reducer from '../../store/modules/auth/reducers'
 import saga from '../../store/modules/auth/sagas'
 import { ContainerRow, AuthButton } from './styled'
-
-const key = 'auth'
+import { required, email, confirmPassword } from '../../utils/validations'
+import { requestRegister } from '../../store/modules/auth/actions'
 
 class SignUpPage extends React.PureComponent {
+  constructor(props) {
+    super(props)
+
+    this.onSubmit = this.onSubmit.bind(this)
+  }
+
+  onSubmit(user) {
+    const {requestRegister} = this.props
+
+    requestRegister(user)
+  }
+
   render() {
+    const {handleSubmit} = this.props
+
     return (
       <ContainerRow className="container">
         <Col span={12}>
@@ -21,17 +36,17 @@ class SignUpPage extends React.PureComponent {
             <small>with DeployGate</small>
           </h1>
           <AuthButton>
-            <Col span={20} id="github_login_button" className="auth_button col-sm-10">
+            <Col span={20} className="auth_button col-sm-10">
               <Button type="primary" shape="round" icon="github" size='large'>
                 Sign up with GitHub
               </Button>
             </Col>
-            <Col span={20} id="google_login_button" className="auth_button col-sm-10">
+            <Col span={20} className="auth_button col-sm-10">
               <Button type="primary" shape="round" icon="google" size='large'>
                 Sign up with Google
               </Button>
             </Col>
-            <Col span={20} id="saml_login_button" className="auth_button col-sm-10">
+            <Col span={20} className="auth_button col-sm-10">
               <Button type="primary" shape="round" size='large' icon='mail'>
                 Sign up with Email
               </Button>
@@ -40,7 +55,16 @@ class SignUpPage extends React.PureComponent {
         </Col>
         <Col span={12} className="row-two">
           <Card bordered={false}>
-            <Form layout="vertical">
+            <Form layout="vertical" onSubmit={handleSubmit(this.onSubmit)}>
+              <Field
+                label="Name"
+                name="name"
+                component={AInput}
+                type="text"
+                placeholder="Please enter your name"
+                size='large'
+                validate={[required]}
+              />
               <Field
                 label="Email"
                 name="email"
@@ -48,6 +72,7 @@ class SignUpPage extends React.PureComponent {
                 type="email"
                 placeholder="Please enter email"
                 size='large'
+                validate={[required, email]}
               />
 
               <Field
@@ -57,19 +82,21 @@ class SignUpPage extends React.PureComponent {
                 type='password'
                 placeholder="Please enter password"
                 size='large'
+                validate={[required]}
               />
 
               <Field
                 label="Confirm Password"
-                name="password"
+                name="password_confirm"
                 component={AInput}
                 type='password'
                 placeholder="Please enter password confirmation"
                 size='large'
+                validate={[required, confirmPassword]}
               />
 
               <div style={{textAlign: 'center', paddingLeft: '44px'}}>
-                <Button style={{width: '300px'}} shape="round" type="primary" size='large'>Sign-up</Button>
+                <Button style={{width: '300px'}} shape="round" type="primary" size='large' htmlType="submit">Sign-up</Button>
               </div>
             </Form>
           </Card>
@@ -80,8 +107,9 @@ class SignUpPage extends React.PureComponent {
 }
 
 export default compose(
+  connect(null, {requestRegister}),
   injectReducer({key: 'auth', reducer}),
-  injectSaga({key, saga}),
+  injectSaga({key: 'auth', saga}),
   reduxForm({
     form: 'SignUpForm'
   })

@@ -5,7 +5,7 @@ import './HttpInterceptors'
 export default class HttpRequest {
   constructor() {
     this.headers = REQUEST_HEADER
-    this.apiURL = API_URL + '/api'
+    this.apiURL = API_URL
     this.axios = axios
     this.CancelToken = this.axios.CancelToken
   }
