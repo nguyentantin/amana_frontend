@@ -35,6 +35,11 @@ const HTTP_CODE = {
   UNPROCESSABLE_ENTITY: 422,
 }
 
+const PLATFORM_TYPE = {
+  ANDROID: 'android',
+  IOS: 'iOS'
+}
+
 export {
   REQUEST_HEADER,
   API_URL,
@@ -43,4 +48,5 @@ export {
   HTTP_CODE,
   GOOGLE_WEB_FONT,
   GOOGLE_WEB_FONT_STATUS,
+  PLATFORM_TYPE,
 }
