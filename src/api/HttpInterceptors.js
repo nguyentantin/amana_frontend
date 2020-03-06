@@ -1,4 +1,5 @@
 import axios from 'axios'
+import history from '../utils/history'
 
 axios.interceptors.request.use(
   (config) => {
@@ -20,8 +21,10 @@ axios.interceptors.response.use(
       case 403:
         break
       case 404:
+        history.push('/404')
         break
       case 500:
+        history.push('/500')
         break
       default:
         break
