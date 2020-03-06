@@ -2,5 +2,14 @@
   "login": "Login",
   "register": "Register",
   "sorry_page_you_visited_does_not_exist": "Sorry, the page you visited does not exist.",
-  "back_home": "Back Home"
+  "back_home": "Back Home",
+  "time_before": {
+    "just_now": "Just Now",
+    "minute": "{{time}} minutes before",
+    "hour": "{{time}} hour before",
+    "day": "{{time}} day before",
+    "week": "{{time}} week before",
+    "month": "{{time}} month before",
+    "year": "{{time}} year before"
+  }
 }
