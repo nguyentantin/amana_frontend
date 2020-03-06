@@ -1,11 +1,13 @@
 import { call, takeLatest, put } from 'redux-saga/effects'
 import { push } from 'connected-react-router'
+import { stopSubmit, reset } from 'redux-form'
 
 import { error, success } from '../../../utils/toastr'
 import { REQUEST_LOGIN, REQUEST_REGISTER } from './constants'
 import { loginSuccess, loginError, registerError, registerSuccess } from './actions'
 import AuthRequest from '../../../api/Request/AuthRequest'
 import helpers from '../../../utils/helpers'
+import { HTTP_CODE } from '../../../config/constants'
 
 function* login(action) {
   try {
@@ -16,7 +18,7 @@ function* login(action) {
     success('Login is successfully!')
   } catch (err) {
     yield put(loginError())
-
+    yield put(reset('SignInForm'))
     error('Login is failed!')
   }
 }
@@ -29,7 +31,10 @@ function* register(action) {
     success('Register is successfully!')
   } catch (err) {
     yield put(registerError())
-    error('Register is failed!')
+
+    if (err.statusCode === HTTP_CODE.UNPROCESSABLE_ENTITY) {
+      yield put(stopSubmit('SignUpForm', err.error))
+    }
   }
 }
 

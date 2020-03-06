@@ -158,7 +158,6 @@ const mapStateToProps = state => {
   }
 }
 
-
 export default compose(
   connect(mapStateToProps, {requestRegister}),
   injectReducer({key: 'auth', reducer}),

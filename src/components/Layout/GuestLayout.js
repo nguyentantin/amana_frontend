@@ -17,7 +17,7 @@ const {Header, Content} = Layout
 
 const HeaderWrapper = styled(Header)`
   background: #fff;
-  padding: 0;
+  padding: 0 30px;
   position: fixed;
   z-index: 3;
   width: 100%;
@@ -109,26 +109,24 @@ class GuestLayout extends PureComponent {
       <MasterLayout>
         <Layout>
           <HeaderWrapper className={`${this.state.activeClass} ${className}`}>
-            <div className="container flex-center">
-              <LogoWrapper>
-                <Link to='/'><img src={AppLogo} alt="Logo"/></Link>
-              </LogoWrapper>
+            <LogoWrapper>
+              <Link to='/'><img src={AppLogo} alt="Logo"/></Link>
+            </LogoWrapper>
 
-              <div>
-                <Menu mode="horizontal" style={{lineHeight: '64px'}} defaultSelectedKeys={[location.pathname]}>
-                  <Menu.Item key='/'><Link to='/'>Features</Link></Menu.Item>
-                  <Menu.Item key='/develop-tools'><Link to='/develop-tools'>Developer Tools</Link></Menu.Item>
-                  <Menu.Item key='/support'><Link to='/support'>Support</Link></Menu.Item>
+            <div>
+              <Menu mode="horizontal" style={{lineHeight: '64px'}} defaultSelectedKeys={[location.pathname]}>
+                <Menu.Item key='/'><Link to='/'>Features</Link></Menu.Item>
+                <Menu.Item key='/develop-tools'><Link to='/develop-tools'>Developer Tools</Link></Menu.Item>
+                <Menu.Item key='/support'><Link to='/support'>Support</Link></Menu.Item>
 
-                  {
-                    isAuthenticated && <Menu.Item key='/dashboard'><Link to='/dashboard'>Dashboard</Link></Menu.Item>
-                  }
+                {
+                  isAuthenticated && <Menu.Item key='/dashboard'><Link to='/dashboard'>Dashboard</Link></Menu.Item>
+                }
 
-                  {
-                    !isAuthenticated && <Menu.Item key='/sign-in'><Link to='/sign-in'>Sign-in</Link></Menu.Item>
-                  }
-                </Menu>
-              </div>
+                {
+                  !isAuthenticated && <Menu.Item key='/sign-in'><Link to='/sign-in'>Sign-in</Link></Menu.Item>
+                }
+              </Menu>
             </div>
           </HeaderWrapper>
 

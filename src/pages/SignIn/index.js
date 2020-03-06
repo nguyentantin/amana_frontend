@@ -72,7 +72,9 @@ class SignInPage extends React.PureComponent {
                            buttonText="Log in with Github"
                            onSuccess={onSuccess}
                            onFailure={onFailure}
-                           className="ant-btn ant-btn-primary ant-btn-round ant-btn-lg"
+                           className="ant-btn ant-btn-primary ant-btn-round ant-btn-lg disabled"
+                           scope="sss"
+
               />
             </Col>
             <ColStyle span={20} className="auth_button col-sm-10">
@@ -86,7 +88,7 @@ class SignInPage extends React.PureComponent {
               />
             </ColStyle>
             <Col span={20} className="auth_button col-sm-10">
-              <Button type="primary" shape="round" size='large'>
+              <Button type="primary" shape="round" size='large' className="disabled">
                 Log in with SAML Authentication
               </Button>
             </Col>

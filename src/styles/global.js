@@ -7,6 +7,10 @@ const GlobalStyle = createGlobalStyle`
     width: 100%;
     margin: 0;
   },
+  .disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+  }
 `
 
 export default GlobalStyle
