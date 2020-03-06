@@ -33,7 +33,6 @@ class AppRoutes extends PureComponent {
 
   render() {
     const {routes, history} = this.props
-    console.log(this.props)
     const isAuthenticated = this.isAuthenticated()
 
     return (

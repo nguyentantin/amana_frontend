@@ -4,9 +4,8 @@ import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import { Col, Card, Form, Button } from 'antd'
 import { Link } from 'react-router-dom'
-import styled from "styled-components";
-import GoogleLogin from 'react-google-login';
-import GitHubLogin from 'react-github-login';
+import styled from 'styled-components'
+import GoogleLogin from 'react-google-login'
 import _ from 'lodash'
 
 import { AInput } from '../../components/FormUI'
@@ -21,9 +20,6 @@ import { requestLogin } from '../../store/modules/auth/actions'
 const responseGoogle = (response) => {
   console.log(response);
 }
-
-const onSuccess = response => console.log(response);
-const onFailure = response => console.error(response);
 
 const ColStyle = styled(Col)`
   .btn-google {
@@ -67,15 +63,9 @@ class SignInPage extends React.PureComponent {
 
           <AuthButton>
             <Col span={20} className="auth_button col-sm-10">
-              <GitHubLogin clientId="80e0ee2607ea67cff9e7"
-                           redirectUri=""
-                           buttonText="Log in with Github"
-                           onSuccess={onSuccess}
-                           onFailure={onFailure}
-                           className="ant-btn ant-btn-primary ant-btn-round ant-btn-lg disabled"
-                           scope="sss"
-
-              />
+              <Button type="primary" shape="round" icon="github" size='large' disabled>
+                Log in with GitHub
+              </Button>
             </Col>
             <ColStyle span={20} className="auth_button col-sm-10">
               <GoogleLogin
@@ -88,7 +78,7 @@ class SignInPage extends React.PureComponent {
               />
             </ColStyle>
             <Col span={20} className="auth_button col-sm-10">
-              <Button type="primary" shape="round" size='large' className="disabled">
+              <Button type="primary" shape="round" size='large' disabled>
                 Log in with SAML Authentication
               </Button>
             </Col>

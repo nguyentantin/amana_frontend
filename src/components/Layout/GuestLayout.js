@@ -27,6 +27,7 @@ const HeaderWrapper = styled(Header)`
   justify-content: space-between;
   .ant-menu {
     font-size: 18px;
+    border: 0;
   }
   &.active {
     background: transparent;
@@ -41,9 +42,12 @@ const HeaderWrapper = styled(Header)`
     &.normal {
       background: #fff;
       .ant-menu {
-        .ant-menu-item > a {
-          color: #000;
-        }
+        .ant-menu-item {
+        top: 0;
+           a {
+            color: #000;
+          }
+        } 
       }
     }
   }
