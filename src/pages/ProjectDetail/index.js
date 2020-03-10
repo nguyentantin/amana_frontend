@@ -1,12 +1,16 @@
 import React from 'react'
-import {List, Avatar, Button, Tabs, Icon} from 'antd'
+import _ from 'lodash'
+import { List, Avatar, Button, Tabs, Icon, Popover } from 'antd'
 import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { observer } from 'mobx-react'
-import { action, observable } from 'mobx'
+import QRCode from 'qrcode.react'
+import { action, computed, observable, get, values, toJS } from 'mobx'
 import ProjectRequest from '../../api/Request/ProjectRequest'
 import { compose } from 'recompose'
+import { API_URL, PLATFORM_TYPE } from '../../config/constants'
+import { ShowIf } from '../../components/Utils'
 
 const { TabPane } = Tabs;
 
@@ -38,6 +42,10 @@ const divContainer = {
   paddingTop: '40px',
 }
 
+const marginRight = {
+  marginRight: '10px',
+}
+
 const hrStyle = {
   border: '0',
   marginBottom: '20px',
@@ -51,6 +59,10 @@ const SmallTitle =  styled.small`
     color: rgba(0, 0, 0, 0.45);
   `
 
+const LinkDownload = styled.a`
+  color: white;
+`
+
 @observer
 class ProjectDetail extends React.Component {
   @observable projectDetail = {}
@@ -61,9 +73,20 @@ class ProjectDetail extends React.Component {
     this.loading = true
     ProjectRequest.detail(projectId)
       .then((data) => {
+        console.log(data)
         this.projectDetail = data
         this.loading = false
       })
+  }
+
+  @computed get isAndroid() {
+    return get(this.projectDetail, 'platformType') === PLATFORM_TYPE.ANDROID
+  }
+
+  @computed get downloadUrl() {
+    const project = toJS(this.projectDetail)
+    return this.isAndroid ? _.get(project, 'currentVersion.s3Url', '') :
+      `itms-services://?action=download-manifest&url=${API_URL}/app-builds/${_.get(project, 'currentVersion.id', '')}/manifest.plist`
   }
 
   componentDidMount () {
@@ -78,15 +101,34 @@ class ProjectDetail extends React.Component {
           <div style={divImg}>
             <img src="https://via.placeholder.com/250x250.png" alt=""/>
           </div>
-          <ListBuild>
-            <div className="content-left">
-              <h3>Project Name: {this.projectDetail.name}</h3>
-              <p>Descriptions: {this.projectDetail.description}</p>
-              <p>Platform: {this.projectDetail.platformType}</p>
-              <p>Author: {this.projectDetail.author ? this.projectDetail.author.name: ''}</p>
-            </div>
-            <Button className="btn-right" shape="round" type="primary" size='large'>Build App</Button>
-          </ListBuild>
+          <ShowIf condition={!_.isEmpty(this.projectDetail)}>
+            <ListBuild>
+              <div className="content-left">
+                <h3>Project Name: {this.projectDetail.name}</h3>
+                <p>Descriptions: {this.projectDetail.description}</p>
+                <p>Platform: {this.projectDetail.platformType}</p>
+                <p>Author: {this.projectDetail.author ? this.projectDetail.author.name: ''}</p>
+                <Button className="btn-right" type="primary" size='large' style={marginRight}>
+                  <Icon type="download"/>
+                  <LinkDownload href={this.downloadUrl} download> Download </LinkDownload>
+                </Button>
+                <Popover
+                  trigger="click"
+                  content={
+                    <div>
+                      <QRCode></QRCode>
+                    </div>
+                  }
+                >
+                  <Button className="btn-right" type="primary" size='large'>
+                    <Icon type="qrcode"/>
+                    QR Code
+                  </Button>
+                </Popover>
+
+              </div>
+            </ListBuild>
+          </ShowIf>
         </div>
         <hr style={hrStyle}/>
         <div>
