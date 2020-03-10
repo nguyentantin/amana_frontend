@@ -129,6 +129,7 @@ class DashboardLayout extends PureComponent {
                   <Menu.Item key='/'><Link to='/dashboard'>Dashboard</Link></Menu.Item>
                   <Menu.Item key='/develop-tools'><Link to='/projects'>Projects</Link></Menu.Item>
                   <Menu.Item key='/support'><Link to='/apps'>Apps</Link></Menu.Item>
+                  <Menu.Item key='/time-sheets'><Link to='/time-sheets'>Time-Sheet</Link></Menu.Item>
 
                   <Dropdown overlay={overlay}>
                     <Avatar size={30} icon="user"/>

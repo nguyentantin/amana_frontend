@@ -11,6 +11,7 @@ const ASelect = makeField(Select)
 const ACheckbox = makeField(Checkbox)
 const ATextarea = makeField(TextArea)
 const ARangePicker = makeField(RangePicker)
+const ADatePicker = makeField(DatePicker)
 
 export {
   AInput,
@@ -18,5 +19,6 @@ export {
   ASelect,
   ACheckbox,
   ATextarea,
-  ARangePicker
+  ARangePicker,
+  ADatePicker
 }
