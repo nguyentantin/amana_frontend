@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { observer } from 'mobx-react'
 import QRCode from 'qrcode.react'
+import { AppleFilled, AndroidFilled } from '@ant-design/icons'
 import { action, computed, observable, get, values, toJS } from 'mobx'
 import ProjectRequest from '../../api/Request/ProjectRequest'
 import { compose } from 'recompose'
@@ -54,6 +55,10 @@ const hrStyle = {
   backgroundImage: 'linear-gradient(to right, #ccc, #333, #ccc)',
 }
 
+const iconStyle = {
+  fontSize: '20px'
+}
+
 const SmallTitle =  styled.small`
     font-size: 69%;
     color: rgba(0, 0, 0, 0.45);
@@ -73,7 +78,6 @@ class ProjectDetail extends React.Component {
     this.loading = true
     ProjectRequest.detail(projectId)
       .then((data) => {
-        console.log(data)
         this.projectDetail = data
         this.loading = false
       })
@@ -106,7 +110,7 @@ class ProjectDetail extends React.Component {
               <div className="content-left">
                 <h3>Project Name: {this.projectDetail.name}</h3>
                 <p>Descriptions: {this.projectDetail.description}</p>
-                <p>Platform: {this.projectDetail.platformType}</p>
+                <p>Platform: { this.isAndroid ? <AndroidFilled style={iconStyle}/> : <AppleFilled style={iconStyle}/> }</p>
                 <p>Author: {this.projectDetail.author ? this.projectDetail.author.name: ''}</p>
                 <Button className="btn-right" type="primary" size='large' style={marginRight}>
                   <Icon type="download"/>
@@ -114,10 +118,9 @@ class ProjectDetail extends React.Component {
                 </Button>
                 <Popover
                   trigger="click"
+                  placement="bottom"
                   content={
-                    <div>
-                      <QRCode></QRCode>
-                    </div>
+                    <QRCode value={this.downloadUrl}/>
                   }
                 >
                   <Button className="btn-right" type="primary" size='large'>

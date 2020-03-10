@@ -10,7 +10,6 @@ class Store {
   getProject(projectId) {
     ProjectRequest.detail(projectId)
       .then((data) => {
-        console.log(data)
       })
   }
 }
