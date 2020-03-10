@@ -34,7 +34,7 @@ class SignUpPage extends React.PureComponent {
       <ContainerRow className="container">
         <Col span={12}>
           <h1 className="row-title">Create your account<br/>
-            <small>with DeployGate</small>
+            <small>with Build Automation</small>
           </h1>
           <AuthButton>
             <Col span={20} className="auth_button col-sm-10">
@@ -121,7 +121,6 @@ const mapStateToProps = state => {
     loading: _.get(state, 'auth.loading', false)
   }
 }
-
 
 export default compose(
   connect(mapStateToProps, {requestRegister}),

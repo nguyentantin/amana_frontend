@@ -4,6 +4,7 @@ import { Layout, Menu, Dropdown, Avatar } from 'antd'
 import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import classNames from 'classnames'
 
 import MasterLayout from './MasterLayout'
 import Footer from './Footer'
@@ -59,32 +60,35 @@ const ContentPage = styled(Content)` {
 class DashboardLayout extends PureComponent {
   constructor(props) {
     super(props)
-    this.state = {activeClass: ''}
+
+    this.state = {
+      activeClass: ''
+    }
 
     this.logout = this.logout.bind(this)
+    this.scroll = this.scroll.bind(this)
   }
 
-  _isMounted = false
 
   static propTypes = {
     children: PropTypes.node.isRequired,
   }
 
+  scroll() {
+    let activeClass = 'normal'
+    if (window.scrollY === 0) {
+      activeClass = 'top'
+    }
+
+    this.setState({activeClass})
+  }
+
   componentDidMount() {
-    this._isMounted = true
-    window.addEventListener('scroll', () => {
-      if (this._isMounted) {
-        let activeClass = 'normal'
-        if (window.scrollY === 0) {
-          activeClass = 'top'
-        }
-        this.setState({activeClass})
-      }
-    })
+    window.addEventListener('scroll', this.scroll)
   }
 
   componentWillUnmount() {
-    this._isMounted = false
+    window.removeEventListener('scroll', this.scroll)
   }
 
   logout() {
@@ -92,20 +96,12 @@ class DashboardLayout extends PureComponent {
     helpers.removeToken()
 
     history.push('/sign-in')
-
   }
 
   render() {
     const {children, location} = this.props
     const childrenWithProps = React.Children.map(children, child => React.cloneElement(child, {}))
-    const isActive = window.location.pathname
-    let className
-
-    if (isActive === '/') {
-      className = 'active'
-    } else {
-      className = ''
-    }
+    const isActive = window.location.pathname === '/'
 
     const overlay = (
       <Menu>
@@ -113,7 +109,7 @@ class DashboardLayout extends PureComponent {
           Logout
         </Menu.Item>
 
-        <Menu.Item key="0">
+        <Menu.Item key="1">
           Profile
         </Menu.Item>
       </Menu>
@@ -122,7 +118,7 @@ class DashboardLayout extends PureComponent {
     return (
       <MasterLayout>
         <Layout>
-          <HeaderWrapper className={`${this.state.activeClass} ${className}`}>
+          <HeaderWrapper className={classNames({'active': isActive}, this.state.activeClass,)}>
             <div className="container flex-center">
               <LogoWrapper>
                 <Link to='/'><img src={AppLogo} alt="Logo"/></Link>
@@ -133,6 +129,7 @@ class DashboardLayout extends PureComponent {
                   <Menu.Item key='/'><Link to='/dashboard'>Dashboard</Link></Menu.Item>
                   <Menu.Item key='/develop-tools'><Link to='/projects'>Projects</Link></Menu.Item>
                   <Menu.Item key='/support'><Link to='/apps'>Apps</Link></Menu.Item>
+                  <Menu.Item key='/time-sheets'><Link to='/time-sheets'>Time-Sheet</Link></Menu.Item>
 
                   <Dropdown overlay={overlay}>
                     <Avatar size={30} icon="user"/>
@@ -142,7 +139,7 @@ class DashboardLayout extends PureComponent {
             </div>
           </HeaderWrapper>
 
-          <ContentPage className={className}>
+          <ContentPage className={classNames({'active': isActive})}>
             {childrenWithProps}
           </ContentPage>
 
