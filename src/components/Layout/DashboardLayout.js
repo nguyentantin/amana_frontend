@@ -5,6 +5,7 @@ import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import classNames from 'classnames'
+import _ from 'lodash'
 
 import MasterLayout from './MasterLayout'
 import Footer from './Footer'
@@ -94,8 +95,14 @@ class DashboardLayout extends PureComponent {
   logout() {
     const {history} = this.props
     helpers.removeToken()
+    helpers.removeAuthInfo()
 
     history.push('/sign-in')
+  }
+
+  username() {
+    const me = helpers.getAuthInfo()
+    return _.get(me, 'name')
   }
 
   render() {
@@ -131,8 +138,11 @@ class DashboardLayout extends PureComponent {
                   <Menu.Item key='/support'><Link to='/apps'>Apps</Link></Menu.Item>
                   <Menu.Item key='/time-sheets'><Link to='/time-sheets'>Time-Sheet</Link></Menu.Item>
 
-                  <Dropdown overlay={overlay}>
-                    <Avatar size={30} icon="user"/>
+                  <Dropdown overlay={overlay} trigger="click">
+                    <span>
+                      <Avatar size={30} icon="user"/>
+                      <span style={{fontSize: '15px', marginLeft: '5px'}}>{this.username()}</span>
+                    </span>
                   </Dropdown>
                 </Menu>
               </div>
