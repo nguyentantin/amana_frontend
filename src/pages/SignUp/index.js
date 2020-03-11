@@ -3,7 +3,6 @@ import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import { Col, Card, Form, Button } from 'antd'
-import styled from 'styled-components'
 import GoogleLogin from 'react-google-login'
 
 import { AInput } from '../../components/FormUI'
@@ -15,27 +14,14 @@ import { ContainerRow, AuthButton } from './styled'
 import { required, email, confirmPassword } from '../../utils/validations'
 import { requestRegister } from '../../store/modules/auth/actions'
 import _ from 'lodash'
+import ColStyle from '../../styles/colStyle'
+
+// clientId amana
+const clientId = "187145148024-95e46vqvkhfmc1i10075fjr0m0obbdga.apps.googleusercontent.com"
 
 const responseGoogle = (response) => {
   console.log(response);
 }
-
-const ColStyle = styled(Col)`
-  .btn-google {
-    display: block !important;
-    color: #fff !important;
-    background-color: #fa8c16 !important;
-    border-color: #fa8c16 !important;
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12) !important;
-    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045) !important;
-    padding: 0 16px !important;
-    border-radius: 32px !important;
-    text-align: center !important;
-    > div {
-    display: none;
-    }
-  }
-`
 
 class SignUpPage extends React.PureComponent {
   constructor(props) {
@@ -67,7 +53,7 @@ class SignUpPage extends React.PureComponent {
             </Col>
             <ColStyle span={20} className="auth_button col-sm-10">
               <GoogleLogin
-                clientId="737426295561-k8jt2e286sau4d6gpn5ionqnpopfh7v5.apps.googleusercontent.com"
+                clientId={clientId}
                 buttonText="Sign up with Google"
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}

@@ -1,9 +1,9 @@
 import React from 'react'
-import { Layout } from 'antd'
+import Wrapper from './Wrapper'
 
 const Footer = () => {
   return (
-    <Layout.Footer className='footer'>Auto Build Application ©2020 Created by SI1 Studio</Layout.Footer>
+    <Wrapper>Auto Build Application ©2020 Created by SI1 Studio</Wrapper>
   )
 }
 

@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import { Col, Card, Form, Button } from 'antd'
 import { Link } from 'react-router-dom'
-import styled from 'styled-components'
 import GoogleLogin from 'react-google-login'
 import _ from 'lodash'
 
@@ -16,30 +15,14 @@ import saga from '../../store/modules/auth/sagas'
 import { ContainerRow, AuthButton } from './styled'
 import { required, email } from '../../utils/validations'
 import { requestLogin } from '../../store/modules/auth/actions'
+import ColStyle from '../../styles/colStyle'
 
-// clientId test
-const clientId = "737426295561-k8jt2e286sau4d6gpn5ionqnpopfh7v5.apps.googleusercontent.com"
+// clientId amana
+const clientId = "187145148024-95e46vqvkhfmc1i10075fjr0m0obbdga.apps.googleusercontent.com"
 
 const responseGoogle = (response) => {
   console.log(response);
 }
-
-const ColStyle = styled(Col)`
-  .btn-google {
-    display: block !important;
-    color: #fff !important;
-    background-color: #fa8c16 !important;
-    border-color: #fa8c16 !important;
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12) !important;
-    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045) !important;
-    padding: 0 16px !important;
-    border-radius: 32px !important;
-    text-align: center !important;
-    > div {
-    display: none;
-    }
-  }
-`
 
 class SignInPage extends React.PureComponent {
   constructor(props) {

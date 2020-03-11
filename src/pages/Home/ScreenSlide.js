@@ -1,4 +1,6 @@
-.ScreenSlide {
+import styled from 'styled-components'
+
+const ScreenSlide = styled.div`
   height: 100vh;
   position: relative;
   overflow: hidden;
@@ -48,4 +50,6 @@
       height: auto;
     }
   }
-}
+`
+
+export default ScreenSlide
