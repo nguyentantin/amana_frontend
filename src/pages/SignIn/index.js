@@ -17,6 +17,9 @@ import { ContainerRow, AuthButton } from './styled'
 import { required, email } from '../../utils/validations'
 import { requestLogin } from '../../store/modules/auth/actions'
 
+// clientId test
+const clientId = "737426295561-k8jt2e286sau4d6gpn5ionqnpopfh7v5.apps.googleusercontent.com"
+
 const responseGoogle = (response) => {
   console.log(response);
 }
@@ -69,7 +72,7 @@ class SignInPage extends React.PureComponent {
             </Col>
             <ColStyle span={20} className="auth_button col-sm-10">
               <GoogleLogin
-                clientId="737426295561-k8jt2e286sau4d6gpn5ionqnpopfh7v5.apps.googleusercontent.com"
+                clientId={clientId}
                 buttonText="Log in with Google"
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}
