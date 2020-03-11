@@ -2,68 +2,93 @@ import React from 'react'
 import { Table, Card, Button, Form } from 'antd'
 import { Field, reduxForm } from 'redux-form'
 import { compose } from 'recompose'
+import { withRouter } from 'react-router'
+import { observer } from 'mobx-react'
+import { action, observable } from 'mobx'
+import moment from 'moment'
+import _ from 'lodash'
 
-import { AInput, ARangePicker } from '../../components/FormUI'
+import { ADatePicker, AInput } from '../../components/FormUI'
+import TimeTrackingRequest from '../../api/Request/TimeTrackingRequest'
 
+
+@observer
 class TimeSheet extends React.Component {
+  constructor(props) {
+    super(props)
+    this.fetchTimeSheet = this.fetchTimeSheet.bind(this)
+  }
+
+  @observable timeSheetsData = []
+  @observable loading = false
+
+  @action
+  fetchTimeSheet(form = {}) {
+    this.loading = true
+
+    // @TODO: get correct type of date and send date to params
+    const params = _.pick(form, ['username'])
+
+    TimeTrackingRequest.all(params)
+        .then((data) => {
+          this.timeSheetsData = data
+          this.loading = false
+        })
+  }
+
   columns() {
     return [
       {
         title: 'User Name',
-        dataIndex: 'name',
+        dataIndex: 'neoUser.username',
         key: 'name',
       },
       {
         title: 'Time check-in',
-        dataIndex: 'age',
+        dataIndex: 'checkinAt',
         key: 'age',
       },
       {
         title: 'Time check-out',
-        dataIndex: 'address',
+        dataIndex: 'checkoutAt',
         key: 'address',
       },
       {
         title: 'Date',
-        dataIndex: 'date',
+        dataIndex: 'createdAt',
         key: 'date',
       },
     ]
   }
 
-  dataSource() {
-    return [
-      {
-        key: '1',
-        name: 'Mike',
-        age: 32,
-        address: '10 Downing Street',
-      },
-      {
-        key: '2',
-        name: 'John',
-        age: 42,
-        address: '10 Downing Street',
-      },
-
-    ]
+  componentDidMount() {
+    const initDate = {
+      date: moment()
+    }
+    this.props.initialize(initDate)
+    this.fetchTimeSheet({
+      date: moment().format('YYYY-MM-DD')
+    })
   }
 
   render() {
+    const { handleSubmit } = this.props
+
     return (
       <Card style={{margin: '100px'}}>
-        <Form layout="inline" style={{marginBottom: '30px'}}>
+        <Form layout="inline" style={{marginBottom: '30px'}} onSubmit={handleSubmit(this.fetchTimeSheet)}>
           <Field
             label="Name"
             name="username"
             component={AInput}
+            value="TOAN"
             placeholder="Please enter user name"
           />
 
           <Field
             label="Date"
             name="date"
-            component={ARangePicker}
+            component={ADatePicker}
             placeholder="Working date"
           />
 
@@ -76,7 +101,13 @@ class TimeSheet extends React.Component {
             Search
           </Button>
         </Form>
-        <Table bordered={true} pagination={false} dataSource={this.dataSource()} columns={this.columns()}/>
+        <Table
+            loading={this.loading}
+            bordered={true}
+            pagination={false}
+            dataSource={this.timeSheetsData}
+            columns={this.columns()}
+        />
       </Card>
     )
   }
@@ -85,7 +116,8 @@ class TimeSheet extends React.Component {
 const enhancer = compose(
   reduxForm({
     form: 'SearchTimeSheetForm'
-  })
+  }),
+  withRouter,
 )
 
 export default enhancer(TimeSheet)
