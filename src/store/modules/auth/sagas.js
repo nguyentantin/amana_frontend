@@ -13,6 +13,7 @@ function* login(action) {
   try {
     const data = yield call(AuthRequest.login.bind(AuthRequest), action.credentials)
     helpers.saveToken(data)
+    helpers.saveAuthInfo(data.user)
     yield put(loginSuccess(data))
     yield put(push('/dashboard'))
     success('Login is successfully!')

@@ -10,6 +10,10 @@ const PageNotFound = loadable(() => import('../pages/Error/PageNotFound'), {
   fallback: <LoadingPage/>,
 })
 
+const ServerErrorPage = loadable(() => import('../pages/Error/ServerError'), {
+  fallback: <LoadingPage/>,
+})
+
 /**
  * Get List Route Modules.
  *
@@ -35,5 +39,6 @@ export {
 export default [
   ...modulesRoute(),
   {path: '/404', exact: true, component: PageNotFound},
+  {path: '/500', exact: true, component: ServerErrorPage},
   {path: '*', component: PageNotFound},
 ]

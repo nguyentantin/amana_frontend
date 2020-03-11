@@ -1,5 +1,6 @@
 import React from 'react'
 import { Form } from 'antd'
+import _ from 'lodash'
 
 const FormItem = Form.Item
 
@@ -14,12 +15,20 @@ const formItemLayout = {
   }
 }
 
-const makeField = Component => ({input, meta, children, hasFeedback, label, ...rest}) => {
+const makeField = Component => ({input, meta, children, hasFeedback, label, layout, ...rest}) => {
   const hasError = meta.touched && meta.invalid
+  let layoutInput = {}
+
+  if (!_.isEmpty(layout)) {
+    layoutInput = {
+      ...formItemLayout,
+      ...layout
+    }
+  }
 
   return (
     <FormItem
-      {...formItemLayout}
+      {...layoutInput}
       label={label}
       validateStatus={hasError ? "error" : "success"}
       hasFeedback={hasFeedback && hasError}
