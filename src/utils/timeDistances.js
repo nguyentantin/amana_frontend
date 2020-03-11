@@ -2,13 +2,9 @@ import moment from 'moment'
 import { trans } from '../i18n'
 
 const timeDistances = (string) => {
-  console.log(string)
   let duration = moment() - moment(string)
-  console.log(moment())
-  console.log(moment(string))
   duration = moment.duration(duration)
   const second = duration.asSeconds()
-  console.log(second)
 
   const minute = duration.asMinutes()
   const hour = duration.asHours()

@@ -23,7 +23,7 @@ class HomePage extends React.Component {
           <div className="messageBox">
             <div>
               <h1>Distribute your beta apps instantly</h1>
-              <p>DeployGate is the fastest way for iOS and Android developers to share in-development apps with
+              <p>Build Automation is the fastest way for iOS and Android developers to share in-development apps with
                 others.</p>
               <Button size="large">Get Started</Button>
             </div>

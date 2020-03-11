@@ -27,7 +27,8 @@ const LOGIN_CREDENTIALS = {
 
 const STORAGE_KEY = {
   ACCESS_TOKEN: 'Auth_access_token',
-  REFRESH_TOKEN: 'Auth_refresh_token'
+  REFRESH_TOKEN: 'Auth_refresh_token',
+  AUTH_ME_INFO: 'Auth_me_info'
 }
 
 const HTTP_CODE = {

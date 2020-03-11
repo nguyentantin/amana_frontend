@@ -13,6 +13,14 @@ const apps = loadable(() => import('../../pages/Apps'), {
   fallback: <LoadingPage/>,
 })
 
+const projectDetail = loadable(() => import('../../pages/ProjectDetail'), {
+  fallback: <LoadingPage/>,
+})
+
+const TimeSheet = loadable(() => import('../../pages/TimeSheet'), {
+  fallback: <LoadingPage/>,
+})
+
 export default [
   {
     path: '/dashboard',
@@ -25,6 +33,21 @@ export default [
     path: '/apps',
     exact: true,
     component: apps,
+    layout: DashboardLayout,
+    requiredAuth: true
+  },
+  {
+    path: '/project/:projectId',
+    exact: true,
+    component: projectDetail,
+    layout: DashboardLayout,
+    requiredAuth: true
+  },
+
+  {
+    path: '/time-sheets',
+    exact: true,
+    component: TimeSheet,
     layout: DashboardLayout,
     requiredAuth: true
   },
