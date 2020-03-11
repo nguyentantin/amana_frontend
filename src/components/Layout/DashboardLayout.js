@@ -138,7 +138,7 @@ class DashboardLayout extends PureComponent {
                   <Menu.Item key='/support'><Link to='/apps'>Apps</Link></Menu.Item>
                   <Menu.Item key='/time-sheets'><Link to='/time-sheets'>Time-Sheet</Link></Menu.Item>
 
-                  <Dropdown overlay={overlay} trigger="click">
+                  <Dropdown overlay={overlay}>
                     <span>
                       <Avatar size={30} icon="user"/>
                       <span style={{fontSize: '15px', marginLeft: '5px'}}>{this.username()}</span>
