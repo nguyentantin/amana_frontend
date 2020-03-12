@@ -1,39 +1,64 @@
 import React from 'react'
-import { Table, Card, Button, Form } from 'antd'
+import { Table, Card, Button, Form, DatePicker } from 'antd'
 import { Field, reduxForm } from 'redux-form'
 import { compose } from 'recompose'
 import { withRouter } from 'react-router'
 import { observer } from 'mobx-react'
 import { action, observable } from 'mobx'
 import moment from 'moment'
-import _ from 'lodash'
 
-import { ADatePicker, AInput } from '../../components/FormUI'
+import { AInput } from '../../components/FormUI'
 import TimeTrackingRequest from '../../api/Request/TimeTrackingRequest'
 
+const valueToMoment = (value, dateFormat) => {
+  if (value === undefined || value === null || value === "") {
+    return undefined
+  }
+
+  return moment(value, dateFormat)
+}
+
+const DatePickerField = ({input, meta, children, hasFeedback, label, layout, ...rest}) => {
+  const hasError = meta.touched && meta.invalid
+
+  return (
+    <Form.Item
+      label={label}
+      validateStatus={hasError ? "error" : "success"}
+      hasFeedback={hasFeedback && hasError}
+      help={hasError && meta.error}
+    >
+      <DatePicker
+        {...input}
+        {...rest}
+        value={valueToMoment(input.value, rest.dateFormat)}
+      />
+    </Form.Item>
+  )
+}
 
 @observer
 class TimeSheet extends React.Component {
   constructor(props) {
     super(props)
     this.fetchTimeSheet = this.fetchTimeSheet.bind(this)
+    this.onSearch = this.onSearch.bind(this)
   }
 
   @observable timeSheetsData = []
   @observable loading = false
 
   @action
-  fetchTimeSheet(form = {}) {
+  fetchTimeSheet(params = {}) {
     this.loading = true
 
-    // @TODO: get correct type of date and send date to params
-    const params = _.pick(form, ['username'])
-
     TimeTrackingRequest.all(params)
-        .then((data) => {
-          this.timeSheetsData = data
-          this.loading = false
-        })
+      .then((data) => {
+        this.timeSheetsData = data
+      })
+      .finally(() => {
+        this.loading = false
+      })
   }
 
   columns() {
@@ -65,18 +90,24 @@ class TimeSheet extends React.Component {
     const initDate = {
       date: moment()
     }
+
     this.props.initialize(initDate)
+
     this.fetchTimeSheet({
       date: moment().format('YYYY-MM-DD')
     })
   }
 
+  onSearch(values) {
+    this.fetchTimeSheet(values)
+  }
+
   render() {
-    const { handleSubmit } = this.props
+    const {handleSubmit} = this.props
 
     return (
       <Card style={{margin: '100px'}}>
-        <Form layout="inline" style={{marginBottom: '30px'}} onSubmit={handleSubmit(this.fetchTimeSheet)}>
+        <Form layout="inline" style={{marginBottom: '30px'}} onSubmit={handleSubmit(this.onSearch)}>
           <Field
             label="Name"
             name="username"
@@ -88,7 +119,8 @@ class TimeSheet extends React.Component {
           <Field
             label="Date"
             name="date"
-            component={ADatePicker}
+            component={DatePickerField}
+            dateFormat="YYYY-MM-DD"
             placeholder="Working date"
           />
 
@@ -102,11 +134,12 @@ class TimeSheet extends React.Component {
           </Button>
         </Form>
         <Table
-            loading={this.loading}
-            bordered={true}
-            pagination={false}
-            dataSource={this.timeSheetsData}
-            columns={this.columns()}
+          rowKey='id'
+          loading={this.loading}
+          bordered={true}
+          pagination={false}
+          dataSource={this.timeSheetsData}
+          columns={this.columns()}
         />
       </Card>
     )
