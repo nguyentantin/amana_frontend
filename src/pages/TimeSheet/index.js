@@ -37,6 +37,11 @@ const DatePickerField = ({input, meta, children, hasFeedback, label, layout, ...
   )
 }
 
+const VN_DATE_TIME = 'HH:mm:ss DD-MM-YYYY'
+const VN_DATE = 'DD-MM-YYYY'
+const SERVER_DATE = 'YYYY-MM-DD'
+const formatDate = (time, format) => time ? moment(time).format(format) : ''
+
 @observer
 class TimeSheet extends React.Component {
   constructor(props) {
@@ -71,17 +76,20 @@ class TimeSheet extends React.Component {
       {
         title: 'Time check-in',
         dataIndex: 'checkinAt',
-        key: 'age',
+        key: 'checkinAt',
+        render: text => formatDate(text, VN_DATE_TIME)
       },
       {
         title: 'Time check-out',
         dataIndex: 'checkoutAt',
-        key: 'address',
+        key: 'checkoutAt',
+        render: text => formatDate(text, VN_DATE_TIME)
       },
       {
         title: 'Date',
         dataIndex: 'createdAt',
-        key: 'date',
+        key: 'createdAt',
+        render: text => formatDate(text, VN_DATE)
       },
     ]
   }
@@ -94,7 +102,7 @@ class TimeSheet extends React.Component {
     this.props.initialize(initDate)
 
     this.fetchTimeSheet({
-      date: moment().format('YYYY-MM-DD')
+      date: moment().format(SERVER_DATE)
     })
   }
 
@@ -112,7 +120,6 @@ class TimeSheet extends React.Component {
             label="Name"
             name="username"
             component={AInput}
-            value="TOAN"
             placeholder="Please enter user name"
           />
 
