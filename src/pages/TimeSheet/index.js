@@ -37,7 +37,7 @@ const DatePickerField = ({input, meta, children, hasFeedback, label, layout, ...
   )
 }
 
-const VN_DATE_TIME = 'HH:mm:ss DD-MM-YYYY'
+const VN_TIME = 'HH:mm'
 const VN_DATE = 'DD-MM-YYYY'
 const SERVER_DATE = 'YYYY-MM-DD'
 const formatDate = (time, format) => time ? moment(time).format(format) : ''
@@ -72,24 +72,26 @@ class TimeSheet extends React.Component {
         title: 'User Name',
         dataIndex: 'neoUser.username',
         key: 'name',
+        align: 'center'
       },
       {
         title: 'Time check-in',
         dataIndex: 'checkinAt',
-        key: 'checkinAt',
-        render: text => formatDate(text, VN_DATE_TIME)
+        align: 'center',
+        render: text => <b>{formatDate(text, VN_TIME)}</b>
       },
       {
         title: 'Time check-out',
         dataIndex: 'checkoutAt',
         key: 'checkoutAt',
-        render: text => formatDate(text, VN_DATE_TIME)
+        align: 'center',
+        render: text => <b>{formatDate(text, VN_TIME)}</b>
       },
       {
         title: 'Date',
         dataIndex: 'createdAt',
-        key: 'createdAt',
-        render: text => formatDate(text, VN_DATE)
+        align: 'center',
+        render: text => <b>{formatDate(text, VN_DATE)}</b>
       },
     ]
   }
