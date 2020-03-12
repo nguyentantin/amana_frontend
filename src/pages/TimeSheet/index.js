@@ -96,14 +96,12 @@ class TimeSheet extends React.Component {
 
   componentDidMount() {
     const initDate = {
-      date: moment()
+      date: moment().format(SERVER_DATE)
     }
 
     this.props.initialize(initDate)
 
-    this.fetchTimeSheet({
-      date: moment().format(SERVER_DATE)
-    })
+    this.fetchTimeSheet(initDate)
   }
 
   onSearch(values) {
