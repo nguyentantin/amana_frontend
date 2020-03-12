@@ -3,6 +3,7 @@ import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import { Col, Card, Form, Button } from 'antd'
+import GoogleLogin from 'react-google-login'
 
 import { AInput } from '../../components/FormUI'
 import injectReducer from '../../store/injectReducer'
@@ -13,6 +14,14 @@ import { ContainerRow, AuthButton } from './styled'
 import { required, email, confirmPassword } from '../../utils/validations'
 import { requestRegister } from '../../store/modules/auth/actions'
 import _ from 'lodash'
+import ColStyle from '../../styles/colStyle'
+
+// clientId amana
+const clientId = "187145148024-95e46vqvkhfmc1i10075fjr0m0obbdga.apps.googleusercontent.com"
+
+const responseGoogle = (response) => {
+  console.log(response);
+}
 
 class SignUpPage extends React.PureComponent {
   constructor(props) {
@@ -38,17 +47,22 @@ class SignUpPage extends React.PureComponent {
           </h1>
           <AuthButton>
             <Col span={20} className="auth_button col-sm-10">
-              <Button type="primary" shape="round" icon="github" size='large'>
+              <Button type="primary" shape="round" icon="github" size='large' disabled>
                 Sign up with GitHub
               </Button>
             </Col>
+            <ColStyle span={20} className="auth_button col-sm-10">
+              <GoogleLogin
+                clientId={clientId}
+                buttonText="Sign up with Google"
+                onSuccess={responseGoogle}
+                onFailure={responseGoogle}
+                cookiePolicy={'single_host_origin'}
+                className="ant-btn ant-btn-primary ant-btn-round ant-btn-lg btn-google"
+              />
+            </ColStyle>
             <Col span={20} className="auth_button col-sm-10">
-              <Button type="primary" shape="round" icon="google" size='large'>
-                Sign up with Google
-              </Button>
-            </Col>
-            <Col span={20} className="auth_button col-sm-10">
-              <Button type="primary" shape="round" size='large' icon='mail'>
+              <Button type="primary" shape="round" size='large' icon='mail' disabled>
                 Sign up with Email
               </Button>
             </Col>

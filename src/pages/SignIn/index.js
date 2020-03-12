@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import { Col, Card, Form, Button } from 'antd'
 import { Link } from 'react-router-dom'
+import GoogleLogin from 'react-google-login'
 import _ from 'lodash'
 
 import { AInput } from '../../components/FormUI'
@@ -14,6 +15,14 @@ import saga from '../../store/modules/auth/sagas'
 import { ContainerRow, AuthButton } from './styled'
 import { required, email } from '../../utils/validations'
 import { requestLogin } from '../../store/modules/auth/actions'
+import ColStyle from '../../styles/colStyle'
+
+// clientId amana
+const clientId = "187145148024-95e46vqvkhfmc1i10075fjr0m0obbdga.apps.googleusercontent.com"
+
+const responseGoogle = (response) => {
+  console.log(response);
+}
 
 class SignInPage extends React.PureComponent {
   constructor(props) {
@@ -40,17 +49,22 @@ class SignInPage extends React.PureComponent {
 
           <AuthButton>
             <Col span={20} className="auth_button col-sm-10">
-              <Button type="primary" shape="round" icon="github" size='large'>
-                Log in with Github
+              <Button type="primary" shape="round" icon="github" size='large' disabled>
+                Log in with GitHub
               </Button>
             </Col>
+            <ColStyle span={20} className="auth_button col-sm-10">
+              <GoogleLogin
+                clientId={clientId}
+                buttonText="Log in with Google"
+                onSuccess={responseGoogle}
+                onFailure={responseGoogle}
+                cookiePolicy={'single_host_origin'}
+                className="ant-btn ant-btn-primary ant-btn-round ant-btn-lg btn-google"
+              />
+            </ColStyle>
             <Col span={20} className="auth_button col-sm-10">
-              <Button type="primary" shape="round" icon="google" size='large'>
-                Log in with Google
-              </Button>
-            </Col>
-            <Col span={20} className="auth_button col-sm-10">
-              <Button type="primary" shape="round" size='large'>
+              <Button type="primary" shape="round" size='large' disabled>
                 Log in with SAML Authentication
               </Button>
             </Col>
