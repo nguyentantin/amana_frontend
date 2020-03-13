@@ -110,15 +110,15 @@ class TimeSheet extends React.Component {
       const checkinTime = moment(checkin)
       const checkoutTime = moment(checkout)
 
-      const relaxTimeStart = moment(checkin, 'YYYY-MM-DD').set({
-        hour: 12,
-        minute: 0
-      })
+      const relaxTimeStart = moment(checkin, 'YYYY-MM-DD').set({hour: 12, minute: 0})
 
-      const relaxTimeEnd = moment(checkin, 'YYYY-MM-DD').set({
-        hour: 13,
-        minute: 0
-      })
+      const relaxTimeEnd = moment(checkin, 'YYYY-MM-DD').set({hour: 13, minute: 0})
+
+      if (checkoutTime < relaxTimeStart) {
+        const worked = moment.duration(moment(checkoutTime).diff(checkinTime)).asHours()
+
+        return `${_.round(Number(worked), 1)} hours`
+      }
 
       if (checkinTime < relaxTimeStart) {
         timeWorked = timeWorked + moment.duration(moment(relaxTimeStart).diff(checkinTime)).asHours()
