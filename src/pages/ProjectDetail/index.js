@@ -104,7 +104,7 @@ class ProjectDetail extends React.Component {
   render() {
     return (
       <Container>
-        <Flex flex={"flex"}>
+        <Flex flex='flex'>
           <div style={divImg}>
             <img src="https://via.placeholder.com/250x250.png" alt=""/>
           </div>
