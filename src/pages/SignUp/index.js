@@ -10,7 +10,7 @@ import injectReducer from '../../store/injectReducer'
 import injectSaga from '../../store/injectSaga'
 import reducer from '../../store/modules/auth/reducers'
 import saga from '../../store/modules/auth/sagas'
-import { ContainerRow, AuthButton } from './styled'
+import { ContainerRow, AuthButton } from '../SignIn/styled'
 import { required, email, confirmPassword } from '../../utils/validations'
 import { requestRegister } from '../../store/modules/auth/actions'
 import _ from 'lodash'
@@ -40,7 +40,7 @@ class SignUpPage extends React.PureComponent {
     const {handleSubmit, loading} = this.props
 
     return (
-      <ContainerRow className="container">
+      <ContainerRow>
         <Col span={12}>
           <h1 className="row-title">Create your account<br/>
             <small>with Build Automation</small>
