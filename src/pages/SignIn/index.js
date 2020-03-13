@@ -16,7 +16,6 @@ import { ContainerRow, AuthButton } from './styled'
 import { required, email } from '../../utils/validations'
 import { requestLogin } from '../../store/modules/auth/actions'
 import ColStyle from '../../styles/colStyle'
-import { Flex } from '../../styles/utility'
 
 // clientId amana
 const clientId = "187145148024-95e46vqvkhfmc1i10075fjr0m0obbdga.apps.googleusercontent.com"
@@ -52,7 +51,7 @@ class SignInPage extends React.PureComponent {
           <h1 className="row-title">Log in<br/>
             <small>to Build Automation</small>
           </h1>
-          <Flex flex='flex'>111</Flex>
+
           <AuthButton>
             <Col span={20} className="auth_button col-sm-10">
               <Button type="primary" shape="round" icon="github" size='large' disabled>
