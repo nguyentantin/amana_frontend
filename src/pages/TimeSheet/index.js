@@ -6,6 +6,7 @@ import { withRouter } from 'react-router'
 import { observer } from 'mobx-react'
 import { action, observable } from 'mobx'
 import moment from 'moment'
+import _ from 'lodash'
 
 import { AInput } from '../../components/FormUI'
 import TimeTrackingRequest from '../../api/Request/TimeTrackingRequest'
@@ -88,12 +89,51 @@ class TimeSheet extends React.Component {
         render: text => <b>{formatDate(text, VN_TIME)}</b>
       },
       {
+        title: 'Time to work',
+        dataIndex: 'timeWorking',
+        key: 'timeWorking',
+        align: 'center',
+        render: (value, record) => <b>{this.timeToWork(record.checkinAt, record.checkoutAt)}</b>
+      },
+      {
         title: 'Date',
         dataIndex: 'createdAt',
         align: 'center',
         render: text => <b>{formatDate(text, VN_DATE)}</b>
       },
     ]
+  }
+
+  timeToWork(checkin, checkout) {
+    if (checkin && checkout) {
+      let timeWorked = 0
+      const checkinTime = moment(checkin)
+      const checkoutTime = moment(checkout)
+
+      const relaxTimeStart = moment(checkin, 'YYYY-MM-DD').set({
+        hour: 12,
+        minute: 0
+      })
+
+      const relaxTimeEnd = moment(checkin, 'YYYY-MM-DD').set({
+        hour: 13,
+        minute: 0
+      })
+
+      if (checkinTime < relaxTimeStart) {
+        timeWorked = timeWorked + moment.duration(moment(relaxTimeStart).diff(checkinTime)).asHours()
+      }
+
+      if (checkoutTime > relaxTimeEnd) {
+        timeWorked = timeWorked + moment.duration(moment(checkoutTime).diff(relaxTimeEnd)).asHours()
+      }
+
+      const hoursWorked = _.round(Number(timeWorked), 1)
+
+      return `${hoursWorked} hours`
+    }
+
+    return '0 hours'
   }
 
   componentDidMount() {
