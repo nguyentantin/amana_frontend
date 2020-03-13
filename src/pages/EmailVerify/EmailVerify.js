@@ -54,9 +54,13 @@ class EmailVerify extends React.Component {
 
   componentDidMount() {
     const {location} = this.props
-    const params = new URLSearchParams(decodeURI(location.search))
+    const params = new URLSearchParams(location.search)
 
-    this.requestVerifyEmail({email: params.get('email'), token: params.get('token')})
+    const data = {
+      email: decodeURIComponent(params.get('email')),
+      token: decodeURIComponent(params.get('token'))
+    }
+    this.requestVerifyEmail(data)
   }
 
   sendMail() {
