@@ -16,6 +16,10 @@ const EmailVerify = loadable(() => import('../../pages/EmailVerify/EmailVerify')
   fallback: <LoadingPage/>,
 })
 
+const SignUpSuccess = loadable(() => import('../../pages/SignUpSuccess/SignUpSuccess'), {
+  fallback: <LoadingPage/>,
+})
+
 export default [
   {
     path: '/sign-in',
@@ -27,6 +31,13 @@ export default [
   {
     path: '/sign-up',
     component: SignUpPage,
+    layout: GuestLayout,
+    exact: true,
+    restricted: true
+  },
+  {
+    path: '/sign-up-success',
+    component: SignUpSuccess,
     layout: GuestLayout,
     exact: true,
     restricted: true
