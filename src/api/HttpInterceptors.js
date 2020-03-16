@@ -1,8 +1,18 @@
 import axios from 'axios'
 import history from '../utils/history'
+import helpers from '../utils/helpers'
+import _ from 'lodash'
 
 axios.interceptors.request.use(
   (config) => {
+    const accessToken = helpers.getAccessToken()
+
+    if (!_.isEmpty(accessToken)) {
+      config.headers = _.assign(config.headers, {
+        'Authorization': `Bearer ${helpers.getAccessToken()}`
+      })
+    }
+
     return config
   },
   error => Promise.reject(error)

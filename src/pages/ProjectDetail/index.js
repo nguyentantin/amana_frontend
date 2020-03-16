@@ -9,7 +9,7 @@ import {
   iconStyle,
   SmallTitle,
   LinkDownload,
-} from './elements'
+} from './styled'
 import { List, Avatar, Button, Tabs, Icon, Popover } from 'antd'
 import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom'
@@ -48,12 +48,6 @@ class ProjectDetail extends React.Component {
   @observable projectDetail = {}
   @observable loading = false
 
-  constructor(props) {
-    super(props)
-    this.props.fetchRoles()
-    this.props.fetchExternalMembers({id: props.match.params.projectId})
-  }
-
   @action
   getProject(projectId) {
     this.loading = true
@@ -77,6 +71,8 @@ class ProjectDetail extends React.Component {
   componentDidMount() {
     const {match: {params}} = this.props
     this.getProject(params.projectId)
+    this.props.fetchRoles()
+    this.props.fetchExternalMembers({id: this.props.match.params.projectId})
   }
 
   render() {
