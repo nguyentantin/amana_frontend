@@ -38,7 +38,7 @@ const ScreenSlide = styled.div`
       text-shadow: 0 0 30px #000;
       font-size: 18px;
     }
-    Button {
+    a {
       margin-top: 41px;
       border-color: #fa8c16;
       background-color: #fa8c16;
