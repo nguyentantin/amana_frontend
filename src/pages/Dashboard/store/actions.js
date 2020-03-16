@@ -5,5 +5,3 @@ export const fetchProject = makeActionCreator(FETCH_PROJECT, 'params')
 export const fetchProjectSuccess = makeActionCreator(FETCH_PROJECT_SUCCESS, 'data')
 export const fetchAppBuilds = makeActionCreator(FETCH_APP_BUILDS, 'params')
 export const fetchAppBuildsSuccess = makeActionCreator(FETCH_APP_BUILDS_SUCCESS, 'data')
-
-

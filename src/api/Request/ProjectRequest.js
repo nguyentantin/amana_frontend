@@ -8,6 +8,14 @@ class ProjectRequest extends HttpRequest {
   detail(projectId) {
     return this.get(`/projects/${projectId}`)
   }
+
+  fetchExternalMembers(projectId) {
+    return this.get(`/project/${projectId}/external-members`)
+  }
+
+  assignMembers(projectId, data) {
+    return this.post(`/project/${projectId}/members`, data)
+  }
 }
 
 export default new ProjectRequest()
