@@ -10,11 +10,15 @@ class ProjectRequest extends HttpRequest {
   }
 
   fetchExternalMembers(projectId) {
-    return this.get(`/project/${projectId}/external-members`)
+    this.setHeaderToken()
+
+    return this.get(`/projects/${projectId}/external-members`)
   }
 
   assignMembers(projectId, data) {
-    return this.post(`/project/${projectId}/members`, data)
+    this.setHeaderToken()
+
+    return this.post(`/projects/${projectId}/members`, data)
   }
 }
 

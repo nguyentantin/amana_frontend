@@ -1,1 +1,3 @@
-export const externalMembers = state => state.project ? state.project.externalMembers : []
+import _ from 'lodash'
+
+export const getExternalMembers = state => _.get(state, 'project.externalMembers', [])

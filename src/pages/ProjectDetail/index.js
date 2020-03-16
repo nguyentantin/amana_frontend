@@ -1,9 +1,18 @@
 import React from 'react'
 import _ from 'lodash'
+import {
+  ListBuild,
+  divImg,
+  divContainer,
+  marginRight,
+  hrStyle,
+  iconStyle,
+  SmallTitle,
+  LinkDownload,
+} from './elements'
 import { List, Avatar, Button, Tabs, Icon, Popover } from 'antd'
 import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom'
-import styled from 'styled-components'
 import { observer } from 'mobx-react'
 import QRCode from 'qrcode.react'
 import { AppleFilled, AndroidFilled } from '@ant-design/icons'
@@ -12,8 +21,18 @@ import ProjectRequest from '../../api/Request/ProjectRequest'
 import { compose } from 'recompose'
 import { API_URL, PLATFORM_TYPE } from '../../config/constants'
 import { ShowIf } from '../../components/Utils'
+import { connect } from 'react-redux'
+import { injectReducer, injectSaga } from '../../store'
+import projectReducer from '../../store/modules/project/reducers'
+import roleReducer from '../../store/modules/role/reducers'
+import projectSaga from '../../store/modules/project/sagas'
+import roleSaga from '../../store/modules/role/sagas'
+import { getExternalMembers } from '../../store/modules/project/selectors'
+import { getRoles } from '../../store/modules/role/selectors'
+import { fetchExternalMembers } from '../../store/modules/project/actions'
+import { fetchRoles } from '../../store/modules/role/actions'
 
-const { TabPane } = Tabs;
+const {TabPane} = Tabs
 
 const data = [
   {
@@ -24,54 +43,16 @@ const data = [
   },
 ]
 
-const ListBuild = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  .content-left {
-    padding: 0 8px;
-  }
-`
-
-const divImg = {
-  paddingRight: '40px',
-  paddingBottom: '20px'
-}
-
-const divContainer = {
-  paddingTop: '40px',
-}
-
-const marginRight = {
-  marginRight: '10px',
-}
-
-const hrStyle = {
-  border: '0',
-  marginBottom: '20px',
-  height: '1px',
-  background: '#333',
-  backgroundImage: 'linear-gradient(to right, #ccc, #333, #ccc)',
-}
-
-const iconStyle = {
-  fontSize: '20px'
-}
-
-const SmallTitle =  styled.small`
-    font-size: 69%;
-    color: rgba(0, 0, 0, 0.45);
-  `
-
-const LinkDownload = styled.a`
-  color: white;
-`
-
 @observer
 class ProjectDetail extends React.Component {
   @observable projectDetail = {}
   @observable loading = false
+
+  constructor(props) {
+    super(props)
+    this.props.fetchRoles()
+    this.props.fetchExternalMembers({id: props.match.params.projectId})
+  }
 
   @action
   getProject(projectId) {
@@ -93,8 +74,8 @@ class ProjectDetail extends React.Component {
       `itms-services://?action=download-manifest&url=${API_URL}/app-builds/${_.get(project, 'currentVersion.id', '')}/manifest.plist`
   }
 
-  componentDidMount () {
-    const { match: {params} } = this.props
+  componentDidMount() {
+    const {match: {params}} = this.props
     this.getProject(params.projectId)
   }
 
@@ -110,8 +91,9 @@ class ProjectDetail extends React.Component {
               <div className="content-left">
                 <h3>Project Name: {this.projectDetail.name}</h3>
                 <p>Descriptions: {this.projectDetail.description}</p>
-                <p>Platform: { this.isAndroid ? <AndroidFilled style={iconStyle}/> : <AppleFilled style={iconStyle}/> }</p>
-                <p>Author: {this.projectDetail.author ? this.projectDetail.author.name: ''}</p>
+                <p>Platform: {this.isAndroid ? <AndroidFilled style={iconStyle}/> :
+                  <AppleFilled style={iconStyle}/>}</p>
+                <p>Author: {this.projectDetail.author ? this.projectDetail.author.name : ''}</p>
                 <Button className="btn-right" type="primary" size='large' style={marginRight}>
                   <Icon type="download"/>
                   <LinkDownload href={this.downloadUrl} download> Download </LinkDownload>
@@ -140,7 +122,7 @@ class ProjectDetail extends React.Component {
             <TabPane
               tab={
                 <span>
-                  <Icon type="apple" />
+                  <Icon type="apple"/>
                   Tab 1
                 </span>
               }
@@ -152,7 +134,7 @@ class ProjectDetail extends React.Component {
                 renderItem={item => (
                   <List.Item>
                     <List.Item.Meta
-                      avatar={<Avatar size={55} icon="user" />}
+                      avatar={<Avatar size={55} icon="user"/>}
                       title={<Link to='/'>{item.title}</Link>}
                       description="By si-01"
                     />
@@ -164,7 +146,7 @@ class ProjectDetail extends React.Component {
             <TabPane
               tab={
                 <span>
-                  <Icon type="android" />
+                  <Icon type="android"/>
                   Tab 2
                 </span>
               }
@@ -179,8 +161,21 @@ class ProjectDetail extends React.Component {
   }
 }
 
-const enhance = compose(
-  withRouter,
-)
+const mapStateToProps = state => ({
+  externalMembers: getExternalMembers(state),
+  roles: getRoles(state),
+})
 
-export default enhance(ProjectDetail)
+const mapDispatchToProps = {
+  fetchExternalMembers,
+  fetchRoles,
+}
+
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  injectReducer({key: 'project', reducer: projectReducer}),
+  injectReducer({key: 'role', reducer: roleReducer}),
+  injectSaga({key: 'project', saga: projectSaga}),
+  injectSaga({key: 'role', saga: roleSaga}),
+  withRouter,
+)(ProjectDetail)

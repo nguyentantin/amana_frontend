@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { REQUEST_HEADER, API_URL } from '../config/constants'
 import './HttpInterceptors'
+import helpers from '../utils/helpers'
 
 export default class HttpRequest {
   constructor() {
@@ -66,5 +67,11 @@ export default class HttpRequest {
 
   setHeaders(headers) {
     this.headers = Object.assign(this.headers, headers)
+  }
+
+  setHeaderToken() {
+    this.setHeaders({
+      'Authorization': `Bearer ${helpers.getAccessToken()}`
+    })
   }
 }

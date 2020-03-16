@@ -14,7 +14,7 @@ const reducer = (state = initialState, action) =>
       case FETCH_ROLES:
         break
       case FETCH_ROLES_SUCCESS:
-        draft.roles = action.roles
+        draft.roles = action.data
         break
       default:
         return state

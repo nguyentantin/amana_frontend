@@ -6,7 +6,7 @@ import { REQUEST_ASSIGN_MEMBERS, FETCH_EXTERNAL_MEMBERS } from './constants'
 
 function* fetchExternalMembers(action) {
   try {
-    const data = yield call(ProjectRequest.fetchExternalMembers.bind(ProjectRequest), action.project.id)
+    const { data } = yield call(ProjectRequest.fetchExternalMembers.bind(ProjectRequest), action.project.id)
     yield put(fetchExternalMembersSuccess(data))
   } catch (e) {
     error('Fetched external members failed!')
