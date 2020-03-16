@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button } from 'antd'
+import { Link } from 'react-router-dom'
 
 import ScreenSlide from './ScreenSlide'
 import video1 from '../../assets/video/amana.mp4'
@@ -26,7 +27,7 @@ class HomePage extends React.Component {
               <h1>Distribute your beta apps instantly</h1>
               <p>Build Automation is the fastest way for iOS and Android developers to share in-development apps with
                 others.</p>
-              <Button size="large">Get Started</Button>
+              <Link className="ant-btn ant-btn-lg" to='/sign-in'>Get Started</Link>
             </div>
           </div>
         </ScreenSlide>

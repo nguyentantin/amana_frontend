@@ -1,36 +1,37 @@
 import React from 'react'
 import _ from 'lodash'
+import QRCode from 'qrcode.react'
+import { AppleFilled, AndroidFilled } from '@ant-design/icons'
+import { Link } from 'react-router-dom'
+import { List, Avatar, Button, Tabs, Icon, Popover } from 'antd'
+import { action, computed, observable, get, toJS } from 'mobx'
+import { compose } from 'recompose'
+import { connect } from 'react-redux'
+import { observer } from 'mobx-react'
+import { withRouter } from 'react-router'
+import ProjectRequest from '../../api/Request/ProjectRequest'
+import projectReducer from '../../store/modules/project/reducers'
+import projectSaga from '../../store/modules/project/sagas'
+import roleReducer from '../../store/modules/role/reducers'
+import roleSaga from '../../store/modules/role/sagas'
+import { API_URL, PLATFORM_TYPE } from '../../config/constants'
+import { Flex } from '../../styles/utility'
+import { ShowIf } from '../../components/Utils'
+import { fetchExternalMembers } from '../../store/modules/project/actions'
+import { fetchRoles } from '../../store/modules/role/actions'
+import { getExternalMembers } from '../../store/modules/project/selectors'
+import { getRoles } from '../../store/modules/role/selectors'
+import { injectReducer, injectSaga } from '../../store'
 import {
   ListBuild,
   divImg,
-  divContainer,
+  Container,
   marginRight,
   hrStyle,
   iconStyle,
   SmallTitle,
   LinkDownload,
 } from './styled'
-import { List, Avatar, Button, Tabs, Icon, Popover } from 'antd'
-import { withRouter } from 'react-router'
-import { Link } from 'react-router-dom'
-import { observer } from 'mobx-react'
-import QRCode from 'qrcode.react'
-import { AppleFilled, AndroidFilled } from '@ant-design/icons'
-import { action, computed, observable, get, toJS } from 'mobx'
-import ProjectRequest from '../../api/Request/ProjectRequest'
-import { compose } from 'recompose'
-import { API_URL, PLATFORM_TYPE } from '../../config/constants'
-import { ShowIf } from '../../components/Utils'
-import { connect } from 'react-redux'
-import { injectReducer, injectSaga } from '../../store'
-import projectReducer from '../../store/modules/project/reducers'
-import roleReducer from '../../store/modules/role/reducers'
-import projectSaga from '../../store/modules/project/sagas'
-import roleSaga from '../../store/modules/role/sagas'
-import { getExternalMembers } from '../../store/modules/project/selectors'
-import { getRoles } from '../../store/modules/role/selectors'
-import { fetchExternalMembers } from '../../store/modules/project/actions'
-import { fetchRoles } from '../../store/modules/role/actions'
 
 const {TabPane} = Tabs
 
@@ -72,13 +73,13 @@ class ProjectDetail extends React.Component {
     const {match: {params}} = this.props
     this.getProject(params.projectId)
     this.props.fetchRoles()
-    this.props.fetchExternalMembers({id: this.props.match.params.projectId})
+    this.props.fetchExternalMembers({id: params.projectId})
   }
 
   render() {
     return (
-      <div className="container" style={divContainer}>
-        <div className="d-flex">
+      <Container>
+        <Flex flex='flex'>
           <div style={divImg}>
             <img src="https://via.placeholder.com/250x250.png" alt=""/>
           </div>
@@ -110,7 +111,7 @@ class ProjectDetail extends React.Component {
               </div>
             </ListBuild>
           </ShowIf>
-        </div>
+        </Flex>
         <hr style={hrStyle}/>
         <div>
           <h2>Activities <SmallTitle>Recent activities on this app.</SmallTitle></h2>
@@ -152,7 +153,7 @@ class ProjectDetail extends React.Component {
             </TabPane>
           </Tabs>
         </div>
-      </div>
+      </Container>
     )
   }
 }

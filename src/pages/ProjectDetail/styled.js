@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { container } from '../../styles/mixins'
 
 export const ListBuild = styled.div`
   display: flex;
@@ -10,13 +11,14 @@ export const ListBuild = styled.div`
   }
 `
 
+export const Container = styled.div`
+  padding-bottom: 40px;
+  ${container.centerBox}
+`
+
 export const divImg = {
   paddingRight: '40px',
   paddingBottom: '20px'
-}
-
-export const divContainer = {
-  paddingTop: '40px',
 }
 
 export const marginRight = {

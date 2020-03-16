@@ -1,7 +1,10 @@
 import React from 'react'
 import {List, Avatar, Button, Tabs, Icon} from 'antd'
 import { Link } from 'react-router-dom'
-import styled from "styled-components";
+import styled from 'styled-components'
+
+import { Flex } from '../../styles/utility'
+import { container } from '../../styles/mixins'
 
 const { TabPane } = Tabs;
 
@@ -48,13 +51,14 @@ const ListBuild = styled.div`
   }
 `
 
+const Container = styled.div`
+  padding-bottom: 40px;
+  ${container.centerBox}
+`
+
 const divImg = {
   paddingRight: '40px',
   paddingBottom: '20px'
-}
-
-const divContainer = {
-  paddingTop: '40px',
 }
 
 const hrStyle = {
@@ -73,8 +77,8 @@ const smallTitle = {
 class Apps extends React.Component {
   render() {
     return (
-      <div className="container" style={divContainer}>
-        <div className="d-flex">
+      <Container>
+        <Flex flex='flex'>
           <div style={divImg}>
             <img src="https://via.placeholder.com/250x250.png" alt=""/>
           </div>
@@ -85,7 +89,7 @@ class Apps extends React.Component {
             </div>
             <Button className="btn-right" shape="round" type="primary" size='large'>Build App</Button>
           </ListBuild>
-        </div>
+        </Flex>
         <hr style={hrStyle}/>
         <div>
           <h2>Activities <small style={smallTitle}>Recent activities on this app.</small></h2>
@@ -127,7 +131,7 @@ class Apps extends React.Component {
             </TabPane>
           </Tabs>
         </div>
-      </div>
+      </Container>
     )
   }
 }

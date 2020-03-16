@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { REQUEST_HEADER, API_URL } from '../config/constants'
 import './HttpInterceptors'
-import helpers from '../utils/helpers'
 
 export default class HttpRequest {
   constructor() {
