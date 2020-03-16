@@ -12,6 +12,14 @@ class AuthRequest extends HttpRequest {
   logout() {
     return this.get('/auth/logout')
   }
+
+  verifyEmail(params) {
+    return this.get('/auth/active-user', params)
+  }
+
+  sendMailVerify(params) {
+    return this.post('/mails/verify', params)
+  }
 }
 
 export default new AuthRequest()

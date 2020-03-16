@@ -6,6 +6,7 @@ import { withRouter } from 'react-router'
 import { observer } from 'mobx-react'
 import { action, observable } from 'mobx'
 import moment from 'moment'
+import _ from 'lodash'
 
 import { AInput } from '../../components/FormUI'
 import TimeTrackingRequest from '../../api/Request/TimeTrackingRequest'
@@ -37,6 +38,11 @@ const DatePickerField = ({input, meta, children, hasFeedback, label, layout, ...
   )
 }
 
+const VN_TIME = 'HH:mm'
+const VN_DATE = 'DD-MM-YYYY'
+const SERVER_DATE = 'YYYY-MM-DD'
+const formatDate = (time, format) => time ? moment(time).format(format) : ''
+
 @observer
 class TimeSheet extends React.Component {
   constructor(props) {
@@ -67,35 +73,77 @@ class TimeSheet extends React.Component {
         title: 'User Name',
         dataIndex: 'neoUser.username',
         key: 'name',
+        align: 'center'
       },
       {
         title: 'Time check-in',
         dataIndex: 'checkinAt',
-        key: 'age',
+        align: 'center',
+        render: text => <b>{formatDate(text, VN_TIME)}</b>
       },
       {
         title: 'Time check-out',
         dataIndex: 'checkoutAt',
-        key: 'address',
+        key: 'checkoutAt',
+        align: 'center',
+        render: text => <b>{formatDate(text, VN_TIME)}</b>
+      },
+      {
+        title: 'Time to work',
+        dataIndex: 'timeWorking',
+        key: 'timeWorking',
+        align: 'center',
+        render: (value, record) => <b>{this.timeToWork(record.checkinAt, record.checkoutAt)}</b>
       },
       {
         title: 'Date',
         dataIndex: 'createdAt',
-        key: 'date',
+        align: 'center',
+        render: text => <b>{formatDate(text, VN_DATE)}</b>
       },
     ]
   }
 
+  timeToWork(checkin, checkout) {
+    if (checkin && checkout) {
+      let timeWorked = 0
+      const checkinTime = moment(checkin)
+      const checkoutTime = moment(checkout)
+
+      const relaxTimeStart = moment(checkin, 'YYYY-MM-DD').set({hour: 12, minute: 0})
+
+      const relaxTimeEnd = moment(checkin, 'YYYY-MM-DD').set({hour: 13, minute: 0})
+
+      if (checkoutTime < relaxTimeStart) {
+        const worked = moment.duration(moment(checkoutTime).diff(checkinTime)).asHours()
+
+        return `${_.round(Number(worked), 1)} hours`
+      }
+
+      if (checkinTime < relaxTimeStart) {
+        timeWorked = timeWorked + moment.duration(moment(relaxTimeStart).diff(checkinTime)).asHours()
+      }
+
+      if (checkoutTime > relaxTimeEnd) {
+        timeWorked = timeWorked + moment.duration(moment(checkoutTime).diff(relaxTimeEnd)).asHours()
+      }
+
+      const hoursWorked = _.round(Number(timeWorked), 1)
+
+      return `${hoursWorked} hours`
+    }
+
+    return '0 hours'
+  }
+
   componentDidMount() {
     const initDate = {
-      date: moment()
+      date: moment().format(SERVER_DATE)
     }
 
     this.props.initialize(initDate)
 
-    this.fetchTimeSheet({
-      date: moment().format('YYYY-MM-DD')
-    })
+    this.fetchTimeSheet(initDate)
   }
 
   onSearch(values) {
@@ -112,7 +160,6 @@ class TimeSheet extends React.Component {
             label="Name"
             name="username"
             component={AInput}
-            value="TOAN"
             placeholder="Please enter user name"
           />
 
