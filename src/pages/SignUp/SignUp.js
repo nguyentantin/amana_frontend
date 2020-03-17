@@ -12,16 +12,11 @@ import reducer from '../../store/modules/auth/reducers'
 import saga from '../../store/modules/auth/sagas'
 import { ContainerRow, AuthButton } from '../SignIn/styled'
 import { required, email, confirmPassword } from '../../utils/validations'
-import { requestRegister } from '../../store/modules/auth/actions'
-import _ from 'lodash'
+import { requestLoginGoogle, requestRegister } from '../../store/modules/auth/actions'
 import ColStyle from '../../styles/colStyle'
+import { GOOGLE_CLIENT_ID } from '../../config/constants'
+import { error } from '../../utils/toastr'
 
-// clientId amana
-const clientId = "187145148024-95e46vqvkhfmc1i10075fjr0m0obbdga.apps.googleusercontent.com"
-
-const responseGoogle = (response) => {
-  console.log(response);
-}
 
 class SignUpPage extends React.PureComponent {
   constructor(props) {
@@ -34,6 +29,17 @@ class SignUpPage extends React.PureComponent {
     const {requestRegister} = this.props
 
     requestRegister(user)
+  }
+
+  googleSuccessCallback(response) {
+    const { requestLoginGoogle } = this.props
+    const { accessToken } = response
+
+    requestLoginGoogle({ accessToken })
+  }
+
+  googleFailureCallback(response) {
+    error('Cannot sign up with google')
   }
 
   render() {
@@ -53,10 +59,10 @@ class SignUpPage extends React.PureComponent {
             </Col>
             <ColStyle span={20} className="auth_button col-sm-10">
               <GoogleLogin
-                clientId={clientId}
+                clientId={GOOGLE_CLIENT_ID}
                 buttonText="Sign up with Google"
-                onSuccess={responseGoogle}
-                onFailure={responseGoogle}
+                onSuccess={response => this.googleSuccessCallback(response)}
+                onFailure={response => this.googleFailureCallback(response)}
                 cookiePolicy={'single_host_origin'}
                 className="ant-btn ant-btn-primary ant-btn-round ant-btn-lg btn-google"
               />
@@ -137,7 +143,7 @@ const mapStateToProps = state => {
 }
 
 export default compose(
-  connect(mapStateToProps, {requestRegister}),
+  connect(mapStateToProps, {requestRegister, requestLoginGoogle}),
   injectReducer({key: 'auth', reducer}),
   injectSaga({key: 'auth', saga}),
   reduxForm({

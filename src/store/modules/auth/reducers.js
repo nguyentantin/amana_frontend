@@ -5,7 +5,7 @@ import {
   REQUEST_REGISTER,
   REGISTER_SUCCESS,
   LOGIN_ERROR,
-  REGISTER_ERROR
+  REGISTER_ERROR, REQUEST_LOGIN_GOOGLE
 } from './constants'
 
 const initialState = {
@@ -34,6 +34,9 @@ const reducer = (state = initialState, action) =>
         draft.loading = false
         break
       case REGISTER_ERROR:
+        draft.loading = false
+        break
+      case REQUEST_LOGIN_GOOGLE:
         draft.loading = false
         break
       default:
