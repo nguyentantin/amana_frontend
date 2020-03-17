@@ -1,9 +1,10 @@
 import { call, takeLatest, put } from 'redux-saga/effects'
 import { push } from 'connected-react-router'
 import { stopSubmit, reset } from 'redux-form'
+import _ from 'lodash'
 
 import { error, success } from '../../../utils/toastr'
-import { REQUEST_LOGIN, REQUEST_REGISTER } from './constants'
+import { REQUEST_LOGIN, REQUEST_LOGIN_GOOGLE, REQUEST_REGISTER } from './constants'
 import { loginSuccess, loginError, registerError, registerSuccess } from './actions'
 import AuthRequest from '../../../api/Request/AuthRequest'
 import helpers from '../../../utils/helpers'
@@ -39,11 +40,28 @@ function* register(action) {
   }
 }
 
+function* loginGoogle(action) {
+  try {
+    const data = yield call(AuthRequest.googleAuthentication.bind(AuthRequest), action.tokenData)
+    helpers.saveToken(data)
+    helpers.saveAuthInfo(data.user)
+    yield put(loginSuccess(data))
+    yield put(push('/dashboard'))
+    success('Login is successfully!')
+  } catch (err) {
+    yield put(loginError())
+    yield put(reset('SignInForm'))
+    const message = _.get(err, 'error.message', 'Login is fail')
+    error(message)
+  }
+}
+
 /**
  * Root saga manages watcher lifecycle
  */
 export default function* authSagas() {
   yield takeLatest(REQUEST_LOGIN, login)
   yield takeLatest(REQUEST_REGISTER, register)
+  yield takeLatest(REQUEST_LOGIN_GOOGLE, loginGoogle)
 }
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
-import { Col, Card, Form, Button } from 'antd'
+import { Button, Card, Col, Form } from 'antd'
 import { Link } from 'react-router-dom'
 import GoogleLogin from 'react-google-login'
 import _ from 'lodash'
@@ -12,22 +12,17 @@ import injectReducer from '../../store/injectReducer'
 import injectSaga from '../../store/injectSaga'
 import reducer from '../../store/modules/auth/reducers'
 import saga from '../../store/modules/auth/sagas'
-import { ContainerRow, AuthButton } from './styled'
-import { required, email } from '../../utils/validations'
-import { requestLogin } from '../../store/modules/auth/actions'
+import { AuthButton, ContainerRow } from './styled'
+import { email, required } from '../../utils/validations'
+import { requestLogin, requestLoginGoogle } from '../../store/modules/auth/actions'
 import ColStyle from '../../styles/colStyle'
+import { GOOGLE_CLIENT_ID } from '../../config/constants'
+import { error } from '../../utils/toastr'
 
-// clientId amana
-const clientId = "187145148024-95e46vqvkhfmc1i10075fjr0m0obbdga.apps.googleusercontent.com"
-
-const responseGoogle = (response) => {
-  console.log(response);
-}
 
 class SignInPage extends React.PureComponent {
   constructor(props) {
     super(props)
-
     this.onSubmit = this.onSubmit.bind(this)
   }
 
@@ -35,6 +30,17 @@ class SignInPage extends React.PureComponent {
     const {requestLogin} = this.props
 
     requestLogin(user)
+  }
+
+  googleSuccessCallback(response) {
+    const { requestLoginGoogle } = this.props
+    const { accessToken } = response
+
+    requestLoginGoogle({ accessToken })
+  }
+
+  googleFailureCallback(response) {
+    error('Cannot sign in with google')
   }
 
   render() {
@@ -55,10 +61,10 @@ class SignInPage extends React.PureComponent {
             </Col>
             <ColStyle span={20} className="auth_button col-sm-10">
               <GoogleLogin
-                clientId={clientId}
+                clientId={GOOGLE_CLIENT_ID}
                 buttonText="Log in with Google"
-                onSuccess={responseGoogle}
-                onFailure={responseGoogle}
+                onSuccess={response => this.googleSuccessCallback(response)}
+                onFailure={response => this.googleFailureCallback(response)}
                 cookiePolicy={'single_host_origin'}
                 className="ant-btn ant-btn-primary ant-btn-round ant-btn-lg btn-google"
               />
@@ -124,7 +130,7 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = {requestLogin}
+const mapDispatchToProps = {requestLogin, requestLoginGoogle}
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),

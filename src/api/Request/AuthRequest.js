@@ -20,6 +20,10 @@ class AuthRequest extends HttpRequest {
   sendMailVerify(params) {
     return this.post('/mails/verify', params)
   }
+
+  googleAuthentication(body) {
+    return this.post('/auth/google/authentication', body)
+  }
 }
 
 export default new AuthRequest()
