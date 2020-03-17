@@ -5,7 +5,7 @@ import { DashboardLayout } from '../../components/Layout'
 import loadable from '../../utils/loadable'
 import LoadingPage from '../../components/LoadingPage/LoadingPage'
 
-const dashboard = loadable(() => import('../../pages/Dashboard'), {
+const dashboard = loadable(() => import('../../pages/Dashboard/Dashboard'), {
   fallback: <LoadingPage/>,
 })
 
@@ -17,7 +17,7 @@ const projectDetail = loadable(() => import('../../pages/ProjectDetail'), {
   fallback: <LoadingPage/>,
 })
 
-const TimeSheet = loadable(() => import('../../pages/TimeSheet'), {
+const TimeSheet = loadable(() => import('../../pages/TimeSheet/TimeSheet'), {
   fallback: <LoadingPage/>,
 })
 
