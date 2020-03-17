@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import { Col, Card, Form, Button } from 'antd'
 import GoogleLogin from 'react-google-login'
+import _ from 'lodash'
 
 import { AInput } from '../../components/FormUI'
 import injectReducer from '../../store/injectReducer'
