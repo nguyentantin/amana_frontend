@@ -102,24 +102,24 @@ const data = [
   },
 ];
 
-const { Search } = Input;
+const { Search } = Input
 
 // modal
 const formItemLayout = {
   labelCol: { span: 4 },
   wrapperCol: { span: 20 },
-};
+}
 
-const { Option } = Select;
+const { Option } = Select
 
-const { TextArea } = Input;
+const { TextArea } = Input
 
 const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
   // eslint-disable-next-line
   class extends React.Component {
     render() {
-      const { visible, onCancel, onCreate, form } = this.props;
-      const { getFieldDecorator } = form;
+      const { visible, onCancel, onCreate, form } = this.props
+      const { getFieldDecorator } = form
       return (
         <Modal
           visible={visible}
@@ -165,32 +165,32 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
 class DashboardPage extends React.Component {
   state = {
     visible: false,
-  };
+  }
 
   showModal = () => {
-    this.setState({ visible: true });
-  };
+    this.setState({ visible: true })
+  }
 
   handleCancel = () => {
-    this.setState({ visible: false });
-  };
+    this.setState({ visible: false })
+  }
 
   handleCreate = () => {
     const { form } = this.formRef.props;
     form.validateFields((err, values) => {
       if (err) {
-        return;
+        return
       }
 
-      console.log('Received values of form: ', values);
+      console.log('Received values of form: ', values)
       form.resetFields();
-      this.setState({ visible: false });
-    });
-  };
+      this.setState({ visible: false })
+    })
+  }
 
   saveFormRef = formRef => {
-    this.formRef = formRef;
-  };
+    this.formRef = formRef
+  }
   render() {
     return (
       <Container>
