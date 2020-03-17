@@ -79,7 +79,7 @@ const columns = [
       </span>
     ),
   },
-];
+]
 
 const data = [
   {
@@ -100,7 +100,7 @@ const data = [
     owner: 'dummy',
     daytime: '2020-03-16',
   },
-];
+]
 
 const { Search } = Input
 
@@ -157,10 +157,10 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
             </Form.Item>
           </Form>
         </Modal>
-      );
+      )
     }
   },
-);
+)
 
 class DashboardPage extends React.Component {
   state = {
@@ -176,14 +176,14 @@ class DashboardPage extends React.Component {
   }
 
   handleCreate = () => {
-    const { form } = this.formRef.props;
+    const { form } = this.formRef.props
     form.validateFields((err, values) => {
       if (err) {
         return
       }
 
       console.log('Received values of form: ', values)
-      form.resetFields();
+      form.resetFields()
       this.setState({ visible: false })
     })
   }
