@@ -13,6 +13,10 @@ const apps = loadable(() => import('../../pages/Apps'), {
   fallback: <LoadingPage/>,
 })
 
+const projects = loadable(() => import('../../pages/projects/projects'), {
+  fallback: <LoadingPage/>,
+})
+
 const projectDetail = loadable(() => import('../../pages/ProjectDetail'), {
   fallback: <LoadingPage/>,
 })
@@ -37,13 +41,19 @@ export default [
     requiredAuth: true
   },
   {
+    path: '/projects',
+    exact: true,
+    component: projects,
+    layout: DashboardLayout,
+    requiredAuth: true
+  },
+  {
     path: '/project/:projectId',
     exact: true,
     component: projectDetail,
     layout: DashboardLayout,
     requiredAuth: true
   },
-
   {
     path: '/time-sheets',
     exact: true,
