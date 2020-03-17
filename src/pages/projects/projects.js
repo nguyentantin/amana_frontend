@@ -191,6 +191,7 @@ class DashboardPage extends React.Component {
   saveFormRef = formRef => {
     this.formRef = formRef
   }
+
   render() {
     return (
       <Container>
