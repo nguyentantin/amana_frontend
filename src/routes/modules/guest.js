@@ -5,7 +5,7 @@ import { GuestLayout } from '../../components/Layout'
 import loadable from '../../utils/loadable'
 import LoadingPage from '../../components/LoadingPage/LoadingPage'
 
-const HomePage = loadable(() => import('../../pages/Home'), {
+const HomePage = loadable(() => import('../../pages/Home/Home'), {
   fallback: <LoadingPage/>,
 })
 

@@ -1,9 +1,11 @@
 import styled from 'styled-components'
 import { Row } from 'antd'
+import { container } from '../../styles/mixins'
 
 export const ContainerRow = styled(Row)`
   margin-top: 40px !important;
   display: flex !important;
+  ${container.centerBox}
   .row-two {
     display: flex !important;
     .ant-card {

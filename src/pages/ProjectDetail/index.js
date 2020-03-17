@@ -12,6 +12,8 @@ import ProjectRequest from '../../api/Request/ProjectRequest'
 import { compose } from 'recompose'
 import { API_URL, PLATFORM_TYPE } from '../../config/constants'
 import { ShowIf } from '../../components/Utils'
+import { Flex } from '../../styles/utility'
+import { container } from '../../styles/mixins'
 
 const { TabPane } = Tabs;
 
@@ -34,13 +36,14 @@ const ListBuild = styled.div`
   }
 `
 
+const Container = styled.div`
+  padding-bottom: 40px;
+  ${container.centerBox}
+`
+
 const divImg = {
   paddingRight: '40px',
   paddingBottom: '20px'
-}
-
-const divContainer = {
-  paddingTop: '40px',
 }
 
 const marginRight = {
@@ -100,8 +103,8 @@ class ProjectDetail extends React.Component {
 
   render() {
     return (
-      <div className="container" style={divContainer}>
-        <div className="d-flex">
+      <Container>
+        <Flex flex='flex'>
           <div style={divImg}>
             <img src="https://via.placeholder.com/250x250.png" alt=""/>
           </div>
@@ -132,7 +135,7 @@ class ProjectDetail extends React.Component {
               </div>
             </ListBuild>
           </ShowIf>
-        </div>
+        </Flex>
         <hr style={hrStyle}/>
         <div>
           <h2>Activities <SmallTitle>Recent activities on this app.</SmallTitle></h2>
@@ -174,7 +177,7 @@ class ProjectDetail extends React.Component {
             </TabPane>
           </Tabs>
         </div>
-      </div>
+      </Container>
     )
   }
 }

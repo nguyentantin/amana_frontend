@@ -2,34 +2,34 @@ import React from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
-import { Col, Card, Form, Button } from 'antd'
+import { Button, Card, Col, Form } from 'antd'
+import { Link } from 'react-router-dom'
 import GoogleLogin from 'react-google-login'
+import _ from 'lodash'
 
 import { AInput } from '../../components/FormUI'
 import injectReducer from '../../store/injectReducer'
 import injectSaga from '../../store/injectSaga'
 import reducer from '../../store/modules/auth/reducers'
 import saga from '../../store/modules/auth/sagas'
-import { ContainerRow, AuthButton } from './styled'
-import { required, email, confirmPassword } from '../../utils/validations'
-import { requestLoginGoogle, requestRegister } from '../../store/modules/auth/actions'
-import _ from 'lodash'
+import { AuthButton, ContainerRow } from './styled'
+import { email, required } from '../../utils/validations'
+import { requestLogin, requestLoginGoogle } from '../../store/modules/auth/actions'
 import ColStyle from '../../styles/colStyle'
 import { GOOGLE_CLIENT_ID } from '../../config/constants'
 import { error } from '../../utils/toastr'
 
 
-class SignUpPage extends React.PureComponent {
+class SignInPage extends React.PureComponent {
   constructor(props) {
     super(props)
-
     this.onSubmit = this.onSubmit.bind(this)
   }
 
   onSubmit(user) {
-    const {requestRegister} = this.props
+    const {requestLogin} = this.props
 
-    requestRegister(user)
+    requestLogin(user)
   }
 
   googleSuccessCallback(response) {
@@ -40,28 +40,29 @@ class SignUpPage extends React.PureComponent {
   }
 
   googleFailureCallback(response) {
-    error('Cannot sign up with google')
+    error('Cannot sign in with google')
   }
 
   render() {
     const {handleSubmit, loading} = this.props
 
     return (
-      <ContainerRow className="container">
+      <ContainerRow>
         <Col span={12}>
-          <h1 className="row-title">Create your account<br/>
-            <small>with Build Automation</small>
+          <h1 className="row-title">Log in<br/>
+            <small>to Build Automation</small>
           </h1>
+
           <AuthButton>
             <Col span={20} className="auth_button col-sm-10">
               <Button type="primary" shape="round" icon="github" size='large' disabled>
-                Sign up with GitHub
+                Log in with GitHub
               </Button>
             </Col>
             <ColStyle span={20} className="auth_button col-sm-10">
               <GoogleLogin
                 clientId={GOOGLE_CLIENT_ID}
-                buttonText="Sign up with Google"
+                buttonText="Log in with Google"
                 onSuccess={response => this.googleSuccessCallback(response)}
                 onFailure={response => this.googleFailureCallback(response)}
                 cookiePolicy={'single_host_origin'}
@@ -69,24 +70,16 @@ class SignUpPage extends React.PureComponent {
               />
             </ColStyle>
             <Col span={20} className="auth_button col-sm-10">
-              <Button type="primary" shape="round" size='large' icon='mail' disabled>
-                Sign up with Email
+              <Button type="primary" shape="round" size='large' disabled>
+                Log in with SAML Authentication
               </Button>
             </Col>
           </AuthButton>
         </Col>
+
         <Col span={12} className="row-two">
           <Card bordered={false}>
             <Form layout="vertical" onSubmit={handleSubmit(this.onSubmit)}>
-              <Field
-                label="Name"
-                name="name"
-                component={AInput}
-                type="text"
-                placeholder="Please enter your name"
-                size='large'
-                validate={[required]}
-              />
               <Field
                 label="Email"
                 name="email"
@@ -106,18 +99,11 @@ class SignUpPage extends React.PureComponent {
                 size='large'
                 validate={[required]}
               />
+              <div style={{textAlign: 'center', paddingLeft: '45px'}}>
+                <span style={{display: 'block', marginBottom: '15px'}}>
+                  <Link to='/'>Forgot your password?</Link>
+                </span>
 
-              <Field
-                label="Confirm Password"
-                name="password_confirm"
-                component={AInput}
-                type='password'
-                placeholder="Please enter password confirmation"
-                size='large'
-                validate={[required, confirmPassword]}
-              />
-
-              <div style={{textAlign: 'center', paddingLeft: '44px'}}>
                 <Button
                   style={{width: '300px'}}
                   shape="round"
@@ -126,8 +112,9 @@ class SignUpPage extends React.PureComponent {
                   htmlType="submit"
                   loading={loading}
                 >
-                  Sign-up
+                  Sign-In
                 </Button>
+                <Link to='/sign-up' style={{display: 'block', marginTop: '15px'}}>No account? Sign up here.</Link>
               </div>
             </Form>
           </Card>
@@ -143,12 +130,14 @@ const mapStateToProps = state => {
   }
 }
 
+const mapDispatchToProps = {requestLogin, requestLoginGoogle}
+
 export default compose(
-  connect(mapStateToProps, {requestRegister, requestLoginGoogle}),
+  connect(mapStateToProps, mapDispatchToProps),
   injectReducer({key: 'auth', reducer}),
   injectSaga({key: 'auth', saga}),
   reduxForm({
-    form: 'SignUpForm'
+    form: 'SignInForm'
   })
-)(SignUpPage)
+)(SignInPage)
 

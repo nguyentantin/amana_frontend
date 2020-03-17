@@ -1,6 +1,7 @@
 import React from 'react'
 import { Col, Row } from 'antd'
 import { compose } from 'redux'
+import styled from 'styled-components'
 
 import ListProject from './ListProject'
 import ListAppBuild from './ListAppBuild'
@@ -12,10 +13,12 @@ import _ from 'lodash'
 import { connect } from 'react-redux'
 import { fetchAppBuilds, fetchProject } from './store/actions'
 import { API_URL, PLATFORM_TYPE } from '../../config/constants'
+import { container } from '../../styles/mixins'
 
-const divContainer = {
-  paddingTop: '40px',
-}
+const Container = styled.div`
+  padding-top: 40px;
+  ${container.centerBox}
+`
 
 class DashboardPage extends React.Component {
   componentDidMount () {
@@ -36,7 +39,7 @@ class DashboardPage extends React.Component {
 
   render() {
     return (
-      <div className="container" style={divContainer}>
+      <Container>
         <Row gutter={20}>
           <Col span={6}>
             <div>
@@ -50,7 +53,7 @@ class DashboardPage extends React.Component {
             <ListAppBuild data={this.props.appBuilds}/>
           </Col>
         </Row>
-      </div>
+      </Container>
     )
   }
 }
