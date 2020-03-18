@@ -4,7 +4,7 @@ import { DashboardLayout } from '../../components/Layout'
 import loadable from '../../utils/loadable'
 import LoadingPage from '../../components/LoadingPage/LoadingPage'
 
-const projectList = loadable(() => import('../../pages/projects/ProjectList'), {
+const ProjectList = loadable(() => import('../../pages/ProjectList/ProjectList'), {
   fallback: <LoadingPage/>,
 })
 
@@ -12,7 +12,7 @@ export default [
   {
     path: '/projects',
     exact: true,
-    component: projectList,
+    component: ProjectList,
     layout: DashboardLayout,
     requiredAuth: true
   },

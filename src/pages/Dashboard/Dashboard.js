@@ -60,7 +60,7 @@ class DashboardPage extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    projects: _.get(state, 'dashboard.projects', []),
+    projects: _.get(state, 'dashboard.ProjectList', []),
     appBuilds: _.get(state, 'dashboard.appBuilds', []),
   }
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Divider, Table, Progress, Icon, Radio, Input, Button } from 'antd'
+import { Divider, Table, Progress, Icon, Input, Button } from 'antd'
 import { Link } from 'react-router-dom'
 
 import { Flex } from '../../styles/utility'
@@ -10,7 +10,12 @@ const columns = [
   {
     dataIndex: 'name',
     key: 'name',
-    render: text => <Flex flex='flex'><StyleAvatar mr={2} shape="square" size="large" icon="user" /><div><div>Lorem</div>{text}</div></Flex>,
+    render: text => <Flex flex='flex'><StyleAvatar mr={2} shape="square" size="large" icon="user"/>
+      <div>
+        <div>Lorem</div>
+        {text}
+      </div>
+    </Flex>,
   },
   {
     dataIndex: 'owner',
@@ -38,7 +43,7 @@ const columns = [
     width: 200,
     render: () => (
       <span>
-        <Progress percent={60} />
+        <Progress percent={60}/>
       </span>
     ),
   },
@@ -48,8 +53,8 @@ const columns = [
     render: () => (
       <span>
         <Link to='/'>Lorem</Link>
-        <Divider type="vertical" />
-        <Link to='/' className="ant-dropdown-link">Lorem <Icon type="down" /></Link>
+        <Divider type="vertical"/>
+        <Link to='/' className="ant-dropdown-link">Lorem <Icon type="down"/></Link>
       </span>
     ),
   },
@@ -76,7 +81,7 @@ const data = [
   },
 ]
 
-const { Search } = Input
+const {Search} = Input
 
 class ProjectListPage extends React.Component {
   constructor(props) {
@@ -87,15 +92,15 @@ class ProjectListPage extends React.Component {
   }
 
   showModal = () => {
-    this.setState({ visible: true })
+    this.setState({visible: true})
   }
 
   handleCancel = () => {
-    this.setState({ visible: false })
+    this.setState({visible: false})
   }
 
   handleCreate = () => {
-      this.setState({ visible: false })
+    this.setState({visible: false})
   }
 
   render() {
@@ -103,27 +108,22 @@ class ProjectListPage extends React.Component {
       <StyleContainer>
         <StyleCard p={2}>
           <StyleHeader>
-            <h2>Lorem</h2>
+            <h2>Projects</h2>
             <div>
-              <Radio.Group defaultValue="a" buttonStyle="solid">
-                <Radio.Button value="a">Hangzhou</Radio.Button>
-                <Radio.Button value="b">Shanghai</Radio.Button>
-                <Radio.Button value="c">Beijing</Radio.Button>
-              </Radio.Group>
               <Search
-                placeholder="input search text"
+                placeholder="Search project name"
                 onSearch={value => console.log(value)}
-                style={{ width: 200, marginLeft: '10px' }}
+                style={{width: 200, marginLeft: '10px'}}
               />
             </div>
           </StyleHeader>
-          <Button type="dashed" block onClick={this.showModal}><Icon type="plus" />Open Modal</Button>
+          <Button type="dashed" block onClick={this.showModal}><Icon type="plus"/>Add</Button>
           <ModalCreateProject
             visible={this.state.visible}
             onCancel={this.handleCancel}
             onCreate={this.handleCreate}
           />
-          <Table columns={columns} dataSource={data} />,
+          <Table columns={columns} dataSource={data}/>,
         </StyleCard>
       </StyleContainer>
     )
