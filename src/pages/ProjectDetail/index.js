@@ -6,22 +6,13 @@ import { Link } from 'react-router-dom'
 import { List, Avatar, Button, Tabs, Icon, Popover } from 'antd'
 import { action, computed, observable, get, toJS } from 'mobx'
 import { compose } from 'recompose'
-import { connect } from 'react-redux'
 import { observer } from 'mobx-react'
 import { withRouter } from 'react-router'
 import ProjectRequest from '../../api/Request/ProjectRequest'
-import projectReducer from '../../store/modules/project/reducers'
-import projectSaga from '../../store/modules/project/sagas'
-import roleReducer from '../../store/modules/role/reducers'
-import roleSaga from '../../store/modules/role/sagas'
 import { API_URL, PLATFORM_TYPE } from '../../config/constants'
 import { Flex } from '../../styles/utility'
 import { ShowIf } from '../../components/Utils'
-import { fetchExternalMembers } from '../../store/modules/project/actions'
-import { fetchRoles } from '../../store/modules/role/actions'
-import { getExternalMembers } from '../../store/modules/project/selectors'
-import { getRoles } from '../../store/modules/role/selectors'
-import { injectReducer, injectSaga } from '../../store'
+
 import {
   ListBuild,
   divImg,
@@ -32,6 +23,7 @@ import {
   SmallTitle,
   LinkDownload,
 } from './styled'
+import { RoleManagerModal } from './components/RoleManagerModal'
 
 const {TabPane} = Tabs
 
@@ -48,6 +40,13 @@ const data = [
 class ProjectDetail extends React.Component {
   @observable projectDetail = {}
   @observable loading = false
+  @observable activeRoleManagerModal = false
+
+  constructor(props) {
+    super(props);
+
+    this.toggleRoleManagerModal = this.toggleRoleManagerModal.bind(this)
+  }
 
   @action
   getProject(projectId) {
@@ -72,8 +71,11 @@ class ProjectDetail extends React.Component {
   componentDidMount() {
     const {match: {params}} = this.props
     this.getProject(params.projectId)
-    this.props.fetchRoles()
-    this.props.fetchExternalMembers({id: params.projectId})
+  }
+
+  @action
+  toggleRoleManagerModal() {
+    this.activeRoleManagerModal = !this.activeRoleManagerModal
   }
 
   render() {
@@ -91,10 +93,12 @@ class ProjectDetail extends React.Component {
                 <p>Platform: {this.isAndroid ? <AndroidFilled style={iconStyle}/> :
                   <AppleFilled style={iconStyle}/>}</p>
                 <p>Author: {this.projectDetail.author ? this.projectDetail.author.name : ''}</p>
+
                 <Button className="btn-right" type="primary" size='large' style={marginRight}>
                   <Icon type="download"/>
                   <LinkDownload href={this.downloadUrl} download> Download </LinkDownload>
                 </Button>
+
                 <Popover
                   trigger="click"
                   placement="bottom"
@@ -102,12 +106,16 @@ class ProjectDetail extends React.Component {
                     <QRCode value={this.downloadUrl}/>
                   }
                 >
-                  <Button className="btn-right" type="primary" size='large'>
+                  <Button className="btn-right" type="primary" size='large' style={marginRight}>
                     <Icon type="qrcode"/>
                     QR Code
                   </Button>
                 </Popover>
 
+                <Button className="btn-right" type="primary" size='large' onClick={this.toggleRoleManagerModal}>
+                  <Icon type="user-add"/>
+                  Roles Manager
+                </Button>
               </div>
             </ListBuild>
           </ShowIf>
@@ -153,26 +161,12 @@ class ProjectDetail extends React.Component {
             </TabPane>
           </Tabs>
         </div>
+        <RoleManagerModal visible={this.activeRoleManagerModal} onCancel={this.toggleRoleManagerModal} onOk={this.toggleRoleManagerModal}/>
       </Container>
     )
   }
 }
 
-const mapStateToProps = state => ({
-  externalMembers: getExternalMembers(state),
-  roles: getRoles(state),
-})
-
-const mapDispatchToProps = {
-  fetchExternalMembers,
-  fetchRoles,
-}
-
 export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  injectReducer({key: 'project', reducer: projectReducer}),
-  injectReducer({key: 'role', reducer: roleReducer}),
-  injectSaga({key: 'project', saga: projectSaga}),
-  injectSaga({key: 'role', saga: roleSaga}),
   withRouter,
 )(ProjectDetail)

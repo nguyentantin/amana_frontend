@@ -1,7 +1,7 @@
+import _ from 'lodash'
 import axios from 'axios'
 import history from '../utils/history'
 import helpers from '../utils/helpers'
-import _ from 'lodash'
 
 axios.interceptors.request.use(
   (config) => {

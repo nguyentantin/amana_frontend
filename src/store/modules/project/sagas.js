@@ -9,6 +9,7 @@ function* fetchExternalMembers(action) {
     const { data } = yield call(ProjectRequest.fetchExternalMembers.bind(ProjectRequest), action.project.id)
     yield put(fetchExternalMembersSuccess(data))
   } catch (e) {
+    console.log(e)
     error('Fetched external members failed!')
   }
 }
