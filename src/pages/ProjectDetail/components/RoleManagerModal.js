@@ -1,38 +1,36 @@
 import React from 'react'
 import { Button, Icon, Modal } from 'antd'
 import AssignMemberModal from './AssignMemberModal'
-import { action, observable } from 'mobx'
+import store from '../store'
+import { observer } from 'mobx-react'
 
+@observer
 class RoleManagerModal extends React.Component {
-  @observable activeAssignMemberModal = false
-
-  constructor(props) {
-    super(props);
-    this.toggleAssignMemberModal = this.toggleAssignMemberModal.bind(this)
+  handleActiveAssignModal() {
+    store.toggleActiveAssignMemberModal()
   }
 
-  @action
-  toggleAssignMemberModal() {
-    this.activeAssignMemberModal = !this.activeAssignMemberModal
+  onCancel() {
+    store.toggleActiveRoleManagerModal()
+  }
+
+  onOk() {
+    store.toggleActiveRoleManagerModal()
   }
 
   render() {
     return (
       <Modal
-        visible={this.props.visible}
-        onCancel={this.props.onCancel}
-        onOk={this.props.onOk}
+        visible={store.activeRoleManagerModal}
+        onCancel={this.onCancel}
+        onOk={this.onOk}
         closable={false}
       >
-        <Button className="btn-right" type="primary" size='large' onClick={this.toggleAssignMemberModal}>
+        <Button className="btn-right" type="primary" size='large' onClick={this.handleActiveAssignModal}>
           <Icon type="user-add"/>
-          Assign Member
+          Members
         </Button>
-        <AssignMemberModal
-          visible={this.activeAssignMemberModal}
-          onCancel={this.toggleAssignMemberModal}
-          onOk={this.toggleAssignMemberModal}
-        />
+        <AssignMemberModal/>
       </Modal>
     )
   }

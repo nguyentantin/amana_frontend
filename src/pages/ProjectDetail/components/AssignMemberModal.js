@@ -12,29 +12,17 @@ import { getListMemberOptions } from '../../../store/modules/project/selectors'
 import { getRoleOptions } from '../../../store/modules/role/selectors'
 import { injectReducer, injectSaga } from '../../../store'
 import { withRouter } from 'react-router'
+import store from '../store'
+import { observer } from 'mobx-react'
 
+@observer
 class AssignMemberModal extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      memberId: null,
-      roleId: null
-    }
-    this.handleSelectMember = this.handleSelectMember.bind(this)
-    this.handleSelectRole = this.handleSelectRole.bind(this)
-  }
-
   handleSelectMember(memberId) {
-    this.setState({
-      memberId: memberId
-    })
+    store.setMember('memberId', memberId)
   }
 
   handleSelectRole(roleId) {
-    this.setState({
-      roleId: roleId
-    })
+    store.setMember('roleId', roleId)
   }
 
   componentDidMount() {
@@ -43,15 +31,26 @@ class AssignMemberModal extends React.Component {
     this.props.fetchExternalMembers({id: Number(params.projectId)})
   }
 
+  onCancel() {
+    store.toggleActiveAssignMemberModal()
+  }
+
+  onOk() {
+    store.toggleActiveAssignMemberModal()
+  }
+
   render() {
     return (
       <Modal
-        visible={this.props.visible}
+        visible={store.activeAssignMemberModal}
         maskClosable={false}
         width={600}
         closable={false}
-        onCancel={this.props.onCancel}
-        onOk={this.props.onOk}
+        onCancel={this.onCancel}
+        onOk={this.onOk}
+        okButtonProps={{
+          disabled: !store.validateMember
+        }}
       >
         <div style={{marginBottom: 30}}>
           <Form
@@ -65,8 +64,7 @@ class AssignMemberModal extends React.Component {
               >
                 <Select
                   style={{width: 200}}
-                  key={'select member'}
-                  label={'select member label'}
+                  key={'memberId'}
                   showSearch
                   filterOption={(input, option) => {
                     return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -84,8 +82,7 @@ class AssignMemberModal extends React.Component {
               >
                 <Select
                   style={{width: 200}}
-                  key={'select role'}
-                  label={'select role'}
+                  key={'roleId'}
                   onChange={this.handleSelectRole}
                 >{this.props.listRoleOptions}
                 </Select>

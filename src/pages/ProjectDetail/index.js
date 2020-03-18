@@ -20,6 +20,7 @@ import { Flex } from '../../styles/utility'
 import { ShowIf } from '../../components/Utils'
 import ListAppBuild  from './ListAppBuild'
 import RoleManagerModal from './components/RoleManagerModal'
+import store from './store'
 import {
   ListBuild,
   divImg,
@@ -57,12 +58,10 @@ class ProjectDetail extends React.Component {
     appBuilds: []
   }
   @observable loading = false
-  @observable activeRoleManagerModal = false
 
   constructor(props) {
     super(props);
-
-    this.toggleRoleManagerModal = this.toggleRoleManagerModal.bind(this)
+    this.handleActiveRoleManagerModal = this.handleActiveRoleManagerModal.bind(this)
   }
 
   @action
@@ -94,9 +93,8 @@ class ProjectDetail extends React.Component {
     return _.filter(this.projectDetail.appBuilds, (item) => item.env === envKey )
   }
 
-  @action
-  toggleRoleManagerModal() {
-    this.activeRoleManagerModal = !this.activeRoleManagerModal
+  handleActiveRoleManagerModal() {
+    store.toggleActiveRoleManagerModal()
   }
 
   render() {
@@ -135,8 +133,8 @@ class ProjectDetail extends React.Component {
                   </Button>
                 </Popover>
 
-                <Button className="btn-right" type="primary" size='large' onClick={this.toggleRoleManagerModal}>
-                  <Icon type="user-add"/>
+                <Button className="btn-right" type="primary" size='large' onClick={this.handleActiveRoleManagerModal}>
+                  <Icon type="form"/>
                   Roles Manager
                 </Button>
               </div>
@@ -167,11 +165,7 @@ class ProjectDetail extends React.Component {
             }
           </Tabs>
         </div>
-        <RoleManagerModal
-          visible={this.activeRoleManagerModal}
-          onCancel={this.toggleRoleManagerModal}
-          onOk={this.toggleRoleManagerModal}
-        />
+        <RoleManagerModal />
       </Container>
     )
   }
