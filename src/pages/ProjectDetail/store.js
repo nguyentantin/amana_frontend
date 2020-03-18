@@ -5,11 +5,11 @@ class Store {
   @observable activeAssignMemberModal = false
   @observable member = {
     memberId: null,
-    roleId: null
+    roleId: null,
   }
 
-  @computed get
-  validateMember() {
+  @computed
+  get validateMember() {
     return !!(this.member.memberId && this.member.roleId)
   }
 
@@ -30,6 +30,12 @@ class Store {
     if (keys.indexOf(key) > -1) {
       this.member[key] = value
     }
+  }
+
+  @action
+  resetMember() {
+    this.member.memberId = null
+    this.member.roleId = null
   }
 }
 

@@ -6,7 +6,7 @@ import projectReducer from '../../../store/modules/project/reducers'
 import projectSaga from '../../../store/modules/project/sagas'
 import roleReducer from '../../../store/modules/role/reducers'
 import roleSaga from '../../../store/modules/role/sagas'
-import { fetchExternalMembers } from '../../../store/modules/project/actions'
+import { fetchExternalMembers, requestAssignMembers } from '../../../store/modules/project/actions'
 import { fetchRoles } from '../../../store/modules/role/actions'
 import { getListMemberOptions } from '../../../store/modules/project/selectors'
 import { getRoleOptions } from '../../../store/modules/role/selectors'
@@ -17,6 +17,10 @@ import { observer } from 'mobx-react'
 
 @observer
 class AssignMemberModal extends React.Component {
+  constructor(props) {
+    super(props);
+    this.onOk = this.onOk.bind(this)
+  }
   handleSelectMember(memberId) {
     store.setMember('memberId', memberId)
   }
@@ -32,10 +36,16 @@ class AssignMemberModal extends React.Component {
   }
 
   onCancel() {
+    store.resetMember()
     store.toggleActiveAssignMemberModal()
   }
 
   onOk() {
+    this.props.requestAssignMembers({
+      id: this.props.match.params.projectId,
+      members: [{...store.member}]
+    })
+    store.resetMember()
     store.toggleActiveAssignMemberModal()
   }
 
@@ -66,6 +76,7 @@ class AssignMemberModal extends React.Component {
                   style={{width: 200}}
                   key={'memberId'}
                   showSearch
+                  value={store.member.memberId}
                   filterOption={(input, option) => {
                     return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                   }}
@@ -83,6 +94,7 @@ class AssignMemberModal extends React.Component {
                 <Select
                   style={{width: 200}}
                   key={'roleId'}
+                  value={store.member.roleId}
                   onChange={this.handleSelectRole}
                 >{this.props.listRoleOptions}
                 </Select>
@@ -103,6 +115,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   fetchExternalMembers,
   fetchRoles,
+  requestAssignMembers,
 }
 
 export default compose(
