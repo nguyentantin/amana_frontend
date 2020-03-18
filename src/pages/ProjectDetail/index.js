@@ -1,30 +1,29 @@
 import React from 'react'
 import _ from 'lodash'
-import { List, Avatar, Button, Tabs, Icon, Popover } from 'antd'
+import { Button, Icon, Popover, Tabs } from 'antd'
 import { withRouter } from 'react-router'
-import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { observer } from 'mobx-react'
 import QRCode from 'qrcode.react'
-import { AppleFilled, AndroidFilled } from '@ant-design/icons'
-import { action, computed, observable, get, toJS } from 'mobx'
+import {
+  AndroidFilled,
+  AppleFilled,
+  BranchesOutlined,
+  CodeOutlined,
+  FundProjectionScreenOutlined
+} from '@ant-design/icons'
+import { action, computed, get, observable, toJS } from 'mobx'
+
 import ProjectRequest from '../../api/Request/ProjectRequest'
 import { compose } from 'recompose'
 import { API_URL, PLATFORM_TYPE } from '../../config/constants'
 import { ShowIf } from '../../components/Utils'
 import { Flex } from '../../styles/utility'
 import { container } from '../../styles/mixins'
+import ListAppBuild  from './ListAppBuild'
+
 
 const { TabPane } = Tabs;
-
-const data = [
-  {
-    title: 'Ant Design Title 1',
-  },
-  {
-    title: 'Ant Design Title 2',
-  },
-]
 
 const ListBuild = styled.div`
   display: flex;
@@ -71,9 +70,29 @@ const LinkDownload = styled.a`
   color: white;
 `
 
+const listBuildEnv = [
+  {
+    envKey: 1,
+    envName: 'Develop',
+    icon: <CodeOutlined />,
+  },
+  {
+    envKey: 2,
+    envName: 'Staging ',
+    icon: <BranchesOutlined />,
+  },
+  {
+    envKey: 3,
+    envName: 'Production',
+    icon: <FundProjectionScreenOutlined />,
+  },
+]
+
 @observer
 class ProjectDetail extends React.Component {
-  @observable projectDetail = {}
+  @observable projectDetail = {
+    appBuilds: []
+  }
   @observable loading = false
 
   @action
@@ -99,6 +118,10 @@ class ProjectDetail extends React.Component {
   componentDidMount () {
     const { match: {params} } = this.props
     this.getProject(params.projectId)
+  }
+
+  getDataByEnv(envKey) {
+    return _.filter(this.projectDetail.appBuilds, (item) => item.env === envKey )
   }
 
   render() {
@@ -140,41 +163,24 @@ class ProjectDetail extends React.Component {
         <div>
           <h2>Activities <SmallTitle>Recent activities on this app.</SmallTitle></h2>
           <Tabs defaultActiveKey="1">
-            <TabPane
-              tab={
-                <span>
-                  <Icon type="apple" />
-                  Tab 1
-                </span>
-              }
-              key="1"
-            >
-              <List
-                itemLayout="horizontal"
-                dataSource={data}
-                renderItem={item => (
-                  <List.Item>
-                    <List.Item.Meta
-                      avatar={<Avatar size={55} icon="user" />}
-                      title={<Link to='/'>{item.title}</Link>}
-                      description="By si-01"
+            {
+              listBuildEnv.map((item, index) => {
+                return (
+                  <TabPane
+                    tab={
+                      <span>
+                        {item.icon} {item.envName}
+                      </span>
+                    }
+                    key={item.envKey}
+                  >
+                    <ListAppBuild
+                        data={this.getDataByEnv(item.envKey)}
                     />
-                    <Link to='/'>Run</Link>
-                  </List.Item>
-                )}
-              />
-            </TabPane>
-            <TabPane
-              tab={
-                <span>
-                  <Icon type="android" />
-                  Tab 2
-                </span>
-              }
-              key="2"
-            >
-              Tab 2
-            </TabPane>
+                  </TabPane>
+                )
+              })
+            }
           </Tabs>
         </div>
       </Container>
