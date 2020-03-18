@@ -11,6 +11,7 @@ import AppLogo from '../../assets/images/App_logo.png'
 import { LogoWrapper } from './styled'
 import { isEmpty } from 'lodash'
 import helpers from '../../utils/helpers'
+import { DOCS_URL } from '../../config/constants'
 
 const {Header, Content} = Layout
 
@@ -120,7 +121,9 @@ class GuestLayout extends PureComponent {
             <div>
               <Menu mode="horizontal" style={{lineHeight: '64px'}} defaultSelectedKeys={[location.pathname]}>
                 <Menu.Item key='/'><Link to='/'>Features</Link></Menu.Item>
-                <Menu.Item key='/develop-tools'><Link to='/develop-tools'>Developer Tools</Link></Menu.Item>
+                <Menu.Item key='/develop-tools'>
+                  <a href={DOCS_URL}>Developer Tools</a>
+                </Menu.Item>
                 <Menu.Item key='/support'><Link to='/support'>Support</Link></Menu.Item>
 
                 {
