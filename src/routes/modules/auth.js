@@ -4,11 +4,11 @@ import loadable from '../../utils/loadable'
 import LoadingPage from '../../components/LoadingPage/LoadingPage'
 import { GuestLayout } from '../../components/Layout'
 
-const SignInPage = loadable(() => import('../../pages/SignIn'), {
+const SignInPage = loadable(() => import('../../pages/SignIn/SignIn'), {
   fallback: <LoadingPage/>,
 })
 
-const SignUpPage = loadable(() => import('../../pages/SignUp'), {
+const SignUpPage = loadable(() => import('../../pages/SignUp/SignUp'), {
   fallback: <LoadingPage/>,
 })
 

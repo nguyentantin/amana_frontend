@@ -1,18 +1,25 @@
+import QRCode from 'qrcode.react'
 import React from 'react'
 import _ from 'lodash'
-import QRCode from 'qrcode.react'
-import { AppleFilled, AndroidFilled } from '@ant-design/icons'
-import { Link } from 'react-router-dom'
-import { List, Avatar, Button, Tabs, Icon, Popover } from 'antd'
+import { Button, Tabs, Icon, Popover } from 'antd'
 import { action, computed, observable, get, toJS } from 'mobx'
 import { compose } from 'recompose'
 import { observer } from 'mobx-react'
 import { withRouter } from 'react-router'
+import {
+  AndroidFilled,
+  AppleFilled,
+  BranchesOutlined,
+  CodeOutlined,
+  FundProjectionScreenOutlined
+} from '@ant-design/icons'
+
 import ProjectRequest from '../../api/Request/ProjectRequest'
 import { API_URL, PLATFORM_TYPE } from '../../config/constants'
 import { Flex } from '../../styles/utility'
 import { ShowIf } from '../../components/Utils'
-
+import ListAppBuild  from './ListAppBuild'
+import RoleManagerModal from './components/RoleManagerModal'
 import {
   ListBuild,
   divImg,
@@ -23,22 +30,32 @@ import {
   SmallTitle,
   LinkDownload,
 } from './styled'
-import { RoleManagerModal } from './components/RoleManagerModal'
 
 const {TabPane} = Tabs
 
-const data = [
+const listBuildEnv = [
   {
-    title: 'Ant Design Title 1',
+    envKey: 1,
+    envName: 'Develop',
+    icon: <CodeOutlined />,
   },
   {
-    title: 'Ant Design Title 2',
+    envKey: 2,
+    envName: 'Staging ',
+    icon: <BranchesOutlined />,
+  },
+  {
+    envKey: 3,
+    envName: 'Production',
+    icon: <FundProjectionScreenOutlined />,
   },
 ]
 
 @observer
 class ProjectDetail extends React.Component {
-  @observable projectDetail = {}
+  @observable projectDetail = {
+    appBuilds: []
+  }
   @observable loading = false
   @observable activeRoleManagerModal = false
 
@@ -73,6 +90,10 @@ class ProjectDetail extends React.Component {
     this.getProject(params.projectId)
   }
 
+  getDataByEnv(envKey) {
+    return _.filter(this.projectDetail.appBuilds, (item) => item.env === envKey )
+  }
+
   @action
   toggleRoleManagerModal() {
     this.activeRoleManagerModal = !this.activeRoleManagerModal
@@ -90,8 +111,10 @@ class ProjectDetail extends React.Component {
               <div className="content-left">
                 <h3>Project Name: {this.projectDetail.name}</h3>
                 <p>Descriptions: {this.projectDetail.description}</p>
-                <p>Platform: {this.isAndroid ? <AndroidFilled style={iconStyle}/> :
-                  <AppleFilled style={iconStyle}/>}</p>
+                <p>Platform: {this.isAndroid
+                    ? <AndroidFilled style={iconStyle}/>
+                    : <AppleFilled style={iconStyle}/>}
+                </p>
                 <p>Author: {this.projectDetail.author ? this.projectDetail.author.name : ''}</p>
 
                 <Button className="btn-right" type="primary" size='large' style={marginRight}>
@@ -124,44 +147,31 @@ class ProjectDetail extends React.Component {
         <div>
           <h2>Activities <SmallTitle>Recent activities on this app.</SmallTitle></h2>
           <Tabs defaultActiveKey="1">
-            <TabPane
-              tab={
-                <span>
-                  <Icon type="apple"/>
-                  Tab 1
-                </span>
-              }
-              key="1"
-            >
-              <List
-                itemLayout="horizontal"
-                dataSource={data}
-                renderItem={item => (
-                  <List.Item>
-                    <List.Item.Meta
-                      avatar={<Avatar size={55} icon="user"/>}
-                      title={<Link to='/'>{item.title}</Link>}
-                      description="By si-01"
+            {
+              listBuildEnv.map((item, index) => {
+                return (
+                  <TabPane
+                    tab={
+                      <span>
+                        {item.icon} {item.envName}
+                      </span>
+                    }
+                    key={item.envKey}
+                  >
+                    <ListAppBuild
+                        data={this.getDataByEnv(item.envKey)}
                     />
-                    <Link to='/'>Run</Link>
-                  </List.Item>
-                )}
-              />
-            </TabPane>
-            <TabPane
-              tab={
-                <span>
-                  <Icon type="android"/>
-                  Tab 2
-                </span>
-              }
-              key="2"
-            >
-              Tab 2
-            </TabPane>
+                  </TabPane>
+                )
+              })
+            }
           </Tabs>
         </div>
-        <RoleManagerModal visible={this.activeRoleManagerModal} onCancel={this.toggleRoleManagerModal} onOk={this.toggleRoleManagerModal}/>
+        <RoleManagerModal
+          visible={this.activeRoleManagerModal}
+          onCancel={this.toggleRoleManagerModal}
+          onOk={this.toggleRoleManagerModal}
+        />
       </Container>
     )
   }

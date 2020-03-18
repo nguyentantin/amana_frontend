@@ -1,5 +1,9 @@
 const API_URL = process.env.REACT_APP_BASE_API_URL || 'http://localhost'
 
+const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID
+
+const DOCS_URL = process.env.REACT_APP_DOCS_URL
+
 const REQUEST_HEADER = {
   'Content-Type': 'application/json',
   'Accept': 'application/json',
@@ -50,4 +54,6 @@ export {
   GOOGLE_WEB_FONT,
   GOOGLE_WEB_FONT_STATUS,
   PLATFORM_TYPE,
+  GOOGLE_CLIENT_ID,
+  DOCS_URL
 }

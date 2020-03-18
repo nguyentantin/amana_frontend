@@ -3,7 +3,7 @@ import { Button, Icon, Modal } from 'antd'
 import AssignMemberModal from './AssignMemberModal'
 import { action, observable } from 'mobx'
 
-export class RoleManagerModal extends React.Component {
+class RoleManagerModal extends React.Component {
   @observable activeAssignMemberModal = false
 
   constructor(props) {
@@ -14,7 +14,6 @@ export class RoleManagerModal extends React.Component {
   @action
   toggleAssignMemberModal() {
     this.activeAssignMemberModal = !this.activeAssignMemberModal
-    console.log(this.activeAssignMemberModal)
   }
 
   render() {
@@ -38,3 +37,5 @@ export class RoleManagerModal extends React.Component {
     )
   }
 }
+
+export default RoleManagerModal
