@@ -8,8 +8,8 @@ import { StyleLabel } from './styled'
 const { Option } = Select
 
 class ModalCreateProject extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.onSubmit = this.onSubmit.bind(this)
   }
 

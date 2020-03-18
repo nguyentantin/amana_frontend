@@ -29,7 +29,6 @@ export const StyleCard = styled(Card)`
   }
 `
 
-
 export const StyleLabel = styled.label`
   position: relative;
   top: 6px;
