@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { DashboardLayout } from '../../components/Layout'
-
 import loadable from '../../utils/loadable'
 import LoadingPage from '../../components/LoadingPage/LoadingPage'
 

@@ -16,6 +16,7 @@ class ModalCreateProject extends React.Component {
   onSubmit(value) {
     console.log('value', value)
   }
+
   render() {
     const { visible, onCancel, onCreate, handleSubmit } = this.props
     return (
