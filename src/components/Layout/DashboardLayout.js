@@ -11,7 +11,7 @@ import MasterLayout from './MasterLayout'
 import Footer from './Footer'
 import AppLogo from '../../assets/images/App_logo.png'
 import { LogoWrapper } from './styled'
-import helpers from '../../utils/helpers'
+import LocalStorage from '../../utils/localStorage'
 
 const {Header, Content} = Layout
 
@@ -98,14 +98,14 @@ class DashboardLayout extends PureComponent {
 
   logout() {
     const {history} = this.props
-    helpers.removeToken()
-    helpers.removeAuthInfo()
+    LocalStorage.removeToken()
+    LocalStorage.removeAuthInfo()
 
     history.push('/sign-in')
   }
 
   username() {
-    const me = helpers.getAuthInfo()
+    const me = LocalStorage.getAuthInfo()
     return _.get(me, 'name')
   }
 

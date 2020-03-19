@@ -10,7 +10,7 @@ import Footer from './Footer'
 import AppLogo from '../../assets/images/App_logo.png'
 import { LogoWrapper } from './styled'
 import { isEmpty } from 'lodash'
-import helpers from '../../utils/helpers'
+import LocalStorage from '../../utils/localStorage'
 import { DOCS_URL } from '../../config/constants'
 
 const {Header, Content} = Layout
@@ -77,7 +77,7 @@ class GuestLayout extends PureComponent {
 
 
   isAuthenticated = () => {
-    return !isEmpty(helpers.getAccessToken())
+    return !isEmpty(LocalStorage.getAccessToken())
   }
 
   componentDidMount() {
