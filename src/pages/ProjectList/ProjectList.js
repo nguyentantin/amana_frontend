@@ -1,6 +1,5 @@
 import React from 'react'
-import { Divider, Table, Progress, Icon, Input, Button } from 'antd'
-import { Link } from 'react-router-dom'
+import { Table, Icon, Input, Button } from 'antd'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import _ from 'lodash'
@@ -20,73 +19,42 @@ const columns = [
     key: 'name',
     render: text => <Flex flex='flex'><StyleAvatar mr={2} shape="square" size="large" icon="user"/>
       <div>
-        <div>Lorem</div>
+        <div>Name</div>
         {text}
       </div>
     </Flex>,
   },
   {
-    dataIndex: 'owner',
-    key: 'owner',
-    render: owner => (
+    dataIndex: 'author',
+    key: 'author',
+    render: text => (
       <span>
-        <div>Lorem</div>
-        {owner}
+        <div>Author</div>
+        {text}
       </span>
     ),
   },
   {
-    dataIndex: 'daytime',
-    key: 'daytime',
-    render: daytime => (
+    dataIndex: 'platformType',
+    key: 'platformType',
+    render: text => (
       <span>
-        <div>Lorem</div>
-        {daytime}
+        <div>Platform</div>
+        {text}
       </span>
     ),
   },
   {
-    dataIndex: 'progress',
-    key: 'progress',
+    dataIndex: 'description',
+    key: 'description',
     width: 200,
-    render: () => (
+    render: text => (
       <span>
-        <Progress percent={60}/>
+        <div>Description</div>
+        {text}
       </span>
     ),
-  },
-  {
-    key: 'action',
-    width: 150,
-    render: () => (
-      <span>
-        <Link to='/'>Lorem</Link>
-        <Divider type="vertical"/>
-        <Link to='/' className="ant-dropdown-link">Lorem <Icon type="down"/></Link>
-      </span>
-    ),
-  },
-]
-
-const data = [
-  {
-    key: '1',
-    name: 'is simply dummy text of the printing',
-    owner: 'dummy',
-    daytime: '2020-03-16',
-  },
-  {
-    key: '2',
-    name: 'is simply dummy text of the printing',
-    owner: ' dummy',
-    daytime: '2020-03-16',
-  },
-  {
-    key: '3',
-    name: 'is simply dummy text of the printing',
-    owner: 'dummy',
-    daytime: '2020-03-16',
-  },
+  }
 ]
 
 const {Search} = Input
@@ -117,7 +85,7 @@ class ProjectListPage extends React.Component {
   }
 
   render() {
-    console.log('project1', this.props.project)
+    const {projects} = this.props
     return (
       <StyleContainer>
         <StyleCard p={2}>
@@ -137,7 +105,10 @@ class ProjectListPage extends React.Component {
             onCancel={this.handleCancel}
             onCreate={this.handleCreate}
           />
-          <Table columns={columns} dataSource={data}/>,
+          {
+            !_.isEmpty(projects) &&
+            <Table columns={columns} dataSource={projects} rowKey="name" />
+          }
         </StyleCard>
       </StyleContainer>
     )
@@ -146,7 +117,7 @@ class ProjectListPage extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    projects: _.get(state, 'projects', {})
+    projects: _.get(state, 'project.list', {})
   }
 }
 

@@ -1,8 +1,9 @@
 import produce from 'immer'
-import { CREATE_PROJECT, CREATE_PROJECT_SUCCESS } from './constants'
+import { CREATE_PROJECT, CREATE_PROJECT_SUCCESS, FETCH_PROJECT, FETCH_PROJECT_SUCCESS } from './constants'
 
 const initialState = {
   projects: [],
+  list: []
 }
 
 const reducer = (state = initialState, action) =>
@@ -12,7 +13,11 @@ const reducer = (state = initialState, action) =>
         break
       case CREATE_PROJECT_SUCCESS:
         draft.projects = action.data
-        console.log('projects', action)
+        break
+      case FETCH_PROJECT:
+        break
+      case FETCH_PROJECT_SUCCESS:
+        draft.list = action.data
         break
       default:
         return state

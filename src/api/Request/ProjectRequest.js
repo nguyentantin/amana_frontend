@@ -13,8 +13,8 @@ class ProjectRequest extends HttpRequest {
     return this.post('/projects', params)
   }
 
-  get(params) {
-    return this.get('/projects', params)
+  list() {
+    return this.get('/projects')
   }
 }
 

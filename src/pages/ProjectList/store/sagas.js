@@ -8,17 +8,15 @@ function* createProject (action) {
   try {
     const data = yield call(ProjectRequest.create.bind(ProjectRequest), action.data)
     yield put(createProjectSuccess(data))
-    success('Register is successfully!')
+    success('Create project successfully!')
   } catch (err) {
-    error('Create project successfully')
+    error('Can not create project')
   }
 }
 
 function* fetchProject (action) {
   try {
-    console.log('api')
-    const data = yield call(ProjectRequest.get.bind(ProjectRequest))
-    console.log('data', data)
+    const data = yield call(ProjectRequest.list.bind(ProjectRequest))
     yield put(fetchProjectSuccess(data))
   } catch (err) {
     error('Can not get list project')
