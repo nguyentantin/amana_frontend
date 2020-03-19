@@ -2,7 +2,7 @@ import HttpRequest from '../HttpRequest'
 
 class ProjectRequest extends HttpRequest {
   all(params = {}) {
-    return this.get('/ProjectList', params)
+    return this.get('/projects', params)
   }
 
   detail(projectId) {
