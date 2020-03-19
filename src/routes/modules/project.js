@@ -9,7 +9,7 @@ const ProjectDetail = loadable(() => import('../../pages/ProjectDetail'), {
 
 export default [
   {
-    path: '/project/:projectId',
+    path: '/projects/:projectId',
     exact: true,
     component: ProjectDetail,
     layout: DashboardLayout,

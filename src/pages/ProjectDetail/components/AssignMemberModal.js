@@ -1,19 +1,21 @@
+import _ from 'lodash'
 import React from 'react'
 import { Modal, Select, Form, Col } from 'antd'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
+import { observer } from 'mobx-react'
+import { withRouter } from 'react-router'
+
 import projectReducer from '../../../store/modules/project/reducers'
 import projectSaga from '../../../store/modules/project/sagas'
 import roleReducer from '../../../store/modules/role/reducers'
 import roleSaga from '../../../store/modules/role/sagas'
+import store from '../store'
 import { fetchExternalMembers, requestAssignMembers } from '../../../store/modules/project/actions'
 import { fetchRoles } from '../../../store/modules/role/actions'
-import { getListMemberOptions } from '../../../store/modules/project/selectors'
-import { getRoleOptions } from '../../../store/modules/role/selectors'
+import { getExternalMembers } from '../../../store/modules/project/selectors'
+import { getRoles } from '../../../store/modules/role/selectors'
 import { injectReducer, injectSaga } from '../../../store'
-import { withRouter } from 'react-router'
-import store from '../store'
-import { observer } from 'mobx-react'
 
 @observer
 class AssignMemberModal extends React.Component {
@@ -27,12 +29,6 @@ class AssignMemberModal extends React.Component {
 
   handleSelectRole(roleId) {
     store.setMember('roleId', roleId)
-  }
-
-  componentDidMount() {
-    const {match: {params}} = this.props
-    this.props.fetchRoles()
-    this.props.fetchExternalMembers({id: Number(params.projectId)})
   }
 
   onCancel() {
@@ -49,7 +45,48 @@ class AssignMemberModal extends React.Component {
     store.toggleActiveAssignMemberModal()
   }
 
+  getMemberOptions(members) {
+    if (_.isEmpty(members)) {
+      return []
+    }
+
+    const { Option } = Select
+
+    return members.map((member) => (
+      <Option
+        value={member.id}
+        key={`member-key-${member.id}`}
+      >{member.name}
+      </Option>
+    ))
+  }
+
+  getRoleOptions(roles) {
+    if (_.isEmpty(roles)) {
+      return []
+    }
+
+    const { Option } = Select
+
+    return roles.map((role) => (
+      <Option
+        value={role.id}
+        key={`role-key-${role.id}`}
+      >{role.name}
+      </Option>
+    ))
+  }
+
+  componentDidMount() {
+    const {match: {params}} = this.props
+    this.props.fetchRoles()
+    this.props.fetchExternalMembers({id: Number(params.projectId)})
+  }
+
   render() {
+    const memberOptions = this.getMemberOptions(this.props.externalMembers)
+    const roleOptions = this.getRoleOptions(this.props.roles)
+
     return (
       <Modal
         visible={store.activeAssignMemberModal}
@@ -81,7 +118,7 @@ class AssignMemberModal extends React.Component {
                     return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                   }}
                   onChange={this.handleSelectMember}
-                >{this.props.listMemberOptions}
+                >{memberOptions}
                 </Select>
               </Form.Item>
             </Col>
@@ -96,7 +133,7 @@ class AssignMemberModal extends React.Component {
                   key={'roleId'}
                   value={store.member.roleId}
                   onChange={this.handleSelectRole}
-                >{this.props.listRoleOptions}
+                >{roleOptions}
                 </Select>
               </Form.Item>
             </Col>
@@ -108,8 +145,8 @@ class AssignMemberModal extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  listMemberOptions: getListMemberOptions(state),
-  listRoleOptions: getRoleOptions(state),
+  externalMembers: getExternalMembers(state),
+  roles: getRoles(state),
 })
 
 const mapDispatchToProps = {
