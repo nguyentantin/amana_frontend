@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom'
 import { map, isEmpty } from 'lodash'
 import { withRouter } from 'react-router'
 
-import helpers from '../../utils/helpers'
+import LocalStorage from '../../utils/localStorage'
 
 class AppRoutes extends PureComponent {
   static propTypes = {
@@ -12,7 +12,7 @@ class AppRoutes extends PureComponent {
   }
 
   isAuthenticated = () => {
-    return !isEmpty(helpers.getAccessToken())
+    return !isEmpty(LocalStorage.getAccessToken())
   }
 
   renderRoute(route) {
