@@ -41,7 +41,7 @@ const Container = styled.div`
 `
 
 const divImg = {
-  paddingRight: '40px',
+  paddingRight: '20px',
   paddingBottom: '20px'
 }
 

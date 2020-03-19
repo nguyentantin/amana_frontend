@@ -31,9 +31,6 @@ class DashboardPage extends React.Component {
       <Container>
         <Row gutter={20}>
           <Col span={6}>
-            <div>
-              <img style={{width: '100%', marginBottom: '20px'}} src="https://via.placeholder.com/250x300.png" alt=""/>
-            </div>
 
             <ListProject data={this.props.projects} />
 
