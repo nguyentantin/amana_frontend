@@ -9,10 +9,6 @@ const Dashboard = loadable(() => import('../../pages/Dashboard/Dashboard'), {
   fallback: <LoadingPage/>,
 })
 
-const Apps = loadable(() => import('../../pages/Apps'), {
-  fallback: <LoadingPage/>,
-})
-
 const ProjectDetail = loadable(() => import('../../pages/ProjectDetail'), {
   fallback: <LoadingPage/>,
 })
@@ -26,13 +22,6 @@ export default [
     path: '/dashboard',
     exact: true,
     component: Dashboard,
-    layout: DashboardLayout,
-    requiredAuth: true
-  },
-  {
-    path: '/apps',
-    exact: true,
-    component: Apps,
     layout: DashboardLayout,
     requiredAuth: true
   },
