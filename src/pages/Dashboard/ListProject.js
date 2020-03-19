@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { Avatar, Icon, List } from 'antd'
 import React from 'react'
+import _ from 'lodash'
 
 import calling from '../../assets/images/calling.png'
 import { Link } from 'react-router-dom'
@@ -38,7 +39,7 @@ export default class ListProject extends React.Component {
               <Link to={`/project/${item.id}`}>
                 <Icon type={ item.platformType === PLATFORM_TYPE.ANDROID ? 'android' : 'apple' } /> {item.name}
               </Link>
-              <p className="name"><Avatar size="small" icon="user" /> <Link to='/'>author</Link></p>
+              <p className="name"><Avatar size="small" icon="user" /> <Link to='/'>{_.get(item, 'author.name', '')}</Link></p>
             </List.Item>
           )}
         />

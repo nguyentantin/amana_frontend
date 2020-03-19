@@ -1,9 +1,16 @@
-import { Modal, Form, Select, Row, Col } from 'antd'
+import { Modal, Form, Select, Row } from 'antd'
 import { Field, reduxForm } from 'redux-form'
 import React from 'react'
+import { compose } from 'redux'
+import { connect } from 'react-redux'
+import _ from 'lodash'
 
+import injectReducer from '../../store/injectReducer'
+import injectSaga from '../../store/injectSaga'
+import reducer from './store/reducers'
+import saga from './store/sagas'
+import { createProject } from './store/actions'
 import { AInput, ASelect, ATextarea } from '../../components/FormUI'
-import { StyleLabel } from './styled'
 
 const { Option } = Select
 
@@ -14,69 +21,51 @@ class ModalCreateProject extends React.Component {
   }
 
   onSubmit(value) {
-    console.log('value', value)
+    const { createProject } = this.props
+    createProject(value)
   }
 
   render() {
     const { visible, onCancel, onCreate, handleSubmit } = this.props
+    const formItemLayout = {
+      labelCol: { span: 5 },
+      wrapperCol: { span: 19 }
+    }
     return (
       <Modal
         visible={visible}
-        title="Lorem"
+        title="Create"
         okText="Create"
         onCancel={onCancel}
         onOk={onCreate}
         okButtonProps={{form:'create-project-form', key: 'submit', htmlType: 'submit'}}
       >
-        <Form id='create-project-form' onSubmit={handleSubmit(this.onSubmit)}>
+        <Form {...formItemLayout} layout="vertical" id='create-project-form' onSubmit={handleSubmit(this.onSubmit)}>
           <Row>
-            <Col span={5}>
-              <StyleLabel>Title</StyleLabel>
-            </Col>
-            <Col span={19}>
-              <Field
-                name="Title"
-                component={AInput}
-                type="text"
-                placeholder="title"
-              />
-            </Col>
-            <Col span={5}>
-              <StyleLabel>Title2</StyleLabel>
-            </Col>
-            <Col span={19}>
-              <Field
-                name="Title2"
-                component={AInput}
-                type="text"
-                placeholder="title2"
-              />
-            </Col>
-            <Col span={5}>
-              <StyleLabel>Select</StyleLabel>
-            </Col>
-            <Col span={19}>
-              <Field
-                name="Select"
-                component={ASelect}
-                defaultValue="male"
-              >
-                <Option value="male">male</Option>
-                <Option value="female">female</Option>
-              </Field>
-            </Col>
-            <Col span={5}>
-              <StyleLabel>Textarea</StyleLabel>
-            </Col>
-            <Col span={19}>
-              <Field
-                name="Textarea"
-                component={ATextarea}
-                type="text"
-                placeholder="Textarea"
-                rows={4}
-              />
-            </Col>
+            <Field
+              label="Name"
+              name="name"
+              component={AInput}
+              type="text"
+              placeholder="title"
+            />
+            <Field
+              label="Platform"
+              name="platformType"
+              component={ASelect}
+              defaultValue="ios"
+            >
+              <Option value="ios">IOS</Option>
+              <Option value="android">Android</Option>
+            </Field>
+            <Field
+              label="Description "
+              name="description"
+              component={ATextarea}
+              type="text"
+              placeholder="Textarea"
+              rows={4}
+            />
           </Row>
         </Form>
       </Modal>
@@ -84,6 +73,13 @@ class ModalCreateProject extends React.Component {
   }
 }
 
-export default reduxForm({
-  form: 'CreateProjectForm'
-})(ModalCreateProject)
+const mapDispatchToProps = { createProject }
+
+export default compose(
+  connect(null, mapDispatchToProps),
+  injectReducer({key: 'project', reducer}),
+  injectSaga({key: 'project', saga}),
+  reduxForm({
+    form: 'CreateProjectForm',
+  }),
+) (ModalCreateProject)

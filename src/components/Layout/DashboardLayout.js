@@ -136,8 +136,8 @@ class DashboardLayout extends PureComponent {
 
             <div>
               <Menu mode="horizontal" style={{lineHeight: '64px'}} defaultSelectedKeys={[location.pathname]}>
-                <Menu.Item key='/'><Link to='/dashboard'>Dashboard</Link></Menu.Item>
-                <Menu.Item key='/projects'><Link to='/projects'>Projects</Link></Menu.Item>
+                <Menu.Item key='/dashboard'><Link to='/dashboard'>Dashboard</Link></Menu.Item>
+                <Menu.Item key='/develop-tools'><Link to='/projects'>Projects</Link></Menu.Item>
                 <Menu.Item key='/support'><Link to='/apps'>Apps</Link></Menu.Item>
                 <Menu.Item key='/time-sheets'><Link to='/time-sheets'>Time-Sheet</Link></Menu.Item>
 

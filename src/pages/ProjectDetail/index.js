@@ -136,6 +136,7 @@ class ProjectDetail extends React.Component {
               <div className="content-left">
                 <h3>Project Name: {this.projectDetail.name}</h3>
                 <p>Descriptions: {this.projectDetail.description}</p>
+                <p>Latest Commit: # {_.get(this.projectDetail, 'currentVersion.commitChanges', '')}</p>
                 <p>Platform: { this.isAndroid ? <AndroidFilled style={iconStyle}/> : <AppleFilled style={iconStyle}/> }</p>
                 <p>Author: {this.projectDetail.author ? this.projectDetail.author.name: ''}</p>
                 <Button className="btn-right" type="primary" size='large' style={marginRight}>

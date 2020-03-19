@@ -1,7 +1,15 @@
 import React from 'react'
 import { Divider, Table, Progress, Icon, Input, Button } from 'antd'
 import { Link } from 'react-router-dom'
+import { compose } from 'redux'
+import { connect } from 'react-redux'
+import _ from 'lodash'
 
+import injectReducer from '../../store/injectReducer'
+import injectSaga from '../../store/injectSaga'
+import reducer from './store/reducers'
+import saga from './store/sagas'
+import { fetchProject } from './store/actions'
 import { Flex } from '../../styles/utility'
 import { StyleAvatar, StyleCard, StyleContainer, StyleHeader } from './styled'
 import ModalCreateProject from './ModalCreateProject'
@@ -91,6 +99,11 @@ class ProjectListPage extends React.Component {
     }
   }
 
+  componentDidMount () {
+    const { fetchProject } = this.props
+    fetchProject()
+  }
+
   showModal = () => {
     this.setState({visible: true})
   }
@@ -104,6 +117,7 @@ class ProjectListPage extends React.Component {
   }
 
   render() {
+    console.log('project1', this.props.project)
     return (
       <StyleContainer>
         <StyleCard p={2}>
@@ -130,4 +144,16 @@ class ProjectListPage extends React.Component {
   }
 }
 
-export default ProjectListPage
+const mapStateToProps = state => {
+  return {
+    projects: _.get(state, 'projects', {})
+  }
+}
+
+const mapDispatchToProps = { fetchProject }
+
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  injectReducer({key: 'project', reducer}),
+  injectSaga({key: 'project', saga}),
+) (ProjectListPage)
