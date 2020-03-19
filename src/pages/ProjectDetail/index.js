@@ -41,7 +41,7 @@ const Container = styled.div`
 `
 
 const divImg = {
-  paddingRight: '40px',
+  paddingRight: '20px',
   paddingBottom: '20px'
 }
 
@@ -57,8 +57,14 @@ const hrStyle = {
   backgroundImage: 'linear-gradient(to right, #ccc, #333, #ccc)',
 }
 
-const iconStyle = {
-  fontSize: '20px'
+const appleStyle = {
+  fontSize: '20px',
+  color: '#bf5af2',
+}
+
+const androidStyle = {
+  fontSize: '20px',
+  color: '#8eba3e',
 }
 
 const SmallTitle =  styled.small`
@@ -68,6 +74,9 @@ const SmallTitle =  styled.small`
 
 const LinkDownload = styled.a`
   color: white;
+  :hover {
+    color: white
+  }
 `
 
 const listBuildEnv = [
@@ -134,11 +143,11 @@ class ProjectDetail extends React.Component {
           <ShowIf condition={!_.isEmpty(this.projectDetail)}>
             <ListBuild>
               <div className="content-left">
-                <h3>Project Name: {this.projectDetail.name}</h3>
+                <h3># {_.get(this.projectDetail, 'currentVersion.id', '')} - {_.get(this.projectDetail, 'currentVersion.commitChanges', '')}</h3>
+                <p>Project Name: {this.projectDetail.name}</p>
+                <p>Platform: { this.isAndroid ? <AndroidFilled style={androidStyle}/> : <AppleFilled style={appleStyle}/> }</p>
+                <p>Author: {_.get(this.projectDetail, 'author.name', '')}</p>
                 <p>Descriptions: {this.projectDetail.description}</p>
-                <p>Latest Commit: # {_.get(this.projectDetail, 'currentVersion.commitChanges', '')}</p>
-                <p>Platform: { this.isAndroid ? <AndroidFilled style={iconStyle}/> : <AppleFilled style={iconStyle}/> }</p>
-                <p>Author: {this.projectDetail.author ? this.projectDetail.author.name: ''}</p>
                 <Button className="btn-right" type="primary" size='large' style={marginRight}>
                   <Icon type="download"/>
                   <LinkDownload href={this.downloadUrl} download> Download </LinkDownload>

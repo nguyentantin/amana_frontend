@@ -3,7 +3,7 @@ import NProgress from 'nprogress'
 import { isEmpty } from 'lodash'
 
 import history from '../utils/history'
-import Helpers from '../utils/helpers'
+import LocalStorage from '../utils/localStorage'
 
 NProgress.configure({ showSpinner: false })
 
@@ -25,7 +25,7 @@ axios.defaults.onDownloadProgress = (e) => {
 axios.interceptors.request.use(
   (config) => {
     NProgress.start()
-    const accessToken = Helpers.getAccessToken()
+    const accessToken = LocalStorage.getAccessToken()
 
     if (!isEmpty(accessToken)) {
       const headers = {
