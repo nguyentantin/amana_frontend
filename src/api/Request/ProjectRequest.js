@@ -8,6 +8,10 @@ class ProjectRequest extends HttpRequest {
   detail(projectId) {
     return this.get(`/projects/${projectId}`)
   }
+
+  appBuildDetail(projectId, appBuildId) {
+    return this.get(`/projects/${projectId}/app-builds/${appBuildId}`)
+  }
 }
 
 export default new ProjectRequest()
