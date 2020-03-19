@@ -56,7 +56,7 @@ const HeaderWrapper = styled(Header)`
 const ContentPage = styled(Content)` {
   padding: 0;
   min-height: calc(100vh - 69px);
-  padding-top: 64px;
+  padding-top: 100px;
   &.active {
     padding-top: 0;
   }
