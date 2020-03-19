@@ -3,7 +3,7 @@ import { CREATE_PROJECT, CREATE_PROJECT_SUCCESS, FETCH_PROJECT, FETCH_PROJECT_SU
 
 const initialState = {
   projects: [],
-  list: []
+  listProjects: []
 }
 
 const reducer = (state = initialState, action) =>
@@ -17,7 +17,7 @@ const reducer = (state = initialState, action) =>
       case FETCH_PROJECT:
         break
       case FETCH_PROJECT_SUCCESS:
-        draft.list = action.data
+        draft.listProjects = action.data
         break
       default:
         return state

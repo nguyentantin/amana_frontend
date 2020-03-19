@@ -117,7 +117,7 @@ class ProjectListPage extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    projects: _.get(state, 'project.list', {})
+    projects: _.get(state, 'project.listProjects', {})
   }
 }
 

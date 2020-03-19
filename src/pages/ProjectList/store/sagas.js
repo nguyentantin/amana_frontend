@@ -6,7 +6,7 @@ import { error, success } from '../../../utils/toastr'
 
 function* createProject (action) {
   try {
-    const data = yield call(ProjectRequest.create.bind(ProjectRequest), action.data)
+    const data = yield call(ProjectRequest.createProject.bind(ProjectRequest), action.data)
     yield put(createProjectSuccess(data))
     success('Create project successfully!')
   } catch (err) {
@@ -16,7 +16,7 @@ function* createProject (action) {
 
 function* fetchProject (action) {
   try {
-    const data = yield call(ProjectRequest.list.bind(ProjectRequest))
+    const data = yield call(ProjectRequest.listProject.bind(ProjectRequest))
     yield put(fetchProjectSuccess(data))
   } catch (err) {
     error('Can not get list project')

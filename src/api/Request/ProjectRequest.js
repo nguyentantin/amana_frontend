@@ -9,11 +9,11 @@ class ProjectRequest extends HttpRequest {
     return this.get(`/projects/${projectId}`)
   }
 
-  create(params) {
+  createProject(params) {
     return this.post('/projects', params)
   }
 
-  list() {
+  listProject() {
     return this.get('/projects')
   }
 
