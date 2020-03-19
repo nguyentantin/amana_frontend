@@ -14,7 +14,6 @@ class ProjectRequest extends HttpRequest {
   }
 
   get(params) {
-    console.log('params', params)
     return this.get('/projects', params)
   }
 }

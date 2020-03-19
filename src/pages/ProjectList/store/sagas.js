@@ -2,16 +2,15 @@ import { call, takeLatest, put } from 'redux-saga/effects'
 import ProjectRequest from '../../../api/Request/ProjectRequest'
 import { CREATE_PROJECT, FETCH_PROJECT } from './constants'
 import { createProjectSuccess, fetchProjectSuccess } from './actions'
-import { error } from '../../../utils/toastr'
+import { error, success } from '../../../utils/toastr'
 
 function* createProject (action) {
   try {
-    console.log('action', action)
     const data = yield call(ProjectRequest.create.bind(ProjectRequest), action.data)
-    console.log('action1', action)
     yield put(createProjectSuccess(data))
+    success('Register is successfully!')
   } catch (err) {
-    error('Can not create project')
+    error('Create project successfully')
   }
 }
 

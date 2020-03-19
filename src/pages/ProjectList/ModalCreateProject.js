@@ -3,7 +3,6 @@ import { Field, reduxForm } from 'redux-form'
 import React from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import _ from 'lodash'
 
 import injectReducer from '../../store/injectReducer'
 import injectSaga from '../../store/injectSaga'
