@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { system } from 'styled-system'
+import { system, space, color, layout } from 'styled-system'
 
 export const Flex = styled('div')(
   system({
@@ -8,4 +8,10 @@ export const Flex = styled('div')(
       defaultScale: ['flex', 'inline-flex', 'block', 'inline-block'],
     },
   })
+)
+
+export const Box = styled.div(
+  space,
+  color,
+  layout
 )
