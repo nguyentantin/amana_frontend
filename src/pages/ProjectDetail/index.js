@@ -1,14 +1,11 @@
-import QRCode from 'qrcode.react'
 import React from 'react'
 import _ from 'lodash'
-import { Button, Tabs, Icon, Popover } from 'antd'
+import { Button, Tabs, Icon, Divider, Empty } from 'antd'
 import { action, computed, observable, get, toJS } from 'mobx'
 import { compose } from 'recompose'
 import { inject, observer, Provider } from 'mobx-react'
 import { withRouter } from 'react-router'
 import {
-  AndroidFilled,
-  AppleFilled,
   BranchesOutlined,
   CodeOutlined,
   FundProjectionScreenOutlined
@@ -24,14 +21,11 @@ import {
   ListBuild,
   divImg,
   Container,
-  marginRight,
-  hrStyle,
-  appleStyle,
-  androidStyle,
   SmallTitle,
-  LinkDownload,
 } from './styled'
 import store from './store'
+import ProjectBasicInfo from './ProjectBasicInfo'
+import CurrentBuildInfo from './CurrentBuildInfo'
 
 const {TabPane} = Tabs
 
@@ -106,31 +100,12 @@ class ProjectDetail extends React.Component {
           <div style={divImg}>
             <img src="https://via.placeholder.com/250x250.png" alt=""/>
           </div>
+
           <ShowIf condition={!_.isEmpty(this.projectDetail)}>
             <ListBuild>
-              <div className="content-left">
-                <h3># {_.get(this.projectDetail, 'currentVersion.id', '')} - {_.get(this.projectDetail, 'currentVersion.commitChanges', '')}</h3>
-                <p>Project Name: {this.projectDetail.name}</p>
-                <p>Platform: { this.isAndroid ? <AndroidFilled style={androidStyle}/> : <AppleFilled style={appleStyle}/> }</p>
-                <p>Author: {_.get(this.projectDetail, 'author.name', '')}</p>
-                <p>Descriptions: {this.projectDetail.description}</p>
-                <Button className="btn-right" type="primary" size='large' style={marginRight}>
-                  <Icon type="download"/>
-                  <LinkDownload href={this.downloadUrl} download> Download </LinkDownload>
-                </Button>
-
-                <Popover
-                  trigger="click"
-                  placement="bottom"
-                  content={
-                    <QRCode value={this.downloadUrl}/>
-                  }
-                >
-                  <Button className="btn-right" type="primary" size='large' style={marginRight}>
-                    <Icon type="qrcode"/>
-                    QR Code
-                  </Button>
-                </Popover>
+              <div>
+                <ProjectBasicInfo project={this.projectDetail}/>
+                <Divider/>
 
                 <Button className="btn-right" type="primary" size='large' onClick={this.handleActiveRoleManagerModal}>
                   <Icon type="form"/>
@@ -140,7 +115,22 @@ class ProjectDetail extends React.Component {
             </ListBuild>
           </ShowIf>
         </Flex>
-        <hr style={hrStyle}/>
+
+        <Divider/>
+
+        <div>
+          <h2>Current version <SmallTitle>The latest build</SmallTitle></h2>
+          <ShowIf condition={!_.isEmpty(_.get(this.projectDetail, 'currentVersion', {}))}>
+            <CurrentBuildInfo build={_.get(this.projectDetail, 'currentVersion', {})} url={this.downloadUrl}/>
+          </ShowIf>
+
+          <ShowIf condition={_.isEmpty(_.get(this.projectDetail, 'currentVersion', {}))}>
+            <Empty/>
+          </ShowIf>
+        </div>
+
+        <Divider/>
+
         <div>
           <h2>Activities <SmallTitle>Recent activities on this app.</SmallTitle></h2>
           <Tabs defaultActiveKey="1">
@@ -156,7 +146,7 @@ class ProjectDetail extends React.Component {
                     key={item.envKey}
                   >
                     <ListAppBuild
-                        data={this.getDataByEnv(item.envKey)}
+                      data={this.getDataByEnv(item.envKey)}
                     />
                   </TabPane>
                 )
@@ -164,7 +154,7 @@ class ProjectDetail extends React.Component {
             }
           </Tabs>
         </div>
-        <RoleManagerModal />
+        <RoleManagerModal/>
       </Container>
     )
   }
