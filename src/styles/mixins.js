@@ -4,13 +4,13 @@ export const container = {
   centerBox: css`
     padding-top: 40px;
     width: 1170px;
-    margin: 0 auto !important;
+    margin: 0 auto 15px !important;
     @media (max-width: 992px) {
       width: 970px;
     }
     @media (max-width: 768px) {
       width: 100%;
-      padding: 16px 16px 0;
+      padding: 16px;
     }
   `
 }

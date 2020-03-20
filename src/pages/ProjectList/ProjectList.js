@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table, Icon, Input, Button, message } from 'antd'
+import { Icon, Input, Button, message } from 'antd'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -14,6 +14,7 @@ import ModalCreateProject from './ModalCreateProject'
 import ProjectRequest from '../../api/Request/ProjectRequest'
 import { HTTP_CODE } from '../../config/constants'
 import { PlatformIcon } from '../../components/CoreUI'
+import TableStyle from '../../styles/tableResponsive'
 
 const {Search} = Input
 
@@ -150,7 +151,7 @@ class ProjectListPage extends React.Component {
             onToggle={() => this.toggleModalCreate()}
           />
 
-          <Table
+          <TableStyle
             columns={this.columns()}
             dataSource={this.projects}
             loading={this.loading}
