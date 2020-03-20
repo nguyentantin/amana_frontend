@@ -38,6 +38,9 @@ export const HeaderWrapper = styled(Header)`
         } 
       }
     }
+    @media (max-width: 768px) {
+      background: #fff;
+    }
   }
 `
 

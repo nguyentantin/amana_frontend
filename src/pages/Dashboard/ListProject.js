@@ -1,26 +1,19 @@
-import styled from 'styled-components'
 import { Avatar, Icon, List } from 'antd'
 import React from 'react'
 import _ from 'lodash'
 
 import calling from '../../assets/images/calling.png'
 import { Link } from 'react-router-dom'
-import { PLATFORM_TYPE } from '../../config/constants'
 import { ScrollContainer } from './styled'
-
-const ListBuild = styled(List)`
-  .name {
-    margin-top: 10px;
-    margin-bottom: 2px;
-  }
-`
+import { PlatformIcon } from '../../components/CoreUI'
+import { Box } from '../../styles/utility'
 
 export default class ListProject extends React.Component {
   render () {
     return (
       <ScrollContainer height={['auto', 300]} mb={[20, 0]}>
         <h4><Icon type="unordered-list" /> Build</h4>
-        <ListBuild
+        <List
           itemLayout="vertical"
           size="small"
           header={<div>Your Project</div>}
@@ -37,9 +30,15 @@ export default class ListProject extends React.Component {
               }
             >
               <Link to={`/projects/${item.id}`}>
-                <Icon type={ item.platformType === PLATFORM_TYPE.ANDROID ? 'android' : 'apple' } /> {item.name}
+                <PlatformIcon platform={item.platformType}/>
+                {item.name}
               </Link>
-              <p className="name"><Avatar size="small" icon="user" /> <Link to='/'>{_.get(item, 'author.name', '')}</Link></p>
+
+              <Box mt={10} mb={2}>
+                <Avatar size="small" icon="user"/>
+
+                {_.get(item, 'author.name', '')}
+              </Box>
             </List.Item>
           )}
         />

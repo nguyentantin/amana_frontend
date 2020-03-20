@@ -55,7 +55,7 @@ const ScreenSlide = styled.div`
       padding: 0 10px;
       h1 {
       margin-top: 100px;
-    }
+      }
     } 
   }
 `
