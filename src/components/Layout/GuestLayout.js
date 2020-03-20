@@ -3,65 +3,12 @@ import PropTypes from 'prop-types'
 import { Layout, Menu } from 'antd'
 import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom'
-import styled from 'styled-components'
 
 import MasterLayout from './MasterLayout'
 import Footer from './Footer'
 import AppLogo from '../../assets/images/App_logo.png'
-import { LogoWrapper } from './styled'
-import { isEmpty } from 'lodash'
-import LocalStorage from '../../utils/localStorage'
-import { DOCS_URL } from '../../config/constants'
-
-const {Header, Content} = Layout
-
-
-const HeaderWrapper = styled(Header)`
-  background: #fff;
-  padding: 0 30px;
-  position: fixed;
-  z-index: 3;
-  width: 100%;
-  height: 66px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  .ant-menu {
-    font-size: 18px;
-    border: 0;
-  }
-  &.active {
-    background: transparent;
-    transition-duration: 0.4s;
-    .ant-menu {
-      background: transparent;
-      border-bottom: 0;
-      .ant-menu-item > a {
-        color: #fff;
-      }
-    }
-    &.normal {
-      background: #fff;
-      .ant-menu {
-        .ant-menu-item {
-        top: 0;
-           a {
-            color: #000;
-          }
-        } 
-      }
-    }
-  }
-`
-
-const ContentPage = styled(Content)` {
-  padding: 0;
-  min-height: calc(100vh - 69px);
-  padding-top: 100px;
-  &.active {
-    padding-top: 0;
-  }
-}`
+import { LogoWrapper, HeaderWrapper, ContentPage } from './styled'
+import GuestHeader from './Header/GuestHeader'
 
 class GuestLayout extends PureComponent {
   constructor(props) {
@@ -73,11 +20,6 @@ class GuestLayout extends PureComponent {
 
   static propTypes = {
     children: PropTypes.node.isRequired,
-  }
-
-
-  isAuthenticated = () => {
-    return !isEmpty(LocalStorage.getAccessToken())
   }
 
   componentDidMount() {
@@ -98,9 +40,7 @@ class GuestLayout extends PureComponent {
   }
 
   render() {
-    const {children, location} = this.props
-    const isAuthenticated = this.isAuthenticated()
-
+    const {children} = this.props
     const childrenWithProps = React.Children.map(children, child => React.cloneElement(child, {}))
     const isActive = window.location.pathname
     let className
@@ -117,24 +57,7 @@ class GuestLayout extends PureComponent {
             <LogoWrapper>
               <Link to='/'><img src={AppLogo} alt="Logo"/></Link>
             </LogoWrapper>
-
-            <div>
-              <Menu mode="horizontal" style={{lineHeight: '64px'}} defaultSelectedKeys={[location.pathname]}>
-                <Menu.Item key='/'><Link to='/'>Features</Link></Menu.Item>
-                <Menu.Item key='/develop-tools'>
-                  <a href={DOCS_URL}>Developer Tools</a>
-                </Menu.Item>
-                <Menu.Item key='/support'><Link to='/support'>Support</Link></Menu.Item>
-
-                {
-                  isAuthenticated && <Menu.Item key='/dashboard'><Link to='/dashboard'>Dashboard</Link></Menu.Item>
-                }
-
-                {
-                  !isAuthenticated && <Menu.Item key='/sign-in'><Link to='/sign-in'>Sign-in</Link></Menu.Item>
-                }
-              </Menu>
-            </div>
+            <GuestHeader/>
           </HeaderWrapper>
 
           <ContentPage className={className}>

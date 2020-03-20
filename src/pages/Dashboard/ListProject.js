@@ -18,7 +18,7 @@ const ListBuild = styled(List)`
 export default class ListProject extends React.Component {
   render () {
     return (
-      <ScrollContainer height="300px">
+      <ScrollContainer height={['auto', 300]} mb={[20, 0]}>
         <h4><Icon type="unordered-list" /> Build</h4>
         <ListBuild
           itemLayout="vertical"

@@ -1,13 +1,13 @@
 import styled from 'styled-components'
+import { space } from 'styled-system'
 import { Row } from 'antd'
 import { container } from '../../styles/mixins'
 
 export const ContainerRow = styled(Row)`
-  margin-top: 40px !important;
-  display: flex !important;
   ${container.centerBox}
   .row-two {
     display: flex !important;
+    margin-top: 20px;
     .ant-card {
       width: 100%;
       background-color: whitesmoke;
@@ -36,4 +36,9 @@ export const AuthButton = styled.div`
       display: block;
     }
   }
+`
+
+export const StyleLink = styled.div`
+  text-align: center;
+  ${space}
 `

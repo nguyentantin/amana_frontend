@@ -15,7 +15,6 @@ import { fetchAppBuilds, fetchProject } from './store/actions'
 import { container } from '../../styles/mixins'
 
 const Container = styled.div`
-  padding-top: 10px;
   ${container.centerBox}
 `
 
@@ -30,12 +29,12 @@ class DashboardPage extends React.Component {
     return (
       <Container>
         <Row gutter={20}>
-          <Col span={6}>
+          <Col xs={24} md={6}>
 
             <ListProject data={this.props.projects} />
 
           </Col>
-          <Col span={18}>
+          <Col xs={24} md={18}>
             <ListAppBuild data={this.props.appBuilds}/>
           </Col>
         </Row>
