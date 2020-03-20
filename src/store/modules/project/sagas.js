@@ -14,14 +14,17 @@ function* fetchExternalMembers(action) {
 }
 
 function* assignMembers(action) {
-  const data = {
+  const formData = {
     members: action.project.members
   }
 
   try {
-    yield call(ProjectRequest.assignMembers.bind(ProjectRequest), action.project.id, data)
+    yield call(ProjectRequest.assignMembers.bind(ProjectRequest), action.project.id, formData)
+    const { data } = yield call(ProjectRequest.fetchExternalMembers.bind(ProjectRequest), action.project.id)
+    yield put(fetchExternalMembersSuccess(data))
     success('Assigned members succeeded!')
   } catch (e) {
+    console.log(e)
     error('Request assign members failed!')
   }
 }

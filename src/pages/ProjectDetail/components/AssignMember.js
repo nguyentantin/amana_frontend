@@ -1,8 +1,8 @@
 import _ from 'lodash'
 import React from 'react'
-import { Modal, Select, Form, Col } from 'antd'
-import { connect } from 'react-redux'
+import { Button, Col, Form, Input, Select } from 'antd'
 import { compose } from 'redux'
+import { connect } from 'react-redux'
 import { inject, observer } from 'mobx-react'
 import { withRouter } from 'react-router'
 
@@ -18,15 +18,15 @@ import { injectReducer, injectSaga } from '../../../store'
 
 @inject('store')
 @observer
-class AssignMemberModal extends React.Component {
+class AssignMember extends React.Component {
   constructor(props) {
     super(props);
 
     this.handleSelectMember = this.handleSelectMember.bind(this)
     this.handleSelectRole = this.handleSelectRole.bind(this)
-    this.onOk = this.onOk.bind(this)
-    this.onCancel = this.onCancel.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
   }
+
   handleSelectMember(memberId) {
     this.props.store.setMember('memberId', memberId)
   }
@@ -35,12 +35,7 @@ class AssignMemberModal extends React.Component {
     this.props.store.setMember('roleId', roleId)
   }
 
-  onCancel() {
-    this.props.store.resetMember()
-    this.props.store.toggleActiveAssignMemberModal()
-  }
-
-  onOk() {
+  onSubmit() {
     this.props.requestAssignMembers({
       id: this.props.match.params.projectId,
       members: [{...this.props.store.member}]
@@ -49,7 +44,7 @@ class AssignMemberModal extends React.Component {
     this.props.store.toggleActiveAssignMemberModal()
   }
 
-  getMemberOptions(members) {
+  renderMemberOptions(members) {
     if (_.isEmpty(members)) {
       return []
     }
@@ -60,12 +55,13 @@ class AssignMemberModal extends React.Component {
       <Option
         value={member.id}
         key={`member-key-${member.id}`}
+        email={member.email}
       >{member.name}
       </Option>
     ))
   }
 
-  getRoleOptions(roles) {
+  renderRoleOptions(roles) {
     if (_.isEmpty(roles)) {
       return []
     }
@@ -76,7 +72,7 @@ class AssignMemberModal extends React.Component {
       <Option
         value={role.id}
         key={`role-key-${role.id}`}
-      >{role.name}
+      >{role.description}
       </Option>
     ))
   }
@@ -88,38 +84,28 @@ class AssignMemberModal extends React.Component {
   }
 
   render() {
-    const memberOptions = this.getMemberOptions(this.props.externalMembers)
-    const roleOptions = this.getRoleOptions(this.props.roles)
+    const memberOptions = this.renderMemberOptions(this.props.externalMembers)
+    const roleOptions = this.renderRoleOptions(this.props.roles)
 
     return (
-      <Modal
-        visible={this.props.store.activeAssignMemberModal}
-        maskClosable={false}
-        width={600}
-        closable={false}
-        onCancel={this.onCancel}
-        onOk={this.onOk}
-        okButtonProps={{
-          disabled: !this.props.store.validateMember
-        }}
-      >
-        <div style={{marginBottom: 30}}>
-          <Form
-            labelCol={{span: 6}}
-            wrapperCol={{span: 15}}
-          >
-            <Col span={12}>
+      <div style={{height: 25}}>
+        <Form.Item>
+          <Input.Group compact>
+            <Col span={12} style={{paddingRight: 0}}>
               <Form.Item
-                label={'Member'}
                 name={'member'}
+                style={{marginBottom: 0}}
               >
                 <Select
-                  style={{width: 200}}
-                  key={'memberId'}
                   showSearch
+                  placeholder='By name or email address'
+                  style={{width: '100%'}}
+                  key={'memberId'}
                   value={this.props.store.member.memberId}
                   filterOption={(input, option) => {
+                    console.log(option)
                     return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                      || option.props.email.toLowerCase().indexOf(input.toLowerCase()) >= 0
                   }}
                   onChange={this.handleSelectMember}
                 >{memberOptions}
@@ -127,13 +113,13 @@ class AssignMemberModal extends React.Component {
               </Form.Item>
             </Col>
 
-            <Col span={12}>
+            <Col span={8} style={{paddingRight: 0}}>
               <Form.Item
-                label={'role'}
                 name={'role'}
+                style={{marginBottom: 0}}
               >
                 <Select
-                  style={{width: 200}}
+                  style={{width: '100%'}}
                   key={'roleId'}
                   value={this.props.store.member.roleId}
                   onChange={this.handleSelectRole}
@@ -141,9 +127,22 @@ class AssignMemberModal extends React.Component {
                 </Select>
               </Form.Item>
             </Col>
-          </Form>
-        </div>
-      </Modal>
+
+            <Col span={4}>
+              <Form.Item>
+                <Button
+                  onClick={this.onSubmit}
+                  disabled={this.props.store.activeAssignMemberModal}
+                  className='btn-right'
+                  style={{width: '100%'}}
+                  type='primary'
+                >Add
+                </Button>
+              </Form.Item>
+            </Col>
+          </Input.Group>
+        </Form.Item>
+      </div>
     )
   }
 }
@@ -166,4 +165,4 @@ export default compose(
   injectSaga({key: 'project', saga: projectSaga}),
   injectSaga({key: 'role', saga: roleSaga}),
   withRouter
-)(AssignMemberModal)
+)(AssignMember)

@@ -4,8 +4,8 @@ class Store {
   @observable activeRoleManagerModal = false
   @observable activeAssignMemberModal = false
   @observable member = {
-    memberId: null,
-    roleId: null,
+    memberId: undefined,
+    roleId: undefined,
   }
 
   @computed
@@ -34,8 +34,8 @@ class Store {
 
   @action
   resetMember() {
-    this.member.memberId = null
-    this.member.roleId = null
+    this.member.memberId = undefined
+    this.member.roleId = undefined
   }
 }
 
