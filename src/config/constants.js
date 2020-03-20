@@ -41,8 +41,9 @@ const HTTP_CODE = {
 }
 
 const PLATFORM_TYPE = {
+  IOS: 'ios',
   ANDROID: 'android',
-  IOS: 'iOS'
+  WEB: 'web',
 }
 
 export {

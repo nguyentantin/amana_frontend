@@ -21,14 +21,8 @@ export const StyleHeader = styled.div`
 `
 
 export const StyleCard = styled(Card)`
-  ${space}
   padding: 12px !important;
   .ant-card-body {
     padding: 0;
   }
-`
-
-export const StyleLabel = styled.label`
-  position: relative;
-  top: 6px;
 `
