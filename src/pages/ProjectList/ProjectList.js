@@ -3,6 +3,7 @@ import { Table, Icon, Input, Button } from 'antd'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import _ from 'lodash'
+import { Link } from 'react-router-dom'
 
 import injectReducer from '../../store/injectReducer'
 import injectSaga from '../../store/injectSaga'
@@ -17,12 +18,18 @@ const columns = [
   {
     dataIndex: 'name',
     key: 'name',
-    render: text => <Flex flex='flex'><StyleAvatar mr={2} shape="square" size="large" icon="user"/>
-      <div>
-        <div>Name</div>
-        {text}
-      </div>
-    </Flex>,
+    render: (text, record) => {
+      return (
+        <Link to={`/projects/${record.id}`}>
+          <Flex flex='flex'><StyleAvatar mr={2} shape="square" size="large" icon="user"/>
+            <div>
+              <div>Name</div>
+              {text}
+            </div>
+          </Flex>
+        </Link>
+      )
+    },
   },
   {
     dataIndex: 'author',

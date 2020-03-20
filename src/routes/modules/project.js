@@ -8,6 +8,14 @@ const ProjectList = loadable(() => import('../../pages/ProjectList/ProjectList')
   fallback: <LoadingPage/>,
 })
 
+const ProjectDetail = loadable(() => import('../../pages/ProjectDetail'), {
+  fallback: <LoadingPage/>
+})
+
+const AppBuildDetail = loadable(() => import('../../pages/AppBuildDetail'), {
+  fallback: <LoadingPage/>
+})
+
 export default [
   {
     path: '/projects',
@@ -15,5 +23,19 @@ export default [
     component: ProjectList,
     layout: DashboardLayout,
     requiredAuth: true
+  },
+  {
+    path: '/projects/:projectId',
+    exact: true,
+    component: ProjectDetail,
+    layout: DashboardLayout,
+    requiredAuth: true
+  },
+  {
+    path: '/projects/:projectId/app-build/:appBuildId',
+    exact: true,
+    component: AppBuildDetail,
+    layout: DashboardLayout,
+    requireAuth: true,
   },
 ]
