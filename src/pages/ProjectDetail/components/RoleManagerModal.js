@@ -1,27 +1,33 @@
 import React from 'react'
 import { Button, Icon, Modal } from 'antd'
 import AssignMemberModal from './AssignMemberModal'
-import store from '../store'
-import { observer } from 'mobx-react'
+import { inject, observer } from 'mobx-react'
 
+@inject('store')
 @observer
 class RoleManagerModal extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleActiveAssignModal = this.handleActiveAssignModal.bind(this)
+    this.onOk = this.onOk.bind(this)
+    this.onCancel = this.onCancel.bind(this)
+  }
   handleActiveAssignModal() {
-    store.toggleActiveAssignMemberModal()
+    this.props.store.toggleActiveAssignMemberModal()
   }
 
   onCancel() {
-    store.toggleActiveRoleManagerModal()
+    this.props.store.toggleActiveRoleManagerModal()
   }
 
   onOk() {
-    store.toggleActiveRoleManagerModal()
+    this.props.store.toggleActiveRoleManagerModal()
   }
 
   render() {
     return (
       <Modal
-        visible={store.activeRoleManagerModal}
+        visible={this.props.store.activeRoleManagerModal}
         onCancel={this.onCancel}
         onOk={this.onOk}
         closable={false}

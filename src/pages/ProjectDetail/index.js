@@ -4,7 +4,7 @@ import _ from 'lodash'
 import { Button, Tabs, Icon, Popover } from 'antd'
 import { action, computed, observable, get, toJS } from 'mobx'
 import { compose } from 'recompose'
-import { observer } from 'mobx-react'
+import { inject, observer, Provider } from 'mobx-react'
 import { withRouter } from 'react-router'
 import {
   AndroidFilled,
@@ -20,7 +20,6 @@ import { Flex } from '../../styles/utility'
 import { ShowIf } from '../../components/Utils'
 import ListAppBuild  from './ListAppBuild'
 import RoleManagerModal from './components/RoleManagerModal'
-import store from './store'
 import {
   ListBuild,
   divImg,
@@ -32,6 +31,7 @@ import {
   SmallTitle,
   LinkDownload,
 } from './styled'
+import store from './store'
 
 const {TabPane} = Tabs
 
@@ -53,6 +53,7 @@ const listBuildEnv = [
   },
 ]
 
+@inject('store')
 @observer
 class ProjectDetail extends React.Component {
   @observable projectDetail = {
@@ -60,6 +61,11 @@ class ProjectDetail extends React.Component {
   }
   @observable loading = false
 
+  constructor(props) {
+    super(props);
+
+    this.handleActiveRoleManagerModal = this.handleActiveRoleManagerModal.bind(this)
+  }
   @action
   getProject(projectId) {
     this.loading = true
@@ -90,7 +96,7 @@ class ProjectDetail extends React.Component {
   }
 
   handleActiveRoleManagerModal() {
-    store.toggleActiveRoleManagerModal()
+    this.props.store.toggleActiveRoleManagerModal()
   }
 
   render() {
@@ -164,6 +170,14 @@ class ProjectDetail extends React.Component {
   }
 }
 
-export default compose(
+const ProjectDetailCompose =  compose(
   withRouter,
 )(ProjectDetail)
+
+const ProjectDetailContainer = () => {
+  return (
+    <Provider store={store}><ProjectDetailCompose/></Provider>
+  )
+}
+
+export default ProjectDetailContainer

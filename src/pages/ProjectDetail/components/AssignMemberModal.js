@@ -3,46 +3,50 @@ import React from 'react'
 import { Modal, Select, Form, Col } from 'antd'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-import { observer } from 'mobx-react'
+import { inject, observer } from 'mobx-react'
 import { withRouter } from 'react-router'
 
 import projectReducer from '../../../store/modules/project/reducers'
 import projectSaga from '../../../store/modules/project/sagas'
 import roleReducer from '../../../store/modules/role/reducers'
 import roleSaga from '../../../store/modules/role/sagas'
-import store from '../store'
 import { fetchExternalMembers, requestAssignMembers } from '../../../store/modules/project/actions'
 import { fetchRoles } from '../../../store/modules/role/actions'
 import { getExternalMembers } from '../../../store/modules/project/selectors'
 import { getRoles } from '../../../store/modules/role/selectors'
 import { injectReducer, injectSaga } from '../../../store'
 
+@inject('store')
 @observer
 class AssignMemberModal extends React.Component {
   constructor(props) {
     super(props);
+
+    this.handleSelectMember = this.handleSelectMember.bind(this)
+    this.handleSelectRole = this.handleSelectRole.bind(this)
     this.onOk = this.onOk.bind(this)
+    this.onCancel = this.onCancel.bind(this)
   }
   handleSelectMember(memberId) {
-    store.setMember('memberId', memberId)
+    this.props.store.setMember('memberId', memberId)
   }
 
   handleSelectRole(roleId) {
-    store.setMember('roleId', roleId)
+    this.props.store.setMember('roleId', roleId)
   }
 
   onCancel() {
-    store.resetMember()
-    store.toggleActiveAssignMemberModal()
+    this.props.store.resetMember()
+    this.props.store.toggleActiveAssignMemberModal()
   }
 
   onOk() {
     this.props.requestAssignMembers({
       id: this.props.match.params.projectId,
-      members: [{...store.member}]
+      members: [{...this.props.store.member}]
     })
-    store.resetMember()
-    store.toggleActiveAssignMemberModal()
+    this.props.store.resetMember()
+    this.props.store.toggleActiveAssignMemberModal()
   }
 
   getMemberOptions(members) {
@@ -89,14 +93,14 @@ class AssignMemberModal extends React.Component {
 
     return (
       <Modal
-        visible={store.activeAssignMemberModal}
+        visible={this.props.store.activeAssignMemberModal}
         maskClosable={false}
         width={600}
         closable={false}
         onCancel={this.onCancel}
         onOk={this.onOk}
         okButtonProps={{
-          disabled: !store.validateMember
+          disabled: !this.props.store.validateMember
         }}
       >
         <div style={{marginBottom: 30}}>
@@ -113,7 +117,7 @@ class AssignMemberModal extends React.Component {
                   style={{width: 200}}
                   key={'memberId'}
                   showSearch
-                  value={store.member.memberId}
+                  value={this.props.store.member.memberId}
                   filterOption={(input, option) => {
                     return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                   }}
@@ -131,7 +135,7 @@ class AssignMemberModal extends React.Component {
                 <Select
                   style={{width: 200}}
                   key={'roleId'}
-                  value={store.member.roleId}
+                  value={this.props.store.member.roleId}
                   onChange={this.handleSelectRole}
                 >{roleOptions}
                 </Select>
