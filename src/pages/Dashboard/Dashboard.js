@@ -12,11 +12,10 @@ import saga from './store/sagas'
 import _ from 'lodash'
 import { connect } from 'react-redux'
 import { fetchAppBuilds, fetchProject } from './store/actions'
-import { API_URL, PLATFORM_TYPE } from '../../config/constants'
 import { container } from '../../styles/mixins'
 
 const Container = styled.div`
-  padding-top: 40px;
+  padding-top: 10px;
   ${container.centerBox}
 `
 
@@ -27,24 +26,11 @@ class DashboardPage extends React.Component {
     fetchAppBuilds()
   }
 
-  isAndroid(platformType) {
-    return platformType === PLATFORM_TYPE.ANDROID
-  }
-
-  getUrl (item) {
-    return this.isAndroid(item.project.platformType) ?
-      item.s3Url :
-      `itms-services://?action=download-manifest&url=${API_URL}/app-builds/${item.id}/manifest.plist`
-  }
-
   render() {
     return (
       <Container>
         <Row gutter={20}>
           <Col span={6}>
-            <div>
-              <img style={{width: '100%', marginBottom: '20px'}} src="https://via.placeholder.com/250x300.png" alt=""/>
-            </div>
 
             <ListProject data={this.props.projects} />
 

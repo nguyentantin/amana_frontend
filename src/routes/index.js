@@ -1,8 +1,5 @@
 import React from 'react'
 
-import PrivateRoute from './PrivateRoute'
-import RestrictedRoute from './RestrictedRoute'
-
 import loadable from '../utils/loadable'
 import LoadingPage from '../components/LoadingPage/LoadingPage'
 
@@ -29,11 +26,6 @@ const modulesRoute = () => {
   })
 
   return modules
-}
-
-export {
-  PrivateRoute,
-  RestrictedRoute,
 }
 
 export default [

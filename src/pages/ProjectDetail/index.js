@@ -27,7 +27,8 @@ import {
   Container,
   marginRight,
   hrStyle,
-  iconStyle,
+  appleStyle,
+  androidStyle,
   SmallTitle,
   LinkDownload,
 } from './styled'
@@ -102,11 +103,11 @@ class ProjectDetail extends React.Component {
           <ShowIf condition={!_.isEmpty(this.projectDetail)}>
             <ListBuild>
               <div className="content-left">
-                <h3>Project Name: {this.projectDetail.name}</h3>
+                <h3># {_.get(this.projectDetail, 'currentVersion.id', '')} - {_.get(this.projectDetail, 'currentVersion.commitChanges', '')}</h3>
+                <p>Project Name: {this.projectDetail.name}</p>
+                <p>Platform: { this.isAndroid ? <AndroidFilled style={androidStyle}/> : <AppleFilled style={appleStyle}/> }</p>
+                <p>Author: {_.get(this.projectDetail, 'author.name', '')}</p>
                 <p>Descriptions: {this.projectDetail.description}</p>
-                <p>Latest Commit: # {_.get(this.projectDetail, 'currentVersion.commitChanges', '')}</p>
-                <p>Platform: { this.isAndroid ? <AndroidFilled style={iconStyle}/> : <AppleFilled style={iconStyle}/> }</p>
-                <p>Author: {this.projectDetail.author ? this.projectDetail.author.name: ''}</p>
                 <Button className="btn-right" type="primary" size='large' style={marginRight}>
                   <Icon type="download"/>
                   <LinkDownload href={this.downloadUrl} download> Download </LinkDownload>
@@ -138,7 +139,7 @@ class ProjectDetail extends React.Component {
           <h2>Activities <SmallTitle>Recent activities on this app.</SmallTitle></h2>
           <Tabs defaultActiveKey="1">
             {
-              listBuildEnv.map((item, index) => {
+              listBuildEnv.map((item) => {
                 return (
                   <TabPane
                     tab={

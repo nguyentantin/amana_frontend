@@ -17,7 +17,7 @@ export const Container = styled.div`
 `
 
 export const divImg = {
-  paddingRight: '40px',
+  paddingRight: '20px',
   paddingBottom: '20px'
 }
 
@@ -33,8 +33,14 @@ export const hrStyle = {
   backgroundImage: 'linear-gradient(to right, #ccc, #333, #ccc)',
 }
 
-export const iconStyle = {
-  fontSize: '20px'
+export const appleStyle = {
+  fontSize: '20px',
+  color: '#bf5af2',
+}
+
+export const androidStyle = {
+  fontSize: '20px',
+  color: '#8eba3e',
 }
 
 export const SmallTitle =  styled.small`
@@ -44,4 +50,7 @@ export const SmallTitle =  styled.small`
 
 export const LinkDownload = styled.a`
   color: white;
+  :hover {
+    color: white
+  }
 `

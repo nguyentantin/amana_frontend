@@ -1,0 +1,5 @@
+export const CREATE_PROJECT = 'project/CREATE_PROJECT'
+export const CREATE_PROJECT_SUCCESS = 'project/CREATE_PROJECT_SUCCESS'
+export const FETCH_PROJECT = 'project/FETCH_PROJECT'
+export const FETCH_PROJECT_SUCCESS = 'project/FETCH_PROJECT_SUCCESS'
+

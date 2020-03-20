@@ -7,14 +7,14 @@ import { error, success } from '../../../utils/toastr'
 import { REQUEST_LOGIN, REQUEST_LOGIN_GOOGLE, REQUEST_REGISTER } from './constants'
 import { loginSuccess, loginError, registerError, registerSuccess } from './actions'
 import AuthRequest from '../../../api/Request/AuthRequest'
-import helpers from '../../../utils/helpers'
+import LocalStorage from '../../../utils/localStorage'
 import { HTTP_CODE } from '../../../config/constants'
 
 function* login(action) {
   try {
     const data = yield call(AuthRequest.login.bind(AuthRequest), action.credentials)
-    helpers.saveToken(data)
-    helpers.saveAuthInfo(data.user)
+    LocalStorage.saveToken(data)
+    LocalStorage.saveAuthInfo(data.user)
     yield put(loginSuccess(data))
     yield put(push('/dashboard'))
     success('Login is successfully!')
@@ -43,8 +43,8 @@ function* register(action) {
 function* loginGoogle(action) {
   try {
     const data = yield call(AuthRequest.googleAuthentication.bind(AuthRequest), action.tokenData)
-    helpers.saveToken(data)
-    helpers.saveAuthInfo(data.user)
+    LocalStorage.saveToken(data)
+    LocalStorage.saveAuthInfo(data.user)
     yield put(loginSuccess(data))
     yield put(push('/dashboard'))
     success('Login is successfully!')

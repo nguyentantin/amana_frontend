@@ -9,6 +9,18 @@ class ProjectRequest extends HttpRequest {
     return this.get(`/projects/${projectId}`)
   }
 
+  createProject(params) {
+    return this.post('/projects', params)
+  }
+
+  listProject() {
+    return this.get('/projects')
+  }
+
+  appBuildDetail(projectId, appBuildId) {
+    return this.get(`/projects/${projectId}/app-builds/${appBuildId}`)
+  }
+
   fetchExternalMembers(projectId) {
     return this.get(`/projects/${projectId}/external-members`)
   }
