@@ -36,7 +36,7 @@ export default class ListProject extends React.Component {
                 />
               }
             >
-              <Link to={`/project/${item.id}`}>
+              <Link to={`/projects/${item.id}`}>
                 <Icon type={ item.platformType === PLATFORM_TYPE.ANDROID ? 'android' : 'apple' } /> {item.name}
               </Link>
               <p className="name"><Avatar size="small" icon="user" /> <Link to='/'>{_.get(item, 'author.name', '')}</Link></p>

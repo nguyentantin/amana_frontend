@@ -4,13 +4,8 @@ import { DashboardLayout } from '../../components/Layout'
 
 import loadable from '../../utils/loadable'
 import LoadingPage from '../../components/LoadingPage/LoadingPage'
-import AppBuildDetail from '../../pages/AppBuildDetail'
 
 const Dashboard = loadable(() => import('../../pages/Dashboard/Dashboard'), {
-  fallback: <LoadingPage/>,
-})
-
-const ProjectDetail = loadable(() => import('../../pages/ProjectDetail'), {
   fallback: <LoadingPage/>,
 })
 
@@ -23,20 +18,6 @@ export default [
     path: '/dashboard',
     exact: true,
     component: Dashboard,
-    layout: DashboardLayout,
-    requiredAuth: true
-  },
-  {
-    path: '/project/:projectId/app-build/:appBuildId',
-    exact: true,
-    component: AppBuildDetail,
-    layout: DashboardLayout,
-    requireAuth: true,
-  },
-  {
-    path: '/project/:projectId',
-    exact: true,
-    component: ProjectDetail,
     layout: DashboardLayout,
     requiredAuth: true
   },
