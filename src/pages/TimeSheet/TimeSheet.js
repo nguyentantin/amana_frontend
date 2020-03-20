@@ -10,6 +10,7 @@ import _ from 'lodash'
 
 import { AInput } from '../../components/FormUI'
 import TimeTrackingRequest from '../../api/Request/TimeTrackingRequest'
+import { Container } from './styled'
 
 const valueToMoment = (value, dateFormat) => {
   if (value === undefined || value === null || value === "") {
@@ -73,33 +74,34 @@ class TimeSheet extends React.Component {
         title: 'User Name',
         dataIndex: 'neoUser.username',
         key: 'name',
-        align: 'center'
+        align: 'center',
+        render: text => <b>{text}</b>
       },
       {
         title: 'Time check-in',
         dataIndex: 'checkinAt',
         align: 'center',
-        render: text => <b>{formatDate(text, VN_TIME)}</b>
+        render: text => <span>{formatDate(text, VN_TIME)}</span>
       },
       {
         title: 'Time check-out',
         dataIndex: 'checkoutAt',
         key: 'checkoutAt',
         align: 'center',
-        render: text => <b>{formatDate(text, VN_TIME)}</b>
+        render: text => <span>{formatDate(text, VN_TIME)}</span>
       },
       {
         title: 'Time to work',
         dataIndex: 'timeWorking',
         key: 'timeWorking',
         align: 'center',
-        render: (value, record) => <b>{this.timeToWork(record.checkinAt, record.checkoutAt)}</b>
+        render: (value, record) => <span>{this.timeToWork(record.checkinAt, record.checkoutAt)}</span>
       },
       {
         title: 'Date',
         dataIndex: 'createdAt',
         align: 'center',
-        render: text => <b>{formatDate(text, VN_DATE)}</b>
+        render: text => <span>{formatDate(text, VN_DATE)}</span>
       },
     ]
   }
@@ -154,41 +156,43 @@ class TimeSheet extends React.Component {
     const {handleSubmit} = this.props
 
     return (
-      <Card style={{margin: '100px'}}>
-        <Form layout="inline" style={{marginBottom: '30px'}} onSubmit={handleSubmit(this.onSearch)}>
-          <Field
-            label="Name"
-            name="username"
-            component={AInput}
-            placeholder="Please enter user name"
-          />
+      <Container>
+        <Card>
+          <Form layout="inline" style={{marginBottom: '30px'}} onSubmit={handleSubmit(this.onSearch)}>
+            <Field
+              label="Name"
+              name="username"
+              component={AInput}
+              placeholder="Please enter user name"
+            />
 
-          <Field
-            label="Date"
-            name="date"
-            component={DatePickerField}
-            dateFormat="YYYY-MM-DD"
-            placeholder="Working date"
-          />
+            <Field
+              label="Date"
+              name="date"
+              component={DatePickerField}
+              dateFormat="YYYY-MM-DD"
+              placeholder="Working date"
+            />
 
-          <Button
-            shape="round"
-            type="primary"
-            htmlType="submit"
-            style={{marginTop: '4px'}}
-          >
-            Search
-          </Button>
-        </Form>
-        <Table
-          rowKey='id'
-          loading={this.loading}
-          bordered={true}
-          pagination={false}
-          dataSource={this.timeSheetsData}
-          columns={this.columns()}
-        />
-      </Card>
+            <Button
+              shape="round"
+              type="primary"
+              htmlType="submit"
+              style={{marginTop: '4px'}}
+            >
+              Search
+            </Button>
+          </Form>
+          <Table
+            rowKey='id'
+            loading={this.loading}
+            bordered={true}
+            pagination={false}
+            dataSource={this.timeSheetsData}
+            columns={this.columns()}
+          />
+        </Card>
+      </Container>
     )
   }
 }

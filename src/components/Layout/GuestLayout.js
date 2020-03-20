@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { Layout, Menu } from 'antd'
+import { Layout } from 'antd'
 import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom'
 
