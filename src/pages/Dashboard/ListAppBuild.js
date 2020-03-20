@@ -22,7 +22,7 @@ const ListAppBuild = (props) => {
           <List.Item>
             <List.Item.Meta
               avatar={<Avatar size={55} icon="user" />}
-              title={<Link to={`/project/${item.projectId}/app-build/${item.id}`}><strong># {item.id} { truncate(item.commitChanges, 50) }</strong></Link>}
+              title={<Link to={`/projects/${item.projectId}/app-build/${item.id}`}><strong># {item.id} { truncate(item.commitChanges, 50) }</strong></Link>}
               description={item.project.name}
             />
             <div>{ timeDistance(item.createdAt) }</div>
