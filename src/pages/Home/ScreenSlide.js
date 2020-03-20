@@ -50,6 +50,14 @@ const ScreenSlide = styled.div`
       height: auto;
     }
   }
+  @media (max-width: 768px) {
+    .messageBox {
+      padding: 0 10px;
+      h1 {
+      margin-top: 100px;
+      }
+    } 
+  }
 `
 
 export default ScreenSlide

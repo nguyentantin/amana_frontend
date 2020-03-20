@@ -1,4 +1,3 @@
-import styled from 'styled-components'
 import { Avatar, Icon, List } from 'antd'
 import React from 'react'
 import _ from 'lodash'
@@ -12,7 +11,7 @@ import { Box } from '../../styles/utility'
 export default class ListProject extends React.Component {
   render () {
     return (
-      <ScrollContainer height="300px">
+      <ScrollContainer height={['auto', 300]} mb={[20, 0]}>
         <h4><Icon type="unordered-list" /> Build</h4>
         <List
           itemLayout="vertical"

@@ -5,7 +5,6 @@ import { Avatar, Card } from 'antd'
 import { container } from '../../styles/mixins'
 
 export const StyleContainer = styled.div`
-  padding-top: 40px;
   ${container.centerBox}
   .ant-table-thead {
     display: none;
