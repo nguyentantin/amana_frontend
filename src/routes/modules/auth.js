@@ -20,6 +20,14 @@ const SignUpSuccess = loadable(() => import('../../pages/SignUpSuccess/SignUpSuc
   fallback: <LoadingPage/>,
 })
 
+const PasswordSendMail = loadable(() => import('../../pages/PasswordSendMail/PasswordSendMail'), {
+  fallback: <LoadingPage/>,
+})
+
+const PasswordReset = loadable(() => import('../../pages/PasswordReset/PasswordReset'), {
+  fallback: <LoadingPage/>,
+})
+
 export default [
   {
     path: '/sign-in',
@@ -32,6 +40,18 @@ export default [
     path: '/sign-up',
     component: SignUpPage,
     layout: GuestLayout,
+    exact: true,
+    restricted: true
+  },
+  {
+    path: '/pwd/send-mail',
+    component: PasswordSendMail,
+    exact: true,
+    restricted: true
+  },
+  {
+    path: '/pwd/reset',
+    component: PasswordReset,
     exact: true,
     restricted: true
   },

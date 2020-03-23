@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { system, space, color, layout } from 'styled-system'
+import { system, space, color, layout, typography } from 'styled-system'
 
 export const Flex = styled('div')(
   system({
@@ -13,5 +13,6 @@ export const Flex = styled('div')(
 export const Box = styled.div(
   space,
   color,
-  layout
+  layout,
+  typography
 )

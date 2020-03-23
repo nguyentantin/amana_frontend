@@ -20,6 +20,7 @@ import i18n from './i18n'
 import AppRoutes from './components/Application/AppRoutes'
 import route from './routes'
 import logo from './assets/images/App_logo.png'
+import { unregister } from './serviceWorker'
 
 /**
  * Main Application class.
@@ -27,6 +28,7 @@ import logo from './assets/images/App_logo.png'
 class Application {
   constructor() {
     this.MOUNT_NODE = document.getElementById('root')
+    unregister()
   }
 
   initStore() {

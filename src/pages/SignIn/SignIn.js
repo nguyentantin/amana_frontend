@@ -101,7 +101,7 @@ class SignInPage extends React.PureComponent {
               />
               <StyleLink pl={[0, 45]}>
                 <span style={{display: 'block', marginBottom: '15px'}}>
-                  <Link to='/'>Forgot your password?</Link>
+                  <Link to='/pwd/send-mail'>Forgot your password?</Link>
                 </span>
 
                 <Button
