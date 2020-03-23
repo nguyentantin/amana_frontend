@@ -6,3 +6,14 @@ export const ScrollContainer = styled.div`
   ${layout}
   ${space}
 `
+
+export const ListBuildContainer = styled(ScrollContainer)`
+    .ant-list-vertical .ant-list-item-extra {
+        margin-left: 0px;
+        text-align: right;
+    }
+`
+
+export const TextMute = styled.p`
+    color: #CCC;
+`

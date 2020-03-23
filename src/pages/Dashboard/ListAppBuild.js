@@ -1,11 +1,11 @@
 import React from 'react'
+import moment from 'moment'
 import styled from 'styled-components'
 import { Avatar, List } from 'antd'
 import { Link } from 'react-router-dom'
+
 import { truncate } from '../../utils/truncate'
-import timeDistance from '../../utils/timeDistances'
 import { ScrollContainer } from './styled'
-import moment from 'moment'
 
 const SmallTitle =  styled.small`
     font-size: 69%;
@@ -30,9 +30,9 @@ const ListAppBuild = (props) => {
         renderItem={item => (
           <List.Item>
             <List.Item.Meta
-              avatar={<Avatar size={55} icon="user" />}
+              avatar={<Avatar size={55} icon="pull-request" />}
               title={<Link to={`/projects/${item.projectId}/app-build/${item.id}`}><strong># {item.id} { truncate(item.commitChanges, 50) }</strong></Link>}
-              description={<DescriptionLink to={`/project/${item.projectId}`}>{item.project.name}</DescriptionLink>}
+              description={<DescriptionLink to={`/projects/${item.projectId}`}>{item.project.name}</DescriptionLink>}
             />
             <div><TextMute>{ moment(item.createdAt).fromNow() }</TextMute></div>
           </List.Item>
