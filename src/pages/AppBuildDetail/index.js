@@ -2,7 +2,6 @@ import React from 'react'
 import _ from 'lodash'
 import { Button, Icon, Popover } from 'antd'
 import { withRouter } from 'react-router'
-import styled from 'styled-components'
 import { observer } from 'mobx-react'
 import QRCode from 'qrcode.react'
 import { AndroidFilled, AppleFilled } from '@ant-design/icons'
@@ -13,49 +12,7 @@ import { compose } from 'recompose'
 import { API_URL, PLATFORM_TYPE } from '../../config/constants'
 import { ShowIf } from '../../components/Utils'
 import { Flex } from '../../styles/utility'
-import { container } from '../../styles/mixins'
-
-
-const ListBuild = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  .content-left {
-    padding: 0 8px;
-  }
-`
-
-const Container = styled.div`
-  padding-bottom: 40px;
-  ${container.centerBox}
-`
-
-const divImg = {
-  paddingRight: '40px',
-  paddingBottom: '20px'
-}
-
-const marginRight = {
-  marginRight: '10px',
-}
-
-const appleStyle = {
-  fontSize: '20px',
-  color: '#bf5af2',
-}
-
-const androidStyle = {
-  fontSize: '20px',
-  color: '#8eba3e',
-}
-
-const LinkDownload = styled.a`
-  color: white;
-  :hover {
-    color: white
-  }
-`
+import { ListBuild, Container, StyleImg, marginRight, appleStyle, androidStyle, LinkDownload } from './styled'
 
 @observer
 class AppBuildDetail extends React.Component {
@@ -95,12 +52,12 @@ class AppBuildDetail extends React.Component {
   render() {
     return (
       <Container>
-        <Flex flex='flex'>
-          <div style={divImg}>
+        <Flex flex={['block', 'flex']}>
+          <StyleImg pr={[0,20]} pb={20} textAlign={['center', 'left']}>
             <img src="https://via.placeholder.com/250x250.png" alt=""/>
-          </div>
+          </StyleImg>
           <ShowIf condition={!_.isEmpty(this.appBuild)}>
-            <ListBuild>
+            <ListBuild display='flex' alignItems='center'>
               <div className="content-left">
                 <h3># {this.appBuild.id} - {this.appBuild.commitChanges}</h3>
                 <p>Project Name: {_.get(this.appBuild, 'project.name', '')}</p>

@@ -16,12 +16,12 @@ class PasswordSendMail extends React.Component {
     const {handleSubmit} = this.props
     return (
       <Row>
-        <Styled.ContainerWrapper>
+        <Styled.ContainerWrapper pt={[50, 110]}>
           <Styled.LogoWrapper m='auto'>
             <img src={logo} alt="Logo"/>
           </Styled.LogoWrapper>
 
-          <Box m='auto' mt={40} width={500}>
+          <Box m='auto' mt={40} width={[1, 500]} px={[10, 0]}>
             <Card>
               <Form layout="vertical" onSubmit={handleSubmit}>
                 <Box textAlign='center' mb={2}>

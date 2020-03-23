@@ -2,11 +2,7 @@ import styled from 'styled-components'
 import { container } from '../../styles/mixins'
 import styledSystem from '../../styles/styledSystem'
 
-export const ListBuild = styledSystem(styled.div`
-  > div {
-    width: 100%;
-  }
-`)
+export const ListBuild = styledSystem(styled.div``)
 
 export const Container = styled.div`
   padding-bottom: 40px;
@@ -19,10 +15,15 @@ export const marginRight = {
   marginRight: '10px',
 }
 
-export const SmallTitle =  styled.small`
-    font-size: 69%;
-    color: rgba(0, 0, 0, 0.45);
-  `
+export const appleStyle = {
+  fontSize: '20px',
+  color: '#bf5af2',
+}
+
+export const androidStyle = {
+  fontSize: '20px',
+  color: '#8eba3e',
+}
 
 export const LinkDownload = styled.a`
   color: white;
