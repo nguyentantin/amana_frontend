@@ -1,5 +1,5 @@
-import makeField from './makeField'
 import { Input, Radio, Select, Checkbox, DatePicker } from 'antd'
+import makeField from './makeField'
 
 const RadioGroup = Radio.Group
 const {TextArea} = Input
