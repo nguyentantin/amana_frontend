@@ -6,7 +6,7 @@ import moment from 'moment'
 import { PullRequestOutlined } from '@ant-design/icons'
 
 import { ListBuildContainer, TextMute } from './styled'
-import { getFirstCapitalizedLetter, truncate } from '../../utils/truncate'
+import { getFirstCapitalizedLetter, truncate } from '../../utils/helpers'
 import { PlatformIcon } from '../../components/CoreUI'
 import { Box } from '../../styles/utility'
 

@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { Avatar, List } from 'antd'
 import { Link } from 'react-router-dom'
 
-import { truncate } from '../../utils/truncate'
+import { truncate } from '../../utils/helpers'
 import { ScrollContainer } from './styled'
 
 const SmallTitle =  styled.small`
