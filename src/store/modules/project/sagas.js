@@ -1,3 +1,4 @@
+import { reset } from 'redux-form'
 import { call, takeLatest, put } from 'redux-saga/effects'
 import ProjectRequest from '../../../api/Request/ProjectRequest'
 import { error, success } from '../../../utils/toastr'
@@ -22,9 +23,10 @@ function* assignMembers(action) {
     yield call(ProjectRequest.assignMembers.bind(ProjectRequest), action.project.id, formData)
     const { data } = yield call(ProjectRequest.fetchExternalMembers.bind(ProjectRequest), action.project.id)
     yield put(fetchExternalMembersSuccess(data))
+    yield put(reset('AssignMemberForm'))
     success('Assigned members succeeded!')
   } catch (e) {
-    console.log(e)
+    yield put(reset('AssignMemberForm'))
     error('Request assign members failed!')
   }
 }

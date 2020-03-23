@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import React from 'react'
 import { Button, Col, Form, Input, Select } from 'antd'
+import { Field, reduxForm } from 'redux-form'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { inject, observer } from 'mobx-react'
@@ -15,6 +16,8 @@ import { fetchRoles } from '../../../store/modules/role/actions'
 import { getExternalMembers } from '../../../store/modules/project/selectors'
 import { getRoles } from '../../../store/modules/role/selectors'
 import { injectReducer, injectSaga } from '../../../store'
+import { required } from '../../../utils/validations'
+import { ASelect } from '../../../components/FormUI'
 
 @inject('store')
 @observer
@@ -35,15 +38,14 @@ class AssignMember extends React.Component {
     this.props.store.setMember('roleId', roleId)
   }
 
-  onSubmit() {
+  onSubmit(member) {
     const { match, store, requestAssignMembers } = this.props
 
     requestAssignMembers({
       id: match.params.projectId,
-      members: [{...this.props.store.member}]
+      members: [{...member}]
     })
 
-    store.resetMember()
     store.toggleActiveAssignMemberModal()
   }
 
@@ -87,64 +89,59 @@ class AssignMember extends React.Component {
   }
 
   render() {
+    const { handleSubmit } = this.props
     const memberOptions = this.renderMemberOptions(this.props.externalMembers)
     const roleOptions = this.renderRoleOptions(this.props.roles)
 
     return (
       <div style={{height: 25}}>
-        <Form.Item>
-          <Input.Group compact>
-            <Col span={12} style={{paddingRight: 0}}>
-              <Form.Item
-                name={'member'}
-                style={{marginBottom: 0}}
-              >
-                <Select
-                  showSearch
-                  placeholder='By name or email address'
-                  style={{width: '100%'}}
-                  key={'memberId'}
-                  value={this.props.store.member.memberId}
-                  filterOption={(input, option) => {
-                    console.log(option)
-                    return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                      || option.props.email.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                  }}
-                  onChange={this.handleSelectMember}
-                >{memberOptions}
-                </Select>
-              </Form.Item>
-            </Col>
+        <Form onSubmit={handleSubmit(this.onSubmit)}>
+          <Form.Item>
+            <Input.Group compact>
+              <Col span={12} style={{paddingRight: 0}}>
+                <Form.Item style={{marginBottom: 0}}>
+                  <Field
+                    name={'memberId'}
+                    component={ASelect}
+                    placeholder={'Search by name or email address'}
+                    showSearch
+                    style={{width: '100%'}}
+                    filterOption={(input, option) => {
+                      return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        || option.props.email.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                    }}
+                    validate={[required]}
+                  >{memberOptions}
+                  </Field>
+                </Form.Item>
+              </Col>
 
-            <Col span={8} style={{paddingRight: 0}}>
-              <Form.Item
-                name={'role'}
-                style={{marginBottom: 0}}
-              >
-                <Select
-                  style={{width: '100%'}}
-                  key={'roleId'}
-                  value={this.props.store.member.roleId}
-                  onChange={this.handleSelectRole}
-                >{roleOptions}
-                </Select>
-              </Form.Item>
-            </Col>
+              <Col span={8} style={{paddingRight: 0}}>
+                <Form.Item style={{marginBottom: 0}}>
+                  <Field
+                    name={'roleId'}
+                    component={ASelect}
+                    style={{width: '100%'}}
+                    validate={[required]}
+                  >{roleOptions}
+                  </Field>
+                </Form.Item>
+              </Col>
 
-            <Col span={4}>
-              <Form.Item>
-                <Button
-                  onClick={this.onSubmit}
-                  disabled={this.props.store.activeAssignMemberModal}
-                  className='btn-right'
-                  style={{width: '100%'}}
-                  type='primary'
-                >Add
-                </Button>
-              </Form.Item>
-            </Col>
-          </Input.Group>
-        </Form.Item>
+              <Col span={4}>
+                <Form.Item>
+                  <Button
+                    className='btn-right'
+                    style={{width: '100%'}}
+                    type='primary'
+                    htmlType="submit"
+                  >Add
+                  </Button>
+                </Form.Item>
+              </Col>
+            </Input.Group>
+          </Form.Item>
+        </Form>
       </div>
     )
   }
@@ -167,5 +164,8 @@ export default compose(
   injectReducer({key: 'role', reducer: roleReducer}),
   injectSaga({key: 'project', saga: projectSaga}),
   injectSaga({key: 'role', saga: roleSaga}),
-  withRouter
+  withRouter,
+  reduxForm({
+    form: 'AssignMemberForm'
+  })
 )(AssignMember)
