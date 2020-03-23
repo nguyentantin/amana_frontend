@@ -1,17 +1,21 @@
-import { Avatar, Icon, List } from 'antd'
+import { Avatar, Icon, List, Tag } from 'antd'
 import React from 'react'
 import _ from 'lodash'
-
-import calling from '../../assets/images/calling.png'
 import { Link } from 'react-router-dom'
-import { ScrollContainer } from './styled'
+import moment from 'moment'
+import { PullRequestOutlined } from '@ant-design/icons'
+
+import { ListBuildContainer, TextMute } from './styled'
+import { getFirstCapitalizedLetter, truncate } from '../../utils/helpers'
 import { PlatformIcon } from '../../components/CoreUI'
 import { Box } from '../../styles/utility'
+
+const upperCaseProjectName = string => getFirstCapitalizedLetter(string)
 
 export default class ListProject extends React.Component {
   render () {
     return (
-      <ScrollContainer height={['auto', 300]} mb={[20, 0]}>
+      <ListBuildContainer height={['auto', 300]} mb={[20, 0]}>
         <h4><Icon type="unordered-list" /> Build</h4>
         <List
           itemLayout="vertical"
@@ -22,27 +26,23 @@ export default class ListProject extends React.Component {
           renderItem={item => (
             <List.Item
               extra={
-                <img
-                  width={40}
-                  alt="logo"
-                  src={calling}
-                />
+                <React.Fragment>
+                    <p><Tag color="blue">{item.totalAppBuilds || 0} <PullRequestOutlined /></Tag></p>
+                    <TextMute>{ item.latestAppBuild ? moment(_.get(item, 'latestAppBuild.createdAt', moment())).fromNow() : 'No Builds' }</TextMute>
+                </React.Fragment>
               }
             >
               <Link to={`/projects/${item.id}`}>
-                <PlatformIcon platform={item.platformType}/>
-                {item.name}
+                  <PlatformIcon platform={item.platformType}/> {truncate(item.name, 15)}
               </Link>
 
               <Box mt={10} mb={2}>
-                <Avatar size="small" icon="user"/>
-
-                {_.get(item, 'author.name', '')}
+                <Avatar size="small" src={item.avatar}>{upperCaseProjectName(item.name)}</Avatar> {_.get(item, 'author.name', '')}
               </Box>
             </List.Item>
           )}
         />
-      </ScrollContainer>
+      </ListBuildContainer>
     )
   }
 }
