@@ -37,7 +37,7 @@ class ProjectListPage extends React.Component {
       })
   }
 
-  @action createProject(params) {
+  @action createProject(params, callback) {
     message.loading({content: 'Processing...', key: 'create_project'})
     const {dispatch} = this.props
 
@@ -47,6 +47,7 @@ class ProjectListPage extends React.Component {
         message.success({content: 'Create project successfully!', key: 'create_project', duration: 2})
         dispatch(reset('CreateProjectForm'))
         this.modalCreateVisible = false
+        callback()
         dispatch(reset('CreateProjectForm'))
         this.fetchProjects()
       })
@@ -147,7 +148,7 @@ class ProjectListPage extends React.Component {
 
           <ModalCreateProject
             visible={this.modalCreateVisible}
-            onCreateProject={(values) => this.createProject(values)}
+            onCreateProject={(values, cb) => this.createProject(values, cb)}
             onToggle={() => this.toggleModalCreate()}
           />
 

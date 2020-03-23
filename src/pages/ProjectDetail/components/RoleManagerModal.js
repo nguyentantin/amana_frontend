@@ -1,7 +1,7 @@
 import React from 'react'
-import { Button, Icon, Modal } from 'antd'
-import AssignMemberModal from './AssignMemberModal'
+import { Modal } from 'antd'
 import { inject, observer } from 'mobx-react'
+import AssignMember from './AssignMember'
 
 @inject('store')
 @observer
@@ -27,16 +27,14 @@ class RoleManagerModal extends React.Component {
   render() {
     return (
       <Modal
+        title={<AssignMember/>}
         visible={this.props.store.activeRoleManagerModal}
         onCancel={this.onCancel}
         onOk={this.onOk}
         closable={false}
+        maskClosable={false}
       >
-        <Button className="btn-right" type="primary" size='large' onClick={this.handleActiveAssignModal}>
-          <Icon type="user-add"/>
-          Members
-        </Button>
-        <AssignMemberModal/>
+        <div>{/* list members */}</div>
       </Modal>
     )
   }
