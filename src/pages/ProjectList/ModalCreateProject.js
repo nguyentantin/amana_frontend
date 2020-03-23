@@ -27,11 +27,13 @@ class ModalCreateProject extends React.Component {
   @observable uploading = false
   @observable imageUrl = ''
 
+  @action resetLogo = () => this.imageUrl = ''
+
   @action beforeUpload(file) {
     const isJPG = file.type === 'image/jpeg'
     const isPNG = file.type === 'image/png'
     const isGIF = file.type === 'image/gif'
-    const isLt2MB = file.size / 2048000 <= 1
+    const isLt2MB = file.size / 1024 / 1024 < 2
 
     if (!isJPG && !isPNG && !isGIF) {
       message.error('You can only upload JPEG/PNG file!')
@@ -92,11 +94,20 @@ class ModalCreateProject extends React.Component {
 
   onSubmit(values) {
     const {onCreateProject} = this.props
-    onCreateProject(values)
+    onCreateProject(values, () => {
+      this.resetLogo()
+    })
+  }
+
+  toggleModal() {
+    const {onToggle} = this.props
+
+    onToggle()
+    this.resetLogo()
   }
 
   render() {
-    const {visible, onToggle, handleSubmit} = this.props
+    const {visible, handleSubmit} = this.props
 
     const formItemLayout = {
       labelCol: {span: 5},
@@ -114,7 +125,7 @@ class ModalCreateProject extends React.Component {
         visible={visible}
         title="Create"
         okText="Create"
-        onCancel={onToggle}
+        onCancel={() => this.toggleModal()}
         okButtonProps={{form: 'create-project-form', key: 'submit', htmlType: 'submit'}}
       >
         <Form {...formItemLayout} layout="vertical" id='create-project-form' onSubmit={handleSubmit(this.onSubmit)}>
