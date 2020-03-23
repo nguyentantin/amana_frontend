@@ -1,9 +1,10 @@
 import styled from 'styled-components'
+import { space } from 'styled-system'
 
 export const ContainerWrapper = styled.div`
+  ${space}
   width: 100%;
   min-height: 100%;
-  padding: 110px 0 144px;
   position: relative;
 `
 export const LogoWrapper = styled.div`

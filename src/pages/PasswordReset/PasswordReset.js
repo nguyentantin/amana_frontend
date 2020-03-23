@@ -9,19 +9,19 @@ import { withRouter } from 'react-router'
 import { AInput } from '../../components/FormUI'
 import { email, required } from '../../utils/validations'
 import logo from '../../assets/images/App_logo.png'
-import * as Styled from './styled'
+import * as Styled from '../PasswordSendMail/styled'
 
 class PasswordReset extends React.Component {
   render() {
     const {handleSubmit} = this.props
     return (
       <Row>
-        <Styled.ContainerWrapper>
+        <Styled.ContainerWrapper pt={[50, 110]}>
           <Styled.LogoWrapper m='auto'>
             <img src={logo} alt="Logo"/>
           </Styled.LogoWrapper>
 
-          <Box m='auto' mt={40} width={500}>
+          <Box m='auto' mt={40} width={[1, 500]} px={[10, 0]}>
             <Card>
               <Form layout="vertical" onSubmit={handleSubmit}>
                 <Field
