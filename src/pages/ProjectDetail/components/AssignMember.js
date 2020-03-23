@@ -4,7 +4,6 @@ import { Button, Col, Form, Input, Select } from 'antd'
 import { Field, reduxForm } from 'redux-form'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import { inject, observer } from 'mobx-react'
 import { withRouter } from 'react-router'
 
 import projectReducer from '../../../store/modules/project/reducers'
@@ -13,40 +12,26 @@ import roleReducer from '../../../store/modules/role/reducers'
 import roleSaga from '../../../store/modules/role/sagas'
 import { fetchExternalMembers, requestAssignMembers } from '../../../store/modules/project/actions'
 import { fetchRoles } from '../../../store/modules/role/actions'
-import { getExternalMembers } from '../../../store/modules/project/selectors'
+import { getAssignMembersLoading, getExternalMembers } from '../../../store/modules/project/selectors'
 import { getRoles } from '../../../store/modules/role/selectors'
 import { injectReducer, injectSaga } from '../../../store'
 import { required } from '../../../utils/validations'
 import { ASelect } from '../../../components/FormUI'
 
-@inject('store')
-@observer
 class AssignMember extends React.Component {
   constructor(props) {
     super(props);
 
-    this.handleSelectMember = this.handleSelectMember.bind(this)
-    this.handleSelectRole = this.handleSelectRole.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
   }
 
-  handleSelectMember(memberId) {
-    this.props.store.setMember('memberId', memberId)
-  }
-
-  handleSelectRole(roleId) {
-    this.props.store.setMember('roleId', roleId)
-  }
-
   onSubmit(member) {
-    const { match, store, requestAssignMembers } = this.props
+    const { match, requestAssignMembers } = this.props
 
     requestAssignMembers({
       id: match.params.projectId,
       members: [{...member}]
     })
-
-    store.toggleActiveAssignMemberModal()
   }
 
   renderMemberOptions(members) {
@@ -89,7 +74,7 @@ class AssignMember extends React.Component {
   }
 
   render() {
-    const { handleSubmit } = this.props
+    const { handleSubmit, loading } = this.props
     const memberOptions = this.renderMemberOptions(this.props.externalMembers)
     const roleOptions = this.renderRoleOptions(this.props.roles)
 
@@ -135,6 +120,7 @@ class AssignMember extends React.Component {
                     style={{width: '100%'}}
                     type='primary'
                     htmlType="submit"
+                    loading={loading}
                   >Add
                   </Button>
                 </Form.Item>
@@ -150,6 +136,7 @@ class AssignMember extends React.Component {
 const mapStateToProps = state => ({
   externalMembers: getExternalMembers(state),
   roles: getRoles(state),
+  loading: getAssignMembersLoading(state),
 })
 
 const mapDispatchToProps = {
