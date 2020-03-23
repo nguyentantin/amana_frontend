@@ -1,11 +1,8 @@
 import styled from 'styled-components'
-import PropTypes from 'prop-types'
+import { layout, space } from 'styled-system'
 
 export const ScrollContainer = styled.div`
-  height: ${props => props.height};
   overflow: auto;
+  ${layout}
+  ${space}
 `
-ScrollContainer.propTypes = {
-  height: PropTypes.string.isRequired
-}
-

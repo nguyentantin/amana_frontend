@@ -12,7 +12,7 @@ export default class ListAppBuild extends React.PureComponent{
                     <List.Item>
                         <List.Item.Meta
                             avatar={<Avatar size={55} icon="user" />}
-                            title={<Link to={`/project/${item.projectId}/app-build/${item.id}`}><b># {item.id} {item.commitChanges}</b></Link>}
+                            title={<Link to={`/projects/${item.projectId}/app-build/${item.id}`}><b># {item.id} {item.commitChanges}</b></Link>}
                             description={item.filename}
                         />
                     </List.Item>

@@ -4,10 +4,11 @@ import React from 'react'
 import _ from 'lodash'
 
 import { Link } from 'react-router-dom'
-import { PLATFORM_TYPE } from '../../config/constants'
 import { ScrollContainer } from './styled'
 import { getFirstCapitalizedLetter, truncate } from '../../utils/truncate'
 import { PullRequestOutlined } from '@ant-design/icons'
+import { PlatformIcon } from '../../components/CoreUI'
+import { Box } from '../../styles/utility'
 
 const ListBuild = styled(List)`
   .name {
@@ -17,7 +18,6 @@ const ListBuild = styled(List)`
 `
 
 const ListBuildContainer = styled(ScrollContainer)`
-    height: 300px;
     .ant-list-vertical .ant-list-item-extra {
         margin-left: 0px;
         text-align: right;
@@ -33,9 +33,9 @@ const upperCaseProjectName = string => getFirstCapitalizedLetter(string)
 export default class ListProject extends React.Component {
   render () {
     return (
-      <ListBuildContainer>
+      <ListBuildContainer height={['auto', 300]} mb={[20, 0]}>
         <h4><Icon type="unordered-list" /> Build</h4>
-        <ListBuild
+        <List
           itemLayout="vertical"
           size="small"
           header={<div>Your Project</div>}
@@ -50,12 +50,15 @@ export default class ListProject extends React.Component {
                 </React.Fragment>
               }
             >
-              <Link to={`/project/${item.id}`}>
-                <Icon type={ item.platformType === PLATFORM_TYPE.ANDROID ? 'android' : 'apple' } /> {truncate(item.name, 15)}
+              <Link to={`/projects/${item.id}`}>
+                  <PlatformIcon platform={item.platformType}/> {truncate(item.name, 15)}
               </Link>
-              <p className="name">
-                  <Avatar src={item.avatar} size="small">{ upperCaseProjectName(item.name) }</Avatar> <Link to='/'>{ truncate(_.get(item, 'author.name', ''), 15)}</Link>
-              </p>
+
+              <Box mt={10} mb={2}>
+                  <Avatar size="small" src={item.avatar}>{upperCaseProjectName(item.name)}</Avatar>
+
+                {_.get(item, 'author.name', '')}
+              </Box>
             </List.Item>
           )}
         />

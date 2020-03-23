@@ -1,130 +1,168 @@
 import React from 'react'
-import { Table, Icon, Input, Button } from 'antd'
+import { Icon, Input, Button, message } from 'antd'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { observer } from 'mobx-react'
+import { action, observable } from 'mobx'
+import { stopSubmit, reset } from 'redux-form'
 import _ from 'lodash'
 
-import injectReducer from '../../store/injectReducer'
-import injectSaga from '../../store/injectSaga'
-import reducer from './store/reducers'
-import saga from './store/sagas'
-import { fetchProject } from './store/actions'
 import { Flex } from '../../styles/utility'
 import { StyleAvatar, StyleCard, StyleContainer, StyleHeader } from './styled'
 import ModalCreateProject from './ModalCreateProject'
-
-const columns = [
-  {
-    dataIndex: 'name',
-    key: 'name',
-    render: text => <Flex flex='flex'><StyleAvatar mr={2} shape="square" size="large" icon="user"/>
-      <div>
-        <div>Name</div>
-        {text}
-      </div>
-    </Flex>,
-  },
-  {
-    dataIndex: 'author',
-    key: 'author',
-    render: text => (
-      <span>
-        <div>Author</div>
-        {text}
-      </span>
-    ),
-  },
-  {
-    dataIndex: 'platformType',
-    key: 'platformType',
-    render: text => (
-      <span>
-        <div>Platform</div>
-        {text}
-      </span>
-    ),
-  },
-  {
-    dataIndex: 'description',
-    key: 'description',
-    width: 200,
-    render: text => (
-      <span>
-        <div>Description</div>
-        {text}
-      </span>
-    ),
-  }
-]
+import ProjectRequest from '../../api/Request/ProjectRequest'
+import { HTTP_CODE } from '../../config/constants'
+import { PlatformIcon } from '../../components/CoreUI'
+import TableStyle from '../../styles/tableResponsive'
 
 const {Search} = Input
 
+@observer
 class ProjectListPage extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      visible: false,
-    }
+  @observable projects = []
+  @observable loading = false
+  @observable modalCreateVisible = false
+
+  @action fetchProjects() {
+    this.loading = true
+
+    ProjectRequest
+      .all()
+      .then((data) => {
+        this.projects = data
+      })
+      .finally(() => {
+        this.loading = false
+      })
   }
 
-  componentDidMount () {
-    const { fetchProject } = this.props
-    fetchProject()
+  @action createProject(params) {
+    message.loading({content: 'Processing...', key: 'create_project'})
+    const {dispatch} = this.props
+
+    ProjectRequest
+      .createProject(params)
+      .then(() => {
+        message.success({content: 'Create project successfully!', key: 'create_project', duration: 2})
+        dispatch(reset('CreateProjectForm'))
+        this.modalCreateVisible = false
+        dispatch(reset('CreateProjectForm'))
+        this.fetchProjects()
+      })
+      .catch((error) => {
+        if (_.get(error, 'statusCode') === HTTP_CODE.UNPROCESSABLE_ENTITY) {
+          dispatch(stopSubmit('CreateProjectForm', error.error))
+        } else {
+          message.error({content: _.get(error, 'message'), key: 'create_project', duration: 2})
+        }
+      })
+      .finally(() => {
+        message.destroy()
+      })
   }
 
-  showModal = () => {
-    this.setState({visible: true})
+  @action toggleModalCreate() {
+    this.modalCreateVisible = !this.modalCreateVisible
   }
 
-  handleCancel = () => {
-    this.setState({visible: false})
+  componentDidMount() {
+    this.fetchProjects()
   }
 
-  handleCreate = () => {
-    this.setState({visible: false})
+  columns() {
+    return [
+      {
+        name: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+        render: (text, record) => {
+          return (
+            <Link to={`/projects/${record.id}`}>
+              <Flex flex='flex'><StyleAvatar mr={2} shape="square" size="large" icon="user"/>
+                <div>
+                  <div>Name</div>
+                  {text}
+                </div>
+              </Flex>
+            </Link>
+          )
+        },
+      },
+      {
+        dataIndex: 'author.name',
+        key: 'author',
+        render: text => (
+          <span>
+        <div>Author</div>
+            {text}
+      </span>
+        ),
+      },
+      {
+        dataIndex: 'platformType',
+        key: 'platformType',
+        render: text => (
+          <span>
+        <div>Platform</div>
+            <PlatformIcon platform={text}/>
+      </span>
+        ),
+      },
+      {
+        dataIndex: 'description',
+        key: 'description',
+        width: 200,
+        render: text => (
+          <span>
+        <div>Description</div>
+            {text}
+      </span>
+        ),
+      }
+    ]
   }
 
   render() {
-    const {projects} = this.props
     return (
       <StyleContainer>
-        <StyleCard p={2}>
+        <StyleCard>
           <StyleHeader>
             <h2>Projects</h2>
             <div>
               <Search
                 placeholder="Search project name"
-                onSearch={value => console.log(value)}
                 style={{width: 200, marginLeft: '10px'}}
               />
             </div>
           </StyleHeader>
-          <Button type="dashed" block onClick={this.showModal}><Icon type="plus"/>Add</Button>
+
+          <Button
+            type="dashed"
+            block
+            onClick={() => this.toggleModalCreate()}
+          >
+            <Icon type="plus"/>Create Project
+          </Button>
+
           <ModalCreateProject
-            visible={this.state.visible}
-            onCancel={this.handleCancel}
-            onCreate={this.handleCreate}
+            visible={this.modalCreateVisible}
+            onCreateProject={(values) => this.createProject(values)}
+            onToggle={() => this.toggleModalCreate()}
           />
-          {
-            !_.isEmpty(projects) &&
-            <Table columns={columns} dataSource={projects} rowKey="name" />
-          }
+
+          <TableStyle
+            columns={this.columns()}
+            dataSource={this.projects}
+            loading={this.loading}
+            rowKey="id"
+          />
         </StyleCard>
       </StyleContainer>
     )
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    projects: _.get(state, 'project.listProjects', {})
-  }
-}
-
-const mapDispatchToProps = { fetchProject }
-
 export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  injectReducer({key: 'project', reducer}),
-  injectSaga({key: 'project', saga}),
-) (ProjectListPage)
+  connect()
+)(ProjectListPage)

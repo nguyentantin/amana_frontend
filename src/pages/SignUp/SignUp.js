@@ -11,7 +11,7 @@ import injectReducer from '../../store/injectReducer'
 import injectSaga from '../../store/injectSaga'
 import reducer from '../../store/modules/auth/reducers'
 import saga from '../../store/modules/auth/sagas'
-import { ContainerRow, AuthButton } from '../SignIn/styled'
+import { ContainerRow, AuthButton, StyleLink } from '../SignIn/styled'
 import { required, email, confirmPassword } from '../../utils/validations'
 import { requestLoginGoogle, requestRegister } from '../../store/modules/auth/actions'
 import ColStyle from '../../styles/colStyle'
@@ -48,17 +48,17 @@ class SignUpPage extends React.PureComponent {
 
     return (
       <ContainerRow>
-        <Col span={12}>
+        <Col xs={24} md={12}>
           <h1 className="row-title">Create your account<br/>
             <small>with Build Automation</small>
           </h1>
           <AuthButton>
-            <Col span={20} className="auth_button col-sm-10">
+            <Col xs={24} md={20} className="auth_button col-sm-10">
               <Button type="primary" shape="round" icon="github" size='large' disabled>
                 Sign up with GitHub
               </Button>
             </Col>
-            <ColStyle span={20} className="auth_button col-sm-10">
+            <ColStyle xs={24} md={20} className="auth_button col-sm-10">
               <GoogleLogin
                 clientId={GOOGLE_CLIENT_ID}
                 buttonText="Sign up with Google"
@@ -68,14 +68,14 @@ class SignUpPage extends React.PureComponent {
                 className="ant-btn ant-btn-primary ant-btn-round ant-btn-lg btn-google"
               />
             </ColStyle>
-            <Col span={20} className="auth_button col-sm-10">
+            <Col xs={24} md={20} className="auth_button col-sm-10">
               <Button type="primary" shape="round" size='large' icon='mail' disabled>
                 Sign up with Email
               </Button>
             </Col>
           </AuthButton>
         </Col>
-        <Col span={12} className="row-two">
+        <Col xs={24} md={12} className="row-two">
           <Card bordered={false}>
             <Form layout="vertical" onSubmit={handleSubmit(this.onSubmit)}>
               <Field
@@ -117,7 +117,7 @@ class SignUpPage extends React.PureComponent {
                 validate={[required, confirmPassword]}
               />
 
-              <div style={{textAlign: 'center', paddingLeft: '44px'}}>
+              <StyleLink pl={[0, 44]}>
                 <Button
                   style={{width: '300px'}}
                   shape="round"
@@ -128,7 +128,7 @@ class SignUpPage extends React.PureComponent {
                 >
                   Sign-up
                 </Button>
-              </div>
+              </StyleLink>
             </Form>
           </Card>
         </Col>

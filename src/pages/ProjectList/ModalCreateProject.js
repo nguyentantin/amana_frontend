@@ -3,40 +3,45 @@ import { Field, reduxForm } from 'redux-form'
 import React from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
-import injectReducer from '../../store/injectReducer'
-import injectSaga from '../../store/injectSaga'
-import reducer from './store/reducers'
-import saga from './store/sagas'
-import { createProject } from './store/actions'
 import { AInput, ASelect, ATextarea } from '../../components/FormUI'
+import { required, maxLength } from '../../utils/validations'
+import { PLATFORM_TYPE } from '../../config/constants'
 
 const { Option } = Select
+const maxLengthDescription = maxLength(255)
 
 class ModalCreateProject extends React.Component {
+  static propTypes = {
+    onCreateProject: PropTypes.func.isRequired,
+    visible: PropTypes.bool.isRequired,
+  }
+
   constructor(props) {
     super(props)
     this.onSubmit = this.onSubmit.bind(this)
   }
 
-  onSubmit(value) {
-    const { createProject } = this.props
-    createProject(value)
+  onSubmit(values) {
+    const { onCreateProject } = this.props
+    onCreateProject(values)
   }
 
   render() {
-    const { visible, onCancel, onCreate, handleSubmit } = this.props
+    const {visible, onToggle, handleSubmit} = this.props
+
     const formItemLayout = {
-      labelCol: { span: 5 },
-      wrapperCol: { span: 19 }
+      labelCol: {span: 5},
+      wrapperCol: {span: 19}
     }
+
     return (
       <Modal
         visible={visible}
         title="Create"
         okText="Create"
-        onCancel={onCancel}
-        onOk={onCreate}
+        onCancel={onToggle}
         okButtonProps={{form:'create-project-form', key: 'submit', htmlType: 'submit'}}
       >
         <Form {...formItemLayout} layout="vertical" id='create-project-form' onSubmit={handleSubmit(this.onSubmit)}>
@@ -45,24 +50,28 @@ class ModalCreateProject extends React.Component {
               label="Name"
               name="name"
               component={AInput}
+              validate={[required]}
               type="text"
-              placeholder="title"
+              placeholder="Please enter the project name."
             />
             <Field
               label="Platform"
               name="platformType"
+              placeholder="Please select platform."
               component={ASelect}
-              defaultValue="ios"
+              validate={[required, maxLength(255)]}
             >
-              <Option value="ios">IOS</Option>
-              <Option value="android">Android</Option>
+              <Option value={PLATFORM_TYPE.IOS}>IOS</Option>
+              <Option value={PLATFORM_TYPE.ANDROID}>Android</Option>
+              <Option value={PLATFORM_TYPE.WEB}>Web</Option>
             </Field>
             <Field
               label="Description "
               name="description"
               component={ATextarea}
+              validate={[required, maxLengthDescription]}
               type="text"
-              placeholder="Textarea"
+              placeholder="Please enter the project description."
               rows={4}
             />
           </Row>
@@ -72,13 +81,17 @@ class ModalCreateProject extends React.Component {
   }
 }
 
-const mapDispatchToProps = { createProject }
+const mapStateToProps = () => {
+  return {
+    initialValues: {
+      platformType: PLATFORM_TYPE.IOS
+    },
+  }
+}
 
 export default compose(
-  connect(null, mapDispatchToProps),
-  injectReducer({key: 'project', reducer}),
-  injectSaga({key: 'project', saga}),
+  connect(mapStateToProps, {}),
   reduxForm({
     form: 'CreateProjectForm',
   }),
-) (ModalCreateProject)
+)(ModalCreateProject)
