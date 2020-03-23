@@ -6,9 +6,6 @@ export const ListBuild = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  .content-left {
-    padding: 0 8px;
-  }
 `
 
 export const Container = styled.div`
@@ -23,24 +20,6 @@ export const divImg = {
 
 export const marginRight = {
   marginRight: '10px',
-}
-
-export const hrStyle = {
-  border: '0',
-  marginBottom: '20px',
-  height: '1px',
-  background: '#333',
-  backgroundImage: 'linear-gradient(to right, #ccc, #333, #ccc)',
-}
-
-export const appleStyle = {
-  fontSize: '20px',
-  color: '#bf5af2',
-}
-
-export const androidStyle = {
-  fontSize: '20px',
-  color: '#8eba3e',
 }
 
 export const SmallTitle =  styled.small`
