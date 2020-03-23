@@ -19,7 +19,7 @@ import ListAppBuild  from './ListAppBuild'
 import RoleManagerModal from './components/RoleManagerModal'
 import {
   ListBuild,
-  divImg,
+  StyleImg,
   Container,
   SmallTitle,
 } from './styled'
@@ -96,13 +96,13 @@ class ProjectDetail extends React.Component {
   render() {
     return (
       <Container>
-        <Flex flex='flex'>
-          <div style={divImg}>
+        <Flex flex={['block', 'flex']}>
+          <StyleImg pr={[0,20]} pb={20} textAlign={['center', 'left']}>
             <img src="https://via.placeholder.com/250x250.png" alt=""/>
-          </div>
+          </StyleImg>
 
           <ShowIf condition={!_.isEmpty(this.projectDetail)}>
-            <ListBuild>
+            <ListBuild display='flex' alignItems='center'>
               <div>
                 <ProjectBasicInfo project={this.projectDetail}/>
                 <Divider/>

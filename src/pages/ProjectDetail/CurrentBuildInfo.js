@@ -16,11 +16,11 @@ class CurrentBuildInfo extends React.PureComponent {
     return (
       <Fragment>
         <Row>
-          <Col span={3}>
+          <Col xs={10} md={3}>
             <QRCode value={url}/>
           </Col>
 
-          <Col span={6}>
+          <Col xs={14} md={6}>
             <Box>
               <Text strong>Commit: </Text>
               <Text>{_.get(build, 'commitChanges', '')}</Text>
