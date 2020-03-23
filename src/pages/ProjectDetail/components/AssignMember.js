@@ -36,12 +36,15 @@ class AssignMember extends React.Component {
   }
 
   onSubmit() {
-    this.props.requestAssignMembers({
-      id: this.props.match.params.projectId,
+    const { match, store, requestAssignMembers } = this.props
+
+    requestAssignMembers({
+      id: match.params.projectId,
       members: [{...this.props.store.member}]
     })
-    this.props.store.resetMember()
-    this.props.store.toggleActiveAssignMemberModal()
+
+    store.resetMember()
+    store.toggleActiveAssignMemberModal()
   }
 
   renderMemberOptions(members) {
