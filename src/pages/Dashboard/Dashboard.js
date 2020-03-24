@@ -31,11 +31,11 @@ class DashboardPage extends React.Component {
         <Row gutter={20}>
           <Col xs={24} md={6}>
 
-            <ListProject data={this.props.projects} />
+            <ListProject data={this.props.projects} loading={this.props.projectLoading}/>
 
           </Col>
           <Col xs={24} md={18}>
-            <ListAppBuild data={this.props.appBuilds}/>
+            <ListAppBuild data={this.props.appBuilds} loading={this.props.appBuildLoading}/>
           </Col>
         </Row>
       </Container>
@@ -46,7 +46,9 @@ class DashboardPage extends React.Component {
 const mapStateToProps = state => {
   return {
     projects: _.get(state, 'dashboard.projects', []),
+    projectLoading: _.get(state, 'dashboard.projectLoading', false),
     appBuilds: _.get(state, 'dashboard.appBuilds', []),
+    appBuildLoading: _.get(state, 'dashboard.appBuildLoading', false),
   }
 }
 
