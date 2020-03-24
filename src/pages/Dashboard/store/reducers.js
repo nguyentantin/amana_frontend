@@ -1,6 +1,5 @@
 import produce from 'immer'
 import { FETCH_APP_BUILDS, FETCH_APP_BUILDS_SUCCESS, FETCH_PROJECT, FETCH_PROJECT_SUCCESS } from './constants'
-import project from '../../../routes/modules/project'
 
 const initialState = {
   projects: [],

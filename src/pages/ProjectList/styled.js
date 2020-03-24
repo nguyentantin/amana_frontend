@@ -1,8 +1,9 @@
 import styled from 'styled-components'
 import { space } from 'styled-system'
-import { Avatar, Card } from 'antd'
+import { Card } from 'antd'
 
 import { container } from '../../styles/mixins'
+import { AvatarBox } from '../../components/CoreUI'
 
 export const StyleContainer = styled.div`
   ${container.centerBox}
@@ -11,7 +12,7 @@ export const StyleContainer = styled.div`
   }
 `
 
-export const StyleAvatar = styled(Avatar)`
+export const StyleAvatar = styled(AvatarBox)`
   ${space}
 `
 

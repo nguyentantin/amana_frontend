@@ -24,10 +24,6 @@ const skeletonData = () => {
 }
 
 export default class ListProject extends React.Component {
-  constructor(props) {
-      super(props);
-  }
-
   render () {
     return (
       <ListBuildContainer height={['auto', 300]} mb={[20, 0]}>

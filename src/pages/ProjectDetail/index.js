@@ -26,6 +26,7 @@ import {
 import store from './store'
 import ProjectBasicInfo from './ProjectBasicInfo'
 import CurrentBuildInfo from './CurrentBuildInfo'
+import { AvatarBox } from '../../components/CoreUI'
 
 const {TabPane} = Tabs
 
@@ -98,7 +99,16 @@ class ProjectDetail extends React.Component {
       <Container>
         <Flex flex={['block', 'flex']}>
           <StyleImg pr={[0,20]} pb={20} textAlign={['center', 'left']}>
-            <img src="https://via.placeholder.com/250x250.png" alt=""/>
+            <AvatarBox
+              size={250}
+              shape="square"
+              alt=""
+              name={this.projectDetail.name}
+              style={{
+                fontSize: 100,
+                backgroundColor: this.projectDetail.color
+              }}
+            />
           </StyleImg>
 
           <ShowIf condition={!_.isEmpty(this.projectDetail)}>
@@ -147,6 +157,7 @@ class ProjectDetail extends React.Component {
                   >
                     <ListAppBuild
                       data={this.getDataByEnv(item.envKey)}
+                      project={this.projectDetail}
                     />
                   </TabPane>
                 )

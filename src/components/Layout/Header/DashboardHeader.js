@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Avatar, Dropdown, Menu, Drawer, Button } from 'antd'
+import { Button, Drawer, Dropdown, Menu } from 'antd'
 import { Link } from 'react-router-dom'
 import _ from 'lodash'
 import { MenuOutlined } from '@ant-design/icons'
@@ -10,6 +10,7 @@ import { observer } from 'mobx-react'
 import { isMobile } from '../../../utils/helpers'
 import LocalStorage from '../../../utils/localStorage'
 import { ShowIf } from '../../Utils'
+import { AvatarBox } from '../../CoreUI'
 
 @observer
 class DashboardHeader extends React.PureComponent {
@@ -35,6 +36,11 @@ class DashboardHeader extends React.PureComponent {
   username() {
     const me = LocalStorage.getAuthInfo()
     return _.get(me, 'name')
+  }
+
+  color() {
+    const me = LocalStorage.getAuthInfo()
+    return _.get(me, 'color')
   }
 
   renderMobile() {
@@ -86,10 +92,10 @@ class DashboardHeader extends React.PureComponent {
           <Menu.Item key='/time-sheets'><Link to='/time-sheets'>Time-Sheet</Link></Menu.Item>
 
           <Dropdown overlay={overlay}>
-                  <span>
-                    <Avatar size={30} icon="user"/>
-                    <span style={{fontSize: '15px', marginLeft: '5px'}}>{this.username()}</span>
-                  </span>
+            <span>
+              <AvatarBox size={30} name={this.username()} style={{backgroundColor: this.color()}}/>
+              <span style={{fontSize: '15px', marginLeft: '5px'}}>{this.username()}</span>
+            </span>
           </Dropdown>
         </Menu>
       </div>
