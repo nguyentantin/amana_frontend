@@ -12,5 +12,5 @@ export const truncate = (text = '', stop, clamp) => {
 }
 
 export const getFirstCapitalizedLetter = (string) => {
-  return string.charAt(0).toUpperCase()
+  return string ? string.charAt(0).toUpperCase(): ''
 }
