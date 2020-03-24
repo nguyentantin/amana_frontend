@@ -56,7 +56,7 @@ export default class ListProject extends React.Component {
                     </Link>
 
                     <Box mt={10} mb={2}>
-                      <AvatarBox size="small" src={item.avatar} name={item.name}/> {_.get(item, 'author.name', '')}
+                      <AvatarBox size="small" src={item.avatar} name={item.name} style={{ backgroundColor: item.color }}/> {_.get(item, 'author.name', '')}
                     </Box>
                   </List.Item>
               }

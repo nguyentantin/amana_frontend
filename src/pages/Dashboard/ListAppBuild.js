@@ -49,7 +49,13 @@ const ListAppBuild = (props) => {
                 ? <Skeleton loading avatar active/>
                 : <List.Item>
                   <List.Item.Meta
-                    avatar={<AvatarBox size={55} src={_.get(item, 'project.avatar', null)} name={item.project.name}/>}
+                    avatar={
+                      <AvatarBox
+                        size={55}
+                        src={_.get(item, 'project.avatar', null)}
+                        name={item.project.name}
+                        style={{ backgroundColor: _.get(item, 'project.color', null) }}
+                      />}
                     title={<Link to={`/projects/${item.projectId}/app-build/${item.id}`}><strong># {item.id} { truncate(item.commitChanges, 50) }</strong></Link>}
                     description={<DescriptionLink to={`/projects/${item.projectId}`}>{item.project.name}</DescriptionLink>}
                   />
