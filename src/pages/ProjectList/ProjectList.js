@@ -1,11 +1,11 @@
 import React from 'react'
-import { Icon, Input, Button, message } from 'antd'
+import { Button, Icon, Input, message } from 'antd'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { observer } from 'mobx-react'
 import { action, observable } from 'mobx'
-import { stopSubmit, reset } from 'redux-form'
+import { reset, stopSubmit } from 'redux-form'
 import _ from 'lodash'
 
 import { Flex } from '../../styles/utility'
@@ -80,7 +80,14 @@ class ProjectListPage extends React.Component {
         render: (text, record) => {
           return (
             <Link to={`/projects/${record.id}`}>
-              <Flex flex='flex'><StyleAvatar mr={2} shape="square" size="large" icon="user"/>
+              <Flex flex='flex'>
+                <StyleAvatar
+                  mr={2}
+                  shape="square"
+                  size="large"
+                  name={text}
+                  style={{backgroundColor: record.color}}
+                />
                 <div>
                   <div>Name</div>
                   {text}
