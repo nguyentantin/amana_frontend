@@ -46,6 +46,12 @@ const PLATFORM_TYPE = {
   WEB: 'web',
 }
 
+const ROLES = {
+  SUPER_ADMIN: 1,
+  PROJECT_ADMIN: 2,
+  PROJECT_MEMBER: 3,
+}
+
 export {
   REQUEST_HEADER,
   API_URL,
@@ -56,5 +62,6 @@ export {
   GOOGLE_WEB_FONT_STATUS,
   PLATFORM_TYPE,
   GOOGLE_CLIENT_ID,
-  DOCS_URL
+  DOCS_URL,
+  ROLES
 }

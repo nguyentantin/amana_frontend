@@ -1,14 +1,16 @@
 import React from 'react'
 import _ from 'lodash'
-import { Button, Tabs, Icon, Divider, Empty } from 'antd'
+import { Tabs, Divider, Empty, Skeleton } from 'antd'
 import { action, computed, observable, get, toJS } from 'mobx'
 import { compose } from 'recompose'
-import { inject, observer, Provider } from 'mobx-react'
+import { observer } from 'mobx-react'
 import { withRouter } from 'react-router'
+import { Link } from 'react-router-dom'
 import {
   BranchesOutlined,
   CodeOutlined,
-  FundProjectionScreenOutlined
+  FundProjectionScreenOutlined,
+  SettingFilled
 } from '@ant-design/icons'
 
 import ProjectRequest from '../../api/Request/ProjectRequest'
@@ -16,16 +18,15 @@ import { API_URL, PLATFORM_TYPE } from '../../config/constants'
 import { Flex } from '../../styles/utility'
 import { ShowIf } from '../../components/Utils'
 import ListAppBuild  from './ListAppBuild'
-import RoleManagerModal from './components/RoleManagerModal'
 import {
   ListBuild,
   StyleImg,
   Container,
   SmallTitle,
 } from './styled'
-import store from './store'
 import ProjectBasicInfo from './ProjectBasicInfo'
 import CurrentBuildInfo from './CurrentBuildInfo'
+import { Box } from '../../styles/utility'
 
 const {TabPane} = Tabs
 
@@ -47,7 +48,6 @@ const listBuildEnv = [
   },
 ]
 
-@inject('store')
 @observer
 class ProjectDetail extends React.Component {
   @observable projectDetail = {
@@ -55,11 +55,6 @@ class ProjectDetail extends React.Component {
   }
   @observable loading = false
 
-  constructor(props) {
-    super(props);
-
-    this.handleActiveRoleManagerModal = this.handleActiveRoleManagerModal.bind(this)
-  }
   @action
   getProject(projectId) {
     this.loading = true
@@ -89,44 +84,44 @@ class ProjectDetail extends React.Component {
     return _.filter(this.projectDetail.appBuilds, (item) => item.env === envKey )
   }
 
-  handleActiveRoleManagerModal() {
-    this.props.store.toggleActiveRoleManagerModal()
-  }
-
   render() {
     return (
       <Container>
         <Flex flex={['block', 'flex']}>
-          <StyleImg pr={[0,20]} pb={20} textAlign={['center', 'left']}>
-            <img src="https://via.placeholder.com/250x250.png" alt=""/>
-          </StyleImg>
+          <Skeleton active avatar loading={this.loading}>
+            <StyleImg pr={[0,20]} pb={20} textAlign={['center', 'left']}>
+              <img src="https://via.placeholder.com/250x250.png" alt=""/>
+            </StyleImg>
 
-          <ShowIf condition={!_.isEmpty(this.projectDetail)}>
-            <ListBuild display='flex' alignItems='center'>
-              <div>
-                <ProjectBasicInfo project={this.projectDetail}/>
-                <Divider/>
+            <ShowIf condition={!_.isEmpty(this.projectDetail)}>
+              <ListBuild display='flex' alignItems='center'>
+                <div>
+                  <ProjectBasicInfo project={this.projectDetail}/>
 
-                <Button className="btn-right" type="primary" size='large' onClick={this.handleActiveRoleManagerModal}>
-                  <Icon type="form"/>
-                  Roles Manager
-                </Button>
-              </div>
-            </ListBuild>
-          </ShowIf>
+                  <Box mt={2}>
+                    <Link to={`/projects/${_.get(this.projectDetail, 'id')}/settings`}>
+                      <SettingFilled/> Settings
+                    </Link>
+                  </Box>
+                </div>
+              </ListBuild>
+            </ShowIf>
+          </Skeleton>
         </Flex>
 
         <Divider/>
 
         <div>
           <h2>Current version <SmallTitle>The latest build</SmallTitle></h2>
-          <ShowIf condition={!_.isEmpty(_.get(this.projectDetail, 'currentVersion', {}))}>
-            <CurrentBuildInfo build={_.get(this.projectDetail, 'currentVersion', {})} url={this.downloadUrl}/>
-          </ShowIf>
+          <Skeleton active avatar loading={this.loading}>
+            <ShowIf condition={!_.isEmpty(_.get(this.projectDetail, 'currentVersion', {}))}>
+              <CurrentBuildInfo build={_.get(this.projectDetail, 'currentVersion', {})} url={this.downloadUrl}/>
+            </ShowIf>
 
-          <ShowIf condition={_.isEmpty(_.get(this.projectDetail, 'currentVersion', {}))}>
-            <Empty/>
-          </ShowIf>
+            <ShowIf condition={_.isEmpty(_.get(this.projectDetail, 'currentVersion', {}))}>
+              <Empty/>
+            </ShowIf>
+          </Skeleton>
         </div>
 
         <Divider/>
@@ -145,16 +140,17 @@ class ProjectDetail extends React.Component {
                     }
                     key={item.envKey}
                   >
-                    <ListAppBuild
-                      data={this.getDataByEnv(item.envKey)}
-                    />
+                    <Skeleton active avatar loading={this.loading}>
+                      <ListAppBuild
+                        data={this.getDataByEnv(item.envKey)}
+                      />
+                    </Skeleton>
                   </TabPane>
                 )
               })
             }
           </Tabs>
         </div>
-        <RoleManagerModal/>
       </Container>
     )
   }
@@ -164,10 +160,4 @@ const ProjectDetailCompose =  compose(
   withRouter,
 )(ProjectDetail)
 
-const ProjectDetailContainer = () => {
-  return (
-    <Provider store={store}><ProjectDetailCompose/></Provider>
-  )
-}
-
-export default ProjectDetailContainer
+export default ProjectDetailCompose
