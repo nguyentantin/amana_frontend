@@ -1,4 +1,4 @@
-import { Avatar, Icon, List, Tag } from 'antd'
+import { Icon, List, Tag } from 'antd'
 import React from 'react'
 import _ from 'lodash'
 import { Link } from 'react-router-dom'
@@ -6,11 +6,9 @@ import moment from 'moment'
 import { PullRequestOutlined } from '@ant-design/icons'
 
 import { ListBuildContainer, TextMute } from './styled'
-import { getFirstCapitalizedLetter, truncate } from '../../utils/helpers'
-import { PlatformIcon } from '../../components/CoreUI'
+import { truncate } from '../../utils/helpers'
+import { AvatarBox, PlatformIcon } from '../../components/CoreUI'
 import { Box } from '../../styles/utility'
-
-const upperCaseProjectName = string => getFirstCapitalizedLetter(string)
 
 export default class ListProject extends React.Component {
   render () {
@@ -37,7 +35,7 @@ export default class ListProject extends React.Component {
               </Link>
 
               <Box mt={10} mb={2}>
-                <Avatar size="small" src={item.avatar}>{upperCaseProjectName(item.name)}</Avatar> {_.get(item, 'author.name', '')}
+                <AvatarBox size="small" src={item.avatar} name={item.name}/> {_.get(item, 'author.name', '')}
               </Box>
             </List.Item>
           )}
