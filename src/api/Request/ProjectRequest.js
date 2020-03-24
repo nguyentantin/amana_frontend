@@ -25,8 +25,20 @@ class ProjectRequest extends HttpRequest {
     return this.get(`/projects/${projectId}/external-members`)
   }
 
+  listMembers(id) {
+    return this.get(`/projects/${id}/internal-members`)
+  }
+
   assignMembers(projectId, data) {
     return this.post(`/projects/${projectId}/members`, data)
+  }
+
+  deleteMember(projectId, memberId) {
+    return this.delete(`/projects/${projectId}/member/${memberId}`)
+  }
+
+  updateMemberRole(projectId, data) {
+    return this.put(`/projects/${projectId}/member`, data)
   }
 }
 

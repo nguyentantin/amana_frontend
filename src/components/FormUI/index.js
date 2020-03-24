@@ -20,5 +20,5 @@ export {
   ACheckbox,
   ATextarea,
   ARangePicker,
-  ADatePicker
+  ADatePicker,
 }
