@@ -28,8 +28,7 @@ const TableStyle = styled(Table)`
           display: block;
           width: auto !important;
           border: none;
-          padding: 0 1rem;
-          font-size: 1.1rem;
+          padding: 6px 1rem;
 
           &:last-child {
             border-bottom: 1px solid #eee;

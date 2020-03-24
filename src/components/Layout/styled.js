@@ -51,6 +51,9 @@ export const ContentPage = styled(Content)`
   &.active {
     padding-top: 0;
   }
+  @media (max-width: 768px) {
+    min-height: calc(100vh - 90px);
+  }
 `
 
 export const MasterLayoutWrapper = styled.div`

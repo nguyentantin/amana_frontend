@@ -1,7 +1,6 @@
 import { Avatar, Icon, List, Tag } from 'antd'
 import React from 'react'
 import _ from 'lodash'
-import { Link } from 'react-router-dom'
 import moment from 'moment'
 import { PullRequestOutlined } from '@ant-design/icons'
 
@@ -9,6 +8,7 @@ import { ListBuildContainer, TextMute } from './styled'
 import { getFirstCapitalizedLetter, truncate } from '../../utils/helpers'
 import { PlatformIcon } from '../../components/CoreUI'
 import { Box } from '../../styles/utility'
+import { StyleLink } from './styled'
 
 const upperCaseProjectName = string => getFirstCapitalizedLetter(string)
 
@@ -24,7 +24,7 @@ export default class ListProject extends React.Component {
           bordered
           dataSource={this.props.data}
           renderItem={item => (
-            <List.Item
+            <List.Item mt={12}
               extra={
                 <React.Fragment>
                     <p><Tag color="blue">{item.totalAppBuilds || 0} <PullRequestOutlined /></Tag></p>
@@ -32,11 +32,11 @@ export default class ListProject extends React.Component {
                 </React.Fragment>
               }
             >
-              <Link to={`/projects/${item.id}`}>
+              <StyleLink display='flex' alignItems='center' to={`/projects/${item.id}`}>
                   <PlatformIcon platform={item.platformType}/> {truncate(item.name, 15)}
-              </Link>
+              </StyleLink>
 
-              <Box mt={10} mb={2}>
+              <Box mt={12}>
                 <Avatar size="small" src={item.avatar}>{upperCaseProjectName(item.name)}</Avatar> {_.get(item, 'author.name', '')}
               </Box>
             </List.Item>

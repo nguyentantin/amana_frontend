@@ -1,4 +1,4 @@
-import { Modal, Form, Select, Row, Col, Upload, message, Icon } from 'antd'
+import { Form, Select, Row, Col, Upload, message, Icon } from 'antd'
 import { Field, reduxForm, change } from 'redux-form'
 import React from 'react'
 import { compose } from 'redux'
@@ -13,6 +13,8 @@ import { AInput, ASelect, ATextarea } from '../../components/FormUI'
 import { required, maxLength } from '../../utils/validations'
 import { PLATFORM_TYPE } from '../../config/constants'
 import StorageRequest from '../../api/Request/StorageRequest'
+import ModalStyle from '../../styles/modal'
+import { StyleUpload } from './styled'
 
 const {Option} = Select
 const maxLengthDescription = maxLength(255)
@@ -121,7 +123,7 @@ class ModalCreateProject extends React.Component {
     )
 
     return (
-      <Modal
+      <ModalStyle
         visible={visible}
         title="Create"
         okText="Create"
@@ -130,7 +132,7 @@ class ModalCreateProject extends React.Component {
       >
         <Form {...formItemLayout} layout="vertical" id='create-project-form' onSubmit={handleSubmit(this.onSubmit)}>
           <Row>
-            <Col span={8} offset={10}>
+            <StyleUpload display='flex' justifyContent='center'>
               <Upload
                 accept='image/*'
                 name="logo"
@@ -151,7 +153,7 @@ class ModalCreateProject extends React.Component {
                   </div>
                 ) : UploadButton}
               </Upload>
-            </Col>
+            </StyleUpload>
 
             <Col span={24}>
               <Field
@@ -190,7 +192,7 @@ class ModalCreateProject extends React.Component {
             </Col>
           </Row>
         </Form>
-      </Modal>
+      </ModalStyle>
     )
   }
 }
