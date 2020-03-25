@@ -63,6 +63,7 @@ class DashboardHeader extends React.PureComponent {
             <Menu.Item key='/develop-tools'><Link to='/projects'>Projects</Link></Menu.Item>
             {/*<Menu.Item key='/time-sheets'><Link to='/time-sheets'>Time-Sheet</Link></Menu.Item>*/}
             <Menu.Item key='0' onClick={this.logout}>Logout</Menu.Item>
+            <Menu.Item key='/profile'><Link to='/profile'>Profile</Link></Menu.Item>
           </Menu>
         </Drawer>
       </div>
@@ -79,9 +80,7 @@ class DashboardHeader extends React.PureComponent {
           Logout
         </Menu.Item>
 
-        <Menu.Item key="1">
-          Profile
-        </Menu.Item>
+        <Menu.Item key='/profile'><Link to='/profile'>Profile</Link></Menu.Item>
       </Menu>
     )
 

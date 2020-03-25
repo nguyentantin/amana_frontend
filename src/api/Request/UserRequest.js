@@ -4,6 +4,10 @@ class UserRequest extends HttpRequest {
   search(params = {}) {
     return this.get('/users', params)
   }
+
+  profile() {
+    return this.get('/users/me')
+  }
 }
 
 export default new UserRequest()

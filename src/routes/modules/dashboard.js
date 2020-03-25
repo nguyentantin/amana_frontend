@@ -13,6 +13,10 @@ const TimeSheet = loadable(() => import('../../pages/TimeSheet/TimeSheet'), {
   fallback: <LoadingPage/>,
 })
 
+const Profile = loadable(() => import('../../pages/Profile/Profile'), {
+  fallback: <LoadingPage/>,
+})
+
 export default [
   {
     path: '/dashboard',
@@ -25,6 +29,13 @@ export default [
     path: '/time-sheets',
     exact: true,
     component: TimeSheet,
+    layout: DashboardLayout,
+    requiredAuth: true
+  },
+  {
+    path: '/profile',
+    exact: true,
+    component: Profile,
     layout: DashboardLayout,
     requiredAuth: true
   },
