@@ -1,12 +1,13 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { Button, Icon, Col, Row, Typography, Tag } from 'antd'
+import { Button, Col, Row, Typography, Tag } from 'antd'
 import QRCode from 'qrcode.react'
 import _ from 'lodash'
+import { DownloadOutlined } from '@ant-design/icons'
+
 
 import { LinkDownload, marginRight } from './styled'
 import { Box } from '../../styles/utility'
-import { DownloadOutlined } from '@ant-design/icons'
 
 const {Text} = Typography
 

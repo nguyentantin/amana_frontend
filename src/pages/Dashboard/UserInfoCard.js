@@ -1,11 +1,12 @@
 import React from 'react'
-
-import LocalStorage from '../../utils/localStorage'
-import { Card, Col, Dropdown, Menu, Row } from 'antd'
-import { AvatarBox } from '../../components/CoreUI'
 import { Link, withRouter } from 'react-router-dom'
 import styled from 'styled-components'
+import { Card, Col, Dropdown, Menu, Row } from 'antd'
 import { DownOutlined, LogoutOutlined, MailOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons'
+
+import LocalStorage from '../../utils/localStorage'
+import { AvatarBox } from '../../components/CoreUI'
+
 
 const authInfo = () => {
   return LocalStorage.getAuthInfo()

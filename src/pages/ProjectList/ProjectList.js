@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Icon, Input, message } from 'antd'
+import { Button, Input, message } from 'antd'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -7,6 +7,7 @@ import { observer } from 'mobx-react'
 import { action, observable } from 'mobx'
 import { reset, stopSubmit } from 'redux-form'
 import _ from 'lodash'
+import { PlusOutlined } from '@ant-design/icons'
 
 import { Flex } from '../../styles/utility'
 import { StyleAvatar, StyleCard, StyleContainer, StyleHeader } from './styled'
@@ -17,7 +18,6 @@ import { PlatformIcon } from '../../components/CoreUI'
 import TableStyle from '../../styles/tableResponsive'
 import { ShowIf } from '../../components/Utils'
 import LocalStorage from '../../utils/localStorage'
-import { PlusOutlined } from '@ant-design/icons'
 
 const {Search} = Input
 
