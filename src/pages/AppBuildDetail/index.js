@@ -1,10 +1,10 @@
 import React from 'react'
 import _ from 'lodash'
-import { Button, Icon, Popover } from 'antd'
+import { Button, Popover } from 'antd'
 import { withRouter } from 'react-router'
 import { observer } from 'mobx-react'
 import QRCode from 'qrcode.react'
-import { AndroidFilled, AppleFilled } from '@ant-design/icons'
+import { AndroidFilled, AppleFilled, DownloadOutlined, QrcodeOutlined } from '@ant-design/icons'
 import { action, computed, get, observable, toJS } from 'mobx'
 
 import ProjectRequest from '../../api/Request/ProjectRequest'
@@ -12,7 +12,7 @@ import { compose } from 'recompose'
 import { API_URL, PLATFORM_TYPE } from '../../config/constants'
 import { ShowIf } from '../../components/Utils'
 import { Flex } from '../../styles/utility'
-import { ListBuild, Container, StyleImg, marginRight, appleStyle, androidStyle, LinkDownload } from './styled'
+import { androidStyle, appleStyle, Container, LinkDownload, ListBuild, marginRight, StyleImg } from './styled'
 
 @observer
 class AppBuildDetail extends React.Component {
@@ -66,7 +66,7 @@ class AppBuildDetail extends React.Component {
                 <p>Descriptions: {_.get(this.appBuild, 'project.description', '')}</p>
 
                 <Button className="btn-right" type="primary" size='large' style={marginRight}>
-                  <Icon type="download"/>
+                  <DownloadOutlined />
                   <LinkDownload href={this.downloadUrl} download> Download </LinkDownload>
                 </Button>
                 <Popover
@@ -77,7 +77,7 @@ class AppBuildDetail extends React.Component {
                   }
                 >
                   <Button className="btn-right" type="primary" size='large'>
-                    <Icon type="qrcode"/>
+                    <QrcodeOutlined />
                     QR Code
                   </Button>
                 </Popover>

@@ -17,6 +17,7 @@ import { PlatformIcon } from '../../components/CoreUI'
 import TableStyle from '../../styles/tableResponsive'
 import { ShowIf } from '../../components/Utils'
 import LocalStorage from '../../utils/localStorage'
+import { PlusOutlined } from '@ant-design/icons'
 
 const {Search} = Input
 
@@ -158,7 +159,7 @@ class ProjectListPage extends React.Component {
               block
               onClick={() => this.toggleModalCreate()}
             >
-              <Icon type="plus"/>Create Project
+              <PlusOutlined />Create Project
             </Button>
           </ShowIf>
 

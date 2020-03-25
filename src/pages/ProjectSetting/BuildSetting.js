@@ -13,6 +13,7 @@ import { AInput } from '../../components/FormUI'
 import { required } from '../../utils/validations'
 import PopupAddConfig from './PopupAddConfig'
 import { connect } from 'react-redux'
+import { PlusOutlined } from '@ant-design/icons'
 
 const { Panel } = Collapse
 
@@ -120,7 +121,7 @@ class BuildSetting extends React.PureComponent {
               block
               onClick={this.onToggleModal}
             >
-              <Icon type="plus"/>Add Config
+              <PlusOutlined />Add Config
             </Button>
 
             <PopupAddConfig onSubmit={this.onCreateConfig} visible={this.visibleModel} onToggle={this.onToggleModal}/>

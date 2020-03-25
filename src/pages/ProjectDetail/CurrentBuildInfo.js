@@ -6,6 +6,7 @@ import _ from 'lodash'
 
 import { LinkDownload, marginRight } from './styled'
 import { Box } from '../../styles/utility'
+import { DownloadOutlined } from '@ant-design/icons'
 
 const {Text} = Typography
 
@@ -39,7 +40,7 @@ class CurrentBuildInfo extends React.PureComponent {
               <Text style={{marginLeft: '5px'}}>1.0</Text>
             </Box>
             <Button className="btn-right" type="primary" style={marginRight}>
-              <Icon type="download"/>
+              <DownloadOutlined />
               <LinkDownload href={url} download> Download </LinkDownload>
             </Button>
           </Col>

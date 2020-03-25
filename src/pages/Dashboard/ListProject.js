@@ -1,14 +1,13 @@
-import { Icon, List, Skeleton, Tag } from 'antd'
+import { List, Skeleton, Tag } from 'antd'
 import React from 'react'
 import _ from 'lodash'
 import moment from 'moment'
-import { PullRequestOutlined } from '@ant-design/icons'
+import { PullRequestOutlined, UnorderedListOutlined } from '@ant-design/icons'
 
-import { ListBuildContainer, TextMute } from './styled'
+import { ListBuildContainer, StyleLink, TextMute } from './styled'
 import { truncate } from '../../utils/helpers'
 import { AvatarBox, PlatformIcon } from '../../components/CoreUI'
 import { Box } from '../../styles/utility'
-import { StyleLink } from './styled'
 
 const skeletonData = () => {
   const listData = []
@@ -27,7 +26,7 @@ export default class ListProject extends React.Component {
   render () {
     return (
       <ListBuildContainer height={['auto', 300]} mb={[20, 0]}>
-        <h4><Icon type="unordered-list" /> Build</h4>
+        <h4><UnorderedListOutlined /> Build</h4>
         <List
           itemLayout="vertical"
           size="small"
