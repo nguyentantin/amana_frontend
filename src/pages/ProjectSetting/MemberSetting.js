@@ -199,7 +199,7 @@ class MemberSetting extends React.PureComponent {
           <Box mb={2} textAlign={['left', 'center']}>
             <StyleSelect
               mode='multiple'
-              placeholder='Add a member bu their name or email address'
+              placeholder='Add a member by their name or email address'
               onSearch={this.onSearch}
               filterOption={false}
               onChange={this.onChangeSelect}

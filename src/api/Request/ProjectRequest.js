@@ -40,6 +40,14 @@ class ProjectRequest extends HttpRequest {
   updateMemberRole(projectId, data) {
     return this.put(`/projects/${projectId}/member`, data)
   }
+
+  buildConfigs(projectId) {
+    return this.get(`/projects/${projectId}/build-config`)
+  }
+
+  createBuildConfig(projectId, data) {
+    return this.post(`/projects/${projectId}/build-config`, data)
+  }
 }
 
 export default new ProjectRequest()
