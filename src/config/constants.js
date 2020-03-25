@@ -52,6 +52,17 @@ const ROLES = {
   PROJECT_MEMBER: 3,
 }
 
+const PROJECT_ENV = {
+  DEVELOPMENT: 1,
+  STAGING: 2,
+  PRODUCTION: 3
+}
+const PROJECT_ENV_COLOR = {
+  DEVELOPMENT: 'green',
+  STAGING: 'yellow',
+  PRODUCTION: 'red',
+}
+
 export {
   REQUEST_HEADER,
   API_URL,
@@ -63,5 +74,7 @@ export {
   PLATFORM_TYPE,
   GOOGLE_CLIENT_ID,
   DOCS_URL,
-  ROLES
+  ROLES,
+  PROJECT_ENV,
+  PROJECT_ENV_COLOR,
 }

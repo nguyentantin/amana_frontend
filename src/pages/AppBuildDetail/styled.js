@@ -26,8 +26,8 @@ export const androidStyle = {
 }
 
 export const LinkDownload = styled.a`
-  color: white;
+  color: #fa8c16;
   :hover {
-    color: white
+    color: #fa8c16
   }
 `
