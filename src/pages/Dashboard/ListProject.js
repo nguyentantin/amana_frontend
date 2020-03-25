@@ -47,7 +47,7 @@ export default class ListProject extends React.Component {
                       </React.Fragment>
                     }
                   >
-                    <StyleLink display='flex' alignItems='center' to={`/projects/${item.id}`}>
+                    <StyleLink display='flex' to={`/projects/${item.id}`}>
                       <PlatformIcon platform={item.platformType}/> {truncate(item.name, 15)}
                     </StyleLink>
 
