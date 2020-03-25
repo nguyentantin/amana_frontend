@@ -12,11 +12,11 @@ class AppBuildBasicInfo extends React.Component {
 
     return (
       <Fragment>
-        <Title>{_.get(appBuild, 'appName', '')}</Title>
+        <Title>{_.get(appBuild, 'project.name', '')}</Title>
 
         <Box>
-          <Text strong>Project:&nbsp;</Text>
-          <Text>{_.get(appBuild, 'project.name', '')}</Text>
+          <Text strong>App:&nbsp;</Text>
+          <Text strong style={{fontSize: 16}}>{_.get(appBuild, 'appName', '')}</Text>
         </Box>
 
         <Box>
@@ -26,7 +26,7 @@ class AppBuildBasicInfo extends React.Component {
 
         <Box>
           <Text strong>Env:&nbsp;</Text>
-          <EnvTag env={appBuild.env} />
+          <EnvTag type={appBuild.env} />
         </Box>
 
         <Box>

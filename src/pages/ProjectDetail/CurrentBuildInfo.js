@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { Button, Icon, Col, Row, Typography, Tag } from 'antd'
+import { Button, Icon, Col, Row, Typography } from 'antd'
 import QRCode from 'qrcode.react'
 import _ from 'lodash'
 
 import { LinkDownload, marginRight } from './styled'
 import { Box } from '../../styles/utility'
+import { EnvTag } from '../../components/CoreUI'
 
 const {Text} = Typography
 
@@ -31,7 +32,7 @@ class CurrentBuildInfo extends React.PureComponent {
             </Box>
             <Box>
               <Text strong>Env: </Text>
-              <Tag color="red">Develop</Tag>
+              <EnvTag type={build.env}/>
             </Box>
 
             <Box>

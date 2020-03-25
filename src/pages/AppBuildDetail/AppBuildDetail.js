@@ -11,6 +11,7 @@ import ProjectRequest from '../../api/Request/ProjectRequest'
 import { API_URL, PLATFORM_TYPE } from '../../config/constants'
 import { Box } from '../../styles/utility'
 import { Flex } from '../../styles/utility'
+import { GoBack } from '../../components/CoreUI'
 import { ListBuild, Container, StyleImg, LinkDownload } from './styled'
 import { ShowIf } from '../../components/Utils'
 import { SmallTitle } from '../ProjectDetail/styled'
@@ -53,10 +54,13 @@ class AppBuildDetail extends React.Component {
 
   render() {
     const { Text } = Typography
-    const { history } = this.props
 
     return (
       <Container>
+        <GoBack/>
+
+        <Divider style={{marginTop: 10, marginBottom: 10}}/>
+
         <Flex flex={['block', 'flex']}>
           <Skeleton active avatar loading={this.loading}>
             <StyleImg pr={[0,20]} pb={20} textAlign={['center', 'left']}>
@@ -72,11 +76,6 @@ class AppBuildDetail extends React.Component {
                   <AppBuildBasicInfo appBuild={this.appBuild} />
 
                   <Box>
-                    <Button type='link' onClick={() => history.goBack()}>
-                      <Icon type="arrow-left" />
-                      Back
-                    </Button>
-
                     <Button className="btn-right" type="link" size='large'>
                       <Icon type="download"/>
                       <LinkDownload href={this.downloadUrl} download> Download </LinkDownload>
