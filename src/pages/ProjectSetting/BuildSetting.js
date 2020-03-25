@@ -1,7 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import { action, observable, toJS } from 'mobx'
-import { Collapse, Card, Form, Button, Icon, message } from 'antd'
+import { Collapse, Card, Form, Button, message } from 'antd'
 import _ from 'lodash'
 import { compose } from 'recompose'
 import { withRouter } from 'react-router'
@@ -134,7 +134,7 @@ class BuildSetting extends React.PureComponent {
                   return (
                     <Panel header={setting.projectKey} key={setting.id}>
 
-                      <Box m={20}>
+                      <Box m={20}>Curre
                         {
                           _.map(_.keys(setting.jsonValue), (key, index) => {
                             return (
