@@ -48,6 +48,10 @@ class ProjectRequest extends HttpRequest {
   createBuildConfig(projectId, data) {
     return this.post(`/projects/${projectId}/build-config`, data)
   }
+
+  updateBuildConfig(projectId, data) {
+    return this.put(`/projects/${projectId}/build-config`, data)
+  }
 }
 
 export default new ProjectRequest()

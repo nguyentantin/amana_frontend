@@ -5,13 +5,14 @@ import { Collapse, Card, Form, Button, Icon, message } from 'antd'
 import _ from 'lodash'
 import { compose } from 'recompose'
 import { withRouter } from 'react-router'
-import { Field, reduxForm, initialize, reset } from 'redux-form'
+import { Field, reduxForm, initialize, reset, getFormValues } from 'redux-form'
 
 import ProjectRequest from '../../api/Request/ProjectRequest'
 import { Box } from '../../styles/utility'
 import { AInput } from '../../components/FormUI'
 import { required } from '../../utils/validations'
 import PopupAddConfig from './PopupAddConfig'
+import { connect } from 'react-redux'
 
 const { Panel } = Collapse
 
@@ -19,8 +20,8 @@ const { Panel } = Collapse
 class BuildSetting extends React.PureComponent {
   @observable loading = false
   @observable settings = []
-
   @observable visibleModel = false
+  @observable updating = false
 
   @action onToggleModal() {
     this.visibleModel = !this.visibleModel
@@ -71,11 +72,37 @@ class BuildSetting extends React.PureComponent {
     dispatch(initialize('BuildSettingForm', formValues))
   }
 
+  @action onUpdateConfig(projectKey) {
+    this.updating = true
+    const {match: {params}, formValues} = this.props
+    const data = {
+      projectKey
+    }
+
+    _.mapKeys(formValues, (value, key) => {
+      if (_.includes(key, projectKey)) {
+        const fieldName = _.replace(key, `${projectKey}_`, '')
+
+        data[fieldName] = value
+      }
+    })
+
+    ProjectRequest
+      .updateBuildConfig(params.projectId, data)
+      .then((data) => {
+        this.fetchSettings()
+      })
+      .finally(() => {
+        this.updating = false
+      })
+  }
+
   constructor(props) {
     super(props);
 
     this.onCreateConfig = this.onCreateConfig.bind(this)
     this.onToggleModal = this.onToggleModal.bind(this)
+    this.onUpdateConfig = this.onUpdateConfig.bind(this)
   }
 
   componentDidMount() {
@@ -123,7 +150,7 @@ class BuildSetting extends React.PureComponent {
                           })
                         }
 
-                        <Button type='primary'>Save</Button>
+                        <Button type='primary' loading={this.updating} onClick={() => this.onUpdateConfig(setting.projectKey)}>Save</Button>
                       </Box>
                     </Panel>
                   )
@@ -138,7 +165,14 @@ class BuildSetting extends React.PureComponent {
   }
 }
 
+const mapStateToProp = (state) => {
+  return {
+    formValues: getFormValues('BuildSettingForm')(state)
+  }
+}
+
 const enhancer = compose(
+  connect(mapStateToProp, {}),
   withRouter,
   reduxForm({
     form: 'BuildSettingForm',
