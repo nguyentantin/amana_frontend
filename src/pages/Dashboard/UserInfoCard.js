@@ -13,8 +13,9 @@ const authInfo = () => {
 
 const { Meta } = Card
 
-const SmallTitle =  styled.small`
-    font-size: 69%;
+const textStyle = { fontSize: '15px', marginLeft: '5px' }
+
+const TextMuted =  styled.small`
     color: rgba(0, 0, 0, 0.45);
   `
 
@@ -51,10 +52,11 @@ class UserInfoCard extends React.PureComponent {
         style={{
           backgroundColor: 'rgba(240, 242, 245, 1)',
           marginBottom: 20,
+          borderColor: 'rgba(217, 217, 217, 1)',
         }}
         cover={
           <AvatarBox
-            size={275}
+            size={277}
             shape="square"
             style={{
               backgroundColor: authInfo().color,
@@ -70,12 +72,12 @@ class UserInfoCard extends React.PureComponent {
                 <Col span={20}>
                   <div>
                     <UserOutlined/>
-                    <span style={{ fontSize: '15px', marginLeft: '5px' }}>{authInfo().name}</span>
+                    <span style={textStyle}>{authInfo().name}</span>
                   </div>
 
                   <div>
                     <MailOutlined/>
-                    <SmallTitle style={{ fontSize: '15px', marginLeft: '5px' }}>{authInfo().email}</SmallTitle>
+                    <TextMuted style={textStyle}>{authInfo().email}</TextMuted>
                   </div>
                 </Col>
                 <Col span={4} style={{ textAlign: 'right' }}>
