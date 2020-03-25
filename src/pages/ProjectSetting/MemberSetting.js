@@ -14,6 +14,7 @@ import { ASelect } from '../../components/FormUI'
 import ProjectRequest from '../../api/Request/ProjectRequest'
 import UserRequest from '../../api/Request/UserRequest'
 import { ROLES } from '../../config/constants'
+import { StyleSelect, StyleList } from './styled'
 
 const { Option } = Select
 const { CheckableTag } = Tag
@@ -161,7 +162,7 @@ class MemberSetting extends React.PureComponent {
 
   renderMember(member) {
     return (
-      <List.Item key={member.id}>
+      <StyleList key={member.id} >
         <List.Item.Meta
           avatar={
             <Avatar icon={<UserOutlined/>}/>
@@ -182,7 +183,7 @@ class MemberSetting extends React.PureComponent {
             <CloseCircleFilled style={{fontSize: 16}}/>
           </Popconfirm>
         </Box>
-      </List.Item>
+      </StyleList>
     )
   }
 
@@ -191,13 +192,12 @@ class MemberSetting extends React.PureComponent {
     const optionSearch = this.renderOptions()
 
     return (
-      <Box p={15}>
+      <Box p={[0, 15]}>
         <h2> Members </h2>
 
         <Form layout="inline" onSubmit={handleSubmit(this.addMembers)}>
-          <Box mb={2} textAlign='center'>
-            <Select
-              style={{width: '500px', marginRight: '10px'}}
+          <Box mb={2} textAlign={['left', 'center']}>
+            <StyleSelect
               mode='multiple'
               placeholder='Add a member bu their name or email address'
               onSearch={this.onSearch}
@@ -206,11 +206,11 @@ class MemberSetting extends React.PureComponent {
               value={this.membersSelected}
             >
               {optionSearch}
-            </Select>
+            </StyleSelect>
 
             <Field
               name='role'
-              style={{width: '200px'}}
+              style={{width: '222px'}}
               component={ASelect}
             >
               <Option value={String(ROLES.PROJECT_MEMBER)}>Member</Option>

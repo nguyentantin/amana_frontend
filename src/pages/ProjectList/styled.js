@@ -1,8 +1,9 @@
 import styled from 'styled-components'
 import { space } from 'styled-system'
-import { Card } from 'antd'
+import { Card, Col } from 'antd'
 
 import { container } from '../../styles/mixins'
+import styledSystem from '../../styles/styledSystem'
 import { AvatarBox } from '../../components/CoreUI'
 
 export const StyleContainer = styled.div`
@@ -27,3 +28,12 @@ export const StyleCard = styled(Card)`
     padding: 0;
   }
 `
+
+export const StyleUpload = styledSystem(styled(Col)`
+  .ant-upload-picture-card-wrapper {
+    width: auto;
+  }
+  .ant-upload.ant-upload-select-picture-card {
+    margin: 0;
+  }
+`)
