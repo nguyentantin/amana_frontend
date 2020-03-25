@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Form, Button, Card, Divider } from 'antd'
+import { Row, Form, Button, Divider } from 'antd'
 import { Field, reduxForm } from 'redux-form'
 import { compose } from 'recompose'
 import { Link } from 'react-router-dom'
