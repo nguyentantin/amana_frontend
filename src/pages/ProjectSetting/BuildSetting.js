@@ -5,7 +5,7 @@ import { Collapse, Card, Form, Button, Icon, message } from 'antd'
 import _ from 'lodash'
 import { compose } from 'recompose'
 import { withRouter } from 'react-router'
-import { Field, reduxForm, initialize } from 'redux-form'
+import { Field, reduxForm, initialize, reset } from 'redux-form'
 
 import ProjectRequest from '../../api/Request/ProjectRequest'
 import { Box } from '../../styles/utility'
@@ -27,7 +27,7 @@ class BuildSetting extends React.PureComponent {
   }
 
   @action onCreateConfig(values) {
-    const {match: {params}} = this.props
+    const {match: {params}, dispatch} = this.props
 
     message.loading({content: 'Processing...', key: 'create_config'})
 
@@ -37,6 +37,7 @@ class BuildSetting extends React.PureComponent {
         message.success({content: 'Create build config successfully!', key: 'create_config', duration: 2})
         this.onToggleModal()
         this.fetchSettings()
+        dispatch(reset('AddConfigForm'))
       })
   }
 
