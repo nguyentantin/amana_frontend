@@ -17,12 +17,12 @@ class PasswordReset extends React.Component {
     return (
       <Row>
         <Styled.ContainerWrapper pt={[50, 110]}>
-          <Styled.LogoWrapper m='auto'>
-            <img src={logo} alt="Logo"/>
-          </Styled.LogoWrapper>
-
           <Box m='auto' mt={40} width={[1, 500]} px={[10, 0]}>
-            <Card>
+            <Styled.CardContent>
+              <Styled.LogoWrapper m='auto'>
+                <img src={logo} alt="Logo"/>
+              </Styled.LogoWrapper>
+
               <Form layout="vertical" onSubmit={handleSubmit}>
                 <Field
                   label="Email"
@@ -69,7 +69,7 @@ class PasswordReset extends React.Component {
                   <Link to='/sign-in' style={{display: 'block', marginTop: '15px'}}>Return to login.</Link>
                 </Box>
               </Form>
-            </Card>
+            </Styled.CardContent>
           </Box>
         </Styled.ContainerWrapper>
       </Row>
