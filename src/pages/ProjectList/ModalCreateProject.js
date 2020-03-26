@@ -130,7 +130,7 @@ class ModalCreateProject extends React.Component {
         onCancel={() => this.toggleModal()}
         okButtonProps={{form: 'create-project-form', key: 'submit', htmlType: 'submit'}}
       >
-        <Form {...formItemLayout} layout="vertical" id='create-project-form' onSubmit={handleSubmit(this.onSubmit)}>
+        <Form {...formItemLayout} layout="vertical" id='create-project-form' onFinish={handleSubmit(this.onSubmit)}>
           <Row>
             <StyleUpload display='flex' justifyContent='center'>
               <Upload

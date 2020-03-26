@@ -196,7 +196,7 @@ class MemberSetting extends React.PureComponent {
         <h2> Members </h2>
 
         <Row mb={2} justify='center'>
-          <Form layout="inline" onSubmit={handleSubmit(this.addMembers)}>
+          <Form layout="inline" onFinish={handleSubmit(this.addMembers)}>
             <StyleSelect
               mode='multiple'
               placeholder='Add a member by their name or email address'
