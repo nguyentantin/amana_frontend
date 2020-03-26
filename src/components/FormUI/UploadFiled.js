@@ -1,6 +1,7 @@
 import React from 'react'
 
-import { Icon, Form, Modal, Upload } from 'antd'
+import { Form, Modal, Upload } from 'antd'
+import { CloudUploadOutlined } from '@ant-design/icons'
 
 const FormItem = Form.Item
 
@@ -24,7 +25,7 @@ const UploadField = ({children, handleCancel, input, meta: {invalid, touched, er
       >
         {!imageUrl ? (
           <div>
-            <Icon type="cloud-upload-o" style={{fontSize: 48}}/>
+            <CloudUploadOutlined style={{fontSize: 48}}/>
             <div style={{fontSize: 11}}>
               File formats: JPEG, PNG, GIF (max size 2MB)
             </div>

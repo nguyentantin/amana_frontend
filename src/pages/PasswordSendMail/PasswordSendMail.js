@@ -23,7 +23,7 @@ class PasswordSendMail extends React.Component {
                 <img src={logo} alt="Logo"/>
               </Styled.LogoWrapper>
 
-              <Form layout="vertical" onSubmit={handleSubmit}>
+              <Form layout="vertical" onFinish={handleSubmit}>
                 <Box textAlign='center' mb={2}>
                   <h2>Can't log in?</h2>
                 </Box>

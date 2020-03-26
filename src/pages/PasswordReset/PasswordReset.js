@@ -23,7 +23,7 @@ class PasswordReset extends React.Component {
                 <img src={logo} alt="Logo"/>
               </Styled.LogoWrapper>
 
-              <Form layout="vertical" onSubmit={handleSubmit}>
+              <Form layout="vertical" onFinish={handleSubmit}>
                 <Field
                   label="Email"
                   name="email"

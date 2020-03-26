@@ -14,20 +14,10 @@ class AppBuildBasicInfo extends React.Component {
       <Fragment>
         <Title>{_.get(appBuild, 'project.name', '')}</Title>
 
-        <Box>
-          <Text strong>App:&nbsp;</Text>
-          <Text strong style={{fontSize: 16}}>{_.get(appBuild, 'appName', '')}</Text>
-        </Box>
-
-        <Box>
-          <Text strong>Version:&nbsp;</Text>
-          <Text>{_.get(appBuild, 'version', '')}</Text>
-        </Box>
-
-        <Box>
-          <Text strong>Env:&nbsp;</Text>
-          <EnvTag type={appBuild.env} />
-        </Box>
+        {/*<Box>*/}
+        {/*  <Text strong>App:&nbsp;</Text>*/}
+        {/*  <Text strong style={{fontSize: 16}}>{_.get(appBuild, 'appName', '')}</Text>*/}
+        {/*</Box>*/}
 
         <Box>
           <Text strong>Commit:&nbsp;</Text>
@@ -40,19 +30,29 @@ class AppBuildBasicInfo extends React.Component {
         </Box>
 
         <Box>
+          <Text strong>Env:&nbsp;</Text>
+          <EnvTag type={appBuild.env}/>
+        </Box>
+
+        <Box>
+          <Text strong>Version:&nbsp;</Text>
+          <Text>{_.get(appBuild, 'version', '')}</Text>
+        </Box>
+
+        <Box>
           <Text strong>Platform:&nbsp;</Text>
           <PlatformIcon platform={_.get(appBuild, 'project.platformType', 'ios')}/>
         </Box>
 
-        <Box>
-          <Text strong>Author:&nbsp;</Text>
-          <Text>{_.get(appBuild, 'project.author.name', '')}</Text>
-        </Box>
+        {/*<Box>*/}
+        {/*  <Text strong>Author:&nbsp;</Text>*/}
+        {/*  <Text>{_.get(appBuild, 'project.author.name', '')}</Text>*/}
+        {/*</Box>*/}
 
-        <Box>
-          <Text strong>Description:&nbsp;</Text>
-          <Text>{_.get(appBuild, 'project.description', '')}</Text>
-        </Box>
+        {/*<Box>*/}
+        {/*  <Text strong>Description:&nbsp;</Text>*/}
+        {/*  <Text>{_.get(appBuild, 'project.description', '')}</Text>*/}
+        {/*</Box>*/}
       </Fragment>
     )
   }

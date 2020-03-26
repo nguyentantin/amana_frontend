@@ -159,7 +159,7 @@ class TimeSheet extends React.Component {
     return (
       <Container>
         <Card>
-          <Form layout="inline" style={{marginBottom: '30px'}} onSubmit={handleSubmit(this.onSearch)}>
+          <Form layout="inline" style={{marginBottom: '30px'}} onFinish={handleSubmit(this.onSearch)}>
             <Field
               label="Name"
               name="username"

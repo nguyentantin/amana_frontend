@@ -26,7 +26,7 @@ class PopupAddConfig extends React.Component {
         onCancel={onToggle}
         okButtonProps={{form: 'add-config-form', key: 'submit', htmlType: 'submit'}}
       >
-        <Form layout="vertical" id='add-config-form' onSubmit={handleSubmit(onSubmit)}>
+        <Form layout="vertical" id='add-config-form' onFinish={handleSubmit(onSubmit)}>
           <Field
             label="Project Key"
             name="projectKey"

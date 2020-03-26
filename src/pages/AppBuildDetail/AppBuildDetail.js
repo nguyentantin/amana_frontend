@@ -1,7 +1,7 @@
 import QRCode from 'qrcode.react'
 import React  from 'react'
 import _ from 'lodash'
-import { Button, Divider, Icon, Skeleton, Typography } from 'antd'
+import { Button, Divider, Skeleton, Typography } from 'antd'
 import { action, computed, get, observable, toJS } from 'mobx'
 import { observer } from 'mobx-react'
 import { withRouter } from 'react-router'
@@ -14,8 +14,10 @@ import { Flex } from '../../styles/utility'
 import { GoBack } from '../../components/CoreUI'
 import { ListBuild, Container, StyleImg, LinkDownload } from './styled'
 import { ShowIf } from '../../components/Utils'
-import { SmallTitle } from '../ProjectDetail/styled'
+import { marginRight, SmallTitle } from '../ProjectDetail/styled'
 import { compose } from 'recompose'
+import LocalStorage from '../../utils/localStorage'
+import { DownloadOutlined } from '@ant-design/icons'
 
 @observer
 class AppBuildDetail extends React.Component {
@@ -43,8 +45,7 @@ class AppBuildDetail extends React.Component {
   }
 
   @computed get downloadUrl() {
-    return this.isAndroid ? get(this.appBuild, 's3Url') :
-      `itms-services://?action=download-manifest&url=${API_URL}/app-builds/${get(this.appBuild, 'id')}/manifest.plist`
+    return `${API_URL}/app-builds/${get(this.appBuild, 'id')}/download.app?token=${LocalStorage.getAccessToken()}`
   }
 
   componentDidMount () {
@@ -75,9 +76,9 @@ class AppBuildDetail extends React.Component {
                 <div className="content-left">
                   <AppBuildBasicInfo appBuild={this.appBuild} />
 
-                  <Box>
-                    <Button className="btn-right" type="link" size='large'>
-                      <Icon type="download"/>
+                  <Box mt={2}>
+                    <Button className="btn-right" type="primary" style={marginRight}>
+                      <DownloadOutlined />
                       <LinkDownload href={this.downloadUrl} download> Download </LinkDownload>
                     </Button>
                   </Box>
