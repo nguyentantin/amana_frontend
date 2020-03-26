@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Form, List, Avatar, Tag, Select, Skeleton, Popconfirm } from 'antd'
+import { Button, Form, List, Avatar, Tag, Select, Skeleton, Popconfirm, Row } from 'antd'
 import { withRouter } from 'react-router'
 import { Field, reduxForm } from 'redux-form'
 import { compose } from 'recompose'
@@ -195,8 +195,8 @@ class MemberSetting extends React.PureComponent {
       <Box p={[0, 15]}>
         <h2> Members </h2>
 
-        <Form layout="inline" onSubmit={handleSubmit(this.addMembers)}>
-          <Box mb={2} textAlign={['left', 'center']}>
+        <Row mb={2} justify='center'>
+          <Form layout="inline" onFinish={handleSubmit(this.addMembers)}>
             <StyleSelect
               mode='multiple'
               placeholder='Add a member by their name or email address'
@@ -217,18 +217,20 @@ class MemberSetting extends React.PureComponent {
               <Option value={String(ROLES.PROJECT_ADMIN)}>Administrator</Option>
             </Field>
 
-            <Button htmlType='submit' style={{marginTop: '3px'}} type="primary" loading={this.loadingButtonAssign}>
+            <Button htmlType='submit' type="primary" loading={this.loadingButtonAssign}>
               Add
             </Button>
-          </Box>
+          </Form>
+        </Row>
 
+        <Box mt={3}>
           <Skeleton active avatar loading={this.loadingMembers} rows={5}>
             <List
               dataSource={this.members}
               renderItem={member => this.renderMember(member)}
             />
           </Skeleton>
-        </Form>
+        </Box>
       </Box>
     )
   }

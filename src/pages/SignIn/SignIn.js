@@ -55,11 +55,12 @@ class SignInPage extends React.PureComponent {
 
           <AuthButton>
             <Col xs={24} md={20} className="auth_button col-sm-10">
-              <Button type="primary" shape="round" icon="github" size='large' disabled>
+              <Button type="primary" shape="round" size='large' disabled>
                 Log in with GitHub
               </Button>
             </Col>
-            <ColStyle xs={24} md={20}className="auth_button col-sm-10">
+
+            <ColStyle xs={24} md={20} className="auth_button col-sm-10">
               <GoogleLogin
                 clientId={GOOGLE_CLIENT_ID}
                 buttonText="Log in with Google"
@@ -69,6 +70,7 @@ class SignInPage extends React.PureComponent {
                 className="ant-btn ant-btn-primary ant-btn-round ant-btn-lg btn-google"
               />
             </ColStyle>
+
             <Col xs={24} md={20} className="auth_button col-sm-10">
               <Button type="primary" shape="round" size='large' disabled>
                 Log in with SAML Authentication
@@ -79,7 +81,7 @@ class SignInPage extends React.PureComponent {
 
         <Col xs={24} md={12} className="row-two">
           <Card bordered={false}>
-            <Form layout="vertical" onSubmit={handleSubmit(this.onSubmit)}>
+            <Form layout="vertical" onFinish={handleSubmit(this.onSubmit)}>
               <Field
                 label="Email"
                 name="email"

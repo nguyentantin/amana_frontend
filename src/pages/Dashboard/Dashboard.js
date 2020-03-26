@@ -13,6 +13,7 @@ import _ from 'lodash'
 import { connect } from 'react-redux'
 import { fetchAppBuilds, fetchProject } from './store/actions'
 import { container } from '../../styles/mixins'
+import UserInfoCard from './UserInfoCard'
 
 const Container = styled.div`
   ${container.centerBox}
@@ -30,7 +31,7 @@ class DashboardPage extends React.Component {
       <Container>
         <Row gutter={20}>
           <Col xs={24} md={6}>
-
+            <UserInfoCard/>
             <ListProject data={this.props.projects} loading={this.props.projectLoading}/>
 
           </Col>

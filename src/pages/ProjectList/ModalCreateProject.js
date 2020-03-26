@@ -1,16 +1,16 @@
-import { Form, Select, Row, Col, Upload, message, Icon } from 'antd'
-import { Field, reduxForm, change } from 'redux-form'
+import { Col, Form, message, Row, Select, Upload } from 'antd'
+import { change, Field, reduxForm } from 'redux-form'
 import React from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { observer } from 'mobx-react'
 import { action, observable } from 'mobx'
-import { LoadingOutlined } from '@ant-design/icons'
+import { CloudUploadOutlined, LoadingOutlined } from '@ant-design/icons'
 import _ from 'lodash'
 
 import { AInput, ASelect, ATextarea } from '../../components/FormUI'
-import { required, maxLength } from '../../utils/validations'
+import { maxLength, required } from '../../utils/validations'
 import { PLATFORM_TYPE } from '../../config/constants'
 import StorageRequest from '../../api/Request/StorageRequest'
 import ModalStyle from '../../styles/modal'
@@ -130,7 +130,7 @@ class ModalCreateProject extends React.Component {
         onCancel={() => this.toggleModal()}
         okButtonProps={{form: 'create-project-form', key: 'submit', htmlType: 'submit'}}
       >
-        <Form {...formItemLayout} layout="vertical" id='create-project-form' onSubmit={handleSubmit(this.onSubmit)}>
+        <Form {...formItemLayout} layout="vertical" id='create-project-form' onFinish={handleSubmit(this.onSubmit)}>
           <Row>
             <StyleUpload display='flex' justifyContent='center'>
               <Upload
@@ -146,7 +146,7 @@ class ModalCreateProject extends React.Component {
               >
                 {!this.imageUrl ? (
                   <div>
-                    <Icon type="cloud-upload-o" style={{fontSize: 48}}/>
+                    <CloudUploadOutlined style={{fontSize: 48}}/>
                     <div style={{fontSize: 11}}>
                       Logo formats: JPEG, PNG (max size 2MB)
                     </div>

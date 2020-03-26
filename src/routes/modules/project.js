@@ -8,7 +8,7 @@ const ProjectList = loadable(() => import('../../pages/ProjectList/ProjectList')
   fallback: <LoadingPage/>,
 })
 
-const ProjectDetail = loadable(() => import('../../pages/ProjectDetail'), {
+const ProjectDetail = loadable(() => import('../../pages/ProjectDetail/ProjectDetail'), {
   fallback: <LoadingPage/>
 })
 

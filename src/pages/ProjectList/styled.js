@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { space } from 'styled-system'
-import { Card, Col } from 'antd'
+import { Card } from 'antd'
 
 import { container } from '../../styles/mixins'
 import styledSystem from '../../styles/styledSystem'
@@ -29,7 +29,7 @@ export const StyleCard = styled(Card)`
   }
 `
 
-export const StyleUpload = styledSystem(styled(Col)`
+export const StyleUpload = styledSystem(styled('div')`
   .ant-upload-picture-card-wrapper {
     width: auto;
   }

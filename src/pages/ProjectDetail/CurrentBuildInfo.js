@@ -1,8 +1,10 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { Button, Icon, Col, Row, Typography } from 'antd'
+import { Button, Col, Row, Typography } from 'antd'
 import QRCode from 'qrcode.react'
 import _ from 'lodash'
+import { DownloadOutlined } from '@ant-design/icons'
+
 
 import { LinkDownload, marginRight } from './styled'
 import { Box } from '../../styles/utility'
@@ -40,7 +42,7 @@ class CurrentBuildInfo extends React.PureComponent {
               <Text style={{marginLeft: '5px'}}>1.0</Text>
             </Box>
             <Button className="btn-right" type="primary" style={marginRight}>
-              <Icon type="download"/>
+              <DownloadOutlined />
               <LinkDownload href={url} download> Download </LinkDownload>
             </Button>
           </Col>

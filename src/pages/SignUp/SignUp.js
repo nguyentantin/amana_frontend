@@ -77,7 +77,7 @@ class SignUpPage extends React.PureComponent {
         </Col>
         <Col xs={24} md={12} className="row-two">
           <Card bordered={false}>
-            <Form layout="vertical" onSubmit={handleSubmit(this.onSubmit)}>
+            <Form layout="vertical" onFinish={handleSubmit(this.onSubmit)}>
               <Field
                 label="Name"
                 name="name"
