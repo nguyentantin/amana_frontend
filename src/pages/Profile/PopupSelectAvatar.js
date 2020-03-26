@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col, Avatar, Button } from 'antd'
+import { Row, Col, Avatar } from 'antd'
 import _ from 'lodash'
 
 import { Box } from '../../styles/utility'
