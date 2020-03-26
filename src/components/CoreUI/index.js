@@ -1,7 +1,11 @@
-import PlatformIcon from './PlatformIcon'
 import AvatarBox from './AvatarBox'
+import EnvTag from './EnvTag'
+import GoBack from './GoBack'
+import PlatformIcon from './PlatformIcon'
 
 export {
-  PlatformIcon,
   AvatarBox,
+  EnvTag,
+  GoBack,
+  PlatformIcon,
 }

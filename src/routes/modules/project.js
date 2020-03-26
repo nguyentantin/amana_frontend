@@ -16,7 +16,7 @@ const ProjectSetting = loadable(() => import('../../pages/ProjectSetting/Project
   fallback: <LoadingPage/>
 })
 
-const AppBuildDetail = loadable(() => import('../../pages/AppBuildDetail'), {
+const AppBuildDetail = loadable(() => import('../../pages/AppBuildDetail/AppBuildDetail'), {
   fallback: <LoadingPage/>
 })
 
