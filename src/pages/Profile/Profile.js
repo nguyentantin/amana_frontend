@@ -52,6 +52,12 @@ class ProfilePage extends React.PureComponent {
       labelCol: {span: 5},
       wrapperCol: {span: 19}
     }
+
+    const initDate = {
+      name: this.profile.name
+    }
+
+    this.props.initialize(initDate)
  
     return (
       <StyleContainer>
