@@ -1,7 +1,6 @@
 import React from 'react'
 import { Col, Row } from 'antd'
 import { compose } from 'redux'
-import styled from 'styled-components'
 
 import ListProject from './ListProject'
 import ListAppBuild from './ListAppBuild'
@@ -12,12 +11,8 @@ import saga from './store/sagas'
 import _ from 'lodash'
 import { connect } from 'react-redux'
 import { fetchAppBuilds, fetchProject } from './store/actions'
-import { container } from '../../styles/mixins'
 import UserInfoCard from './UserInfoCard'
-
-const Container = styled.div`
-  ${container.centerBox}
-`
+import { StyleContainer, StyleCard } from './styled'
 
 class DashboardPage extends React.Component {
   componentDidMount () {
@@ -28,18 +23,19 @@ class DashboardPage extends React.Component {
 
   render() {
     return (
-      <Container>
-        <Row gutter={20}>
-          <Col xs={24} md={6}>
-            <UserInfoCard/>
-            <ListProject data={this.props.projects} loading={this.props.projectLoading}/>
-
-          </Col>
-          <Col xs={24} md={18}>
-            <ListAppBuild data={this.props.appBuilds} loading={this.props.appBuildLoading}/>
-          </Col>
-        </Row>
-      </Container>
+      <StyleContainer>
+        <StyleCard>
+          <Row gutter={20}>
+            <Col xs={24} md={6}>
+              <UserInfoCard/>
+              <ListProject data={this.props.projects} loading={this.props.projectLoading}/>
+            </Col>
+            <Col xs={24} md={18}>
+              <ListAppBuild data={this.props.appBuilds} loading={this.props.appBuildLoading}/>
+            </Col>
+          </Row>
+        </StyleCard>
+      </StyleContainer>
     )
   }
 }
