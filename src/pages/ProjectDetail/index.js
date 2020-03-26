@@ -28,6 +28,7 @@ import ProjectBasicInfo from './ProjectBasicInfo'
 import CurrentBuildInfo from './CurrentBuildInfo'
 import { Box } from '../../styles/utility'
 import { AvatarBox } from '../../components/CoreUI'
+import LocalStorage from '../../utils/localStorage'
 
 const {TabPane} = Tabs
 
@@ -72,8 +73,7 @@ class ProjectDetail extends React.Component {
 
   @computed get downloadUrl() {
     const project = toJS(this.projectDetail)
-    return this.isAndroid ? _.get(project, 'currentVersion.s3Url', '') :
-      `itms-services://?action=download-manifest&url=${API_URL}/app-builds/${_.get(project, 'currentVersion.id', '')}/manifest.plist`
+    return `${API_URL}/app-builds/${_.get(project, 'currentVersion.id')}/download.app?token=${LocalStorage.getAccessToken()}`
   }
 
   componentDidMount() {
@@ -137,7 +137,7 @@ class ProjectDetail extends React.Component {
         <Divider/>
 
         <div>
-          <h2>Activities <SmallTitle>Recent activities on this app.</SmallTitle></h2>
+          <h2>Other builds <SmallTitle>Recent builds on this app.</SmallTitle></h2>
           <Tabs defaultActiveKey="1">
             {
               listBuildEnv.map((item) => {
