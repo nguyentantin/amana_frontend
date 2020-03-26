@@ -8,6 +8,10 @@ class UserRequest extends HttpRequest {
   profile() {
     return this.get('/users/me')
   }
+
+  updateProfile(data) {
+    return this.put('/users/me', data)
+  }
 }
 
 export default new UserRequest()

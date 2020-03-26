@@ -2,7 +2,7 @@ import React from 'react'
 
 import loadable from '../../utils/loadable'
 import LoadingPage from '../../components/LoadingPage/LoadingPage'
-import { GuestLayout } from '../../components/Layout'
+import { DashboardLayout, GuestLayout } from '../../components/Layout'
 
 const SignInPage = loadable(() => import('../../pages/SignIn/SignIn'), {
   fallback: <LoadingPage/>,
@@ -25,6 +25,10 @@ const PasswordSendMail = loadable(() => import('../../pages/PasswordSendMail/Pas
 })
 
 const PasswordReset = loadable(() => import('../../pages/PasswordReset/PasswordReset'), {
+  fallback: <LoadingPage/>,
+})
+
+const Profile = loadable(() => import('../../pages/Profile/Profile'), {
   fallback: <LoadingPage/>,
 })
 
@@ -66,5 +70,12 @@ export default [
     path: '/email-verification',
     exact: true,
     component: EmailVerify,
+  },
+  {
+    path: '/profile',
+    exact: true,
+    component: Profile,
+    layout: DashboardLayout,
+    requiredAuth: true
   },
 ]

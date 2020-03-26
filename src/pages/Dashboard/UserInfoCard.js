@@ -62,6 +62,7 @@ class UserInfoCard extends React.PureComponent {
             style={{
               backgroundColor: authInfo().color,
               fontSize: 150,
+              width: 'auto'
             }}
             name={authInfo().name}
           />

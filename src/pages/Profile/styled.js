@@ -8,7 +8,8 @@ export const StyleContainer = styled.div`
 `
 
 export const StyleCard = styled(Card)`
-  padding: 12px !important;
+  padding: 26px !important;
+  border-radius: 10px !important;
   .ant-card-body {
     padding: 0;
   }
