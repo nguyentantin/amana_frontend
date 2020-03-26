@@ -81,7 +81,7 @@ class SignInPage extends React.PureComponent {
 
         <Col xs={24} md={12} className="row-two">
           <Card bordered={false}>
-            <Form layout="vertical" onFinish={handleSubmit(this.onSubmit)}>
+            <Form layout="vertical" onSubmit={handleSubmit(this.onSubmit)}>
               <Field
                 label="Email"
                 name="email"

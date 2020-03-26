@@ -112,8 +112,22 @@ class ModalCreateProject extends React.Component {
     const {visible, handleSubmit} = this.props
 
     const formItemLayout = {
-      labelCol: {span: 5},
-      wrapperCol: {span: 19}
+      labelCol: {
+        xs: {
+          span: 24
+        },
+        md: {
+          span: 5
+        }
+      },
+      wrapperCol: {
+        xs: {
+          span: 24
+        },
+        md: {
+          span: 19
+        }
+      }
     }
 
     const UploadButton = (
