@@ -140,7 +140,6 @@ class ProjectListPage extends React.Component {
   }
 
   render() {
-    console.log('profile-4', this.projects)
     return (
       <StyleContainer>
         <StyleCard>
