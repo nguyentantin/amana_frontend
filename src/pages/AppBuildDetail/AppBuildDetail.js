@@ -16,6 +16,7 @@ import { ListBuild, Container, StyleImg, LinkDownload } from './styled'
 import { ShowIf } from '../../components/Utils'
 import { SmallTitle } from '../ProjectDetail/styled'
 import { compose } from 'recompose'
+import LocalStorage from '../../utils/localStorage'
 
 @observer
 class AppBuildDetail extends React.Component {
@@ -43,8 +44,7 @@ class AppBuildDetail extends React.Component {
   }
 
   @computed get downloadUrl() {
-    return this.isAndroid ? get(this.appBuild, 's3Url') :
-      `itms-services://?action=download-manifest&url=${API_URL}/app-builds/${get(this.appBuild, 'id')}/manifest.plist`
+    return `${API_URL}/app-builds/${get(this.appBuild, 'id')}/download.app?token=${LocalStorage.getAccessToken()}`
   }
 
   componentDidMount () {
