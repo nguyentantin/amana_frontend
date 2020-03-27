@@ -71,7 +71,7 @@ class AppBuildDetail extends React.Component {
 
   render() {
     return (
-      <div className="app-build">
+      <Box pb='40px'>
         <GoBack/>
 
         <Divider style={{marginTop: 10, marginBottom: 10}}/>
@@ -108,7 +108,7 @@ class AppBuildDetail extends React.Component {
           <h2>Activities <SmallTitle>Recent activities on this app</SmallTitle></h2>
           <DownloadHistory histories={this.histories} loading={this.loadingHistories}/>
         </div>
-      </div>
+      </Box>
     )
   }
 }

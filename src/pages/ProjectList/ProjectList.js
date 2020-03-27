@@ -10,7 +10,7 @@ import _ from 'lodash'
 import { PlusOutlined } from '@ant-design/icons'
 
 import { Flex } from '../../styles/utility'
-import { StyleAvatar, StyleHeader } from './styled'
+import { Page, StyleAvatar, StyleHeader } from './styled'
 import ModalCreateProject from './ModalCreateProject'
 import ProjectRequest from '../../api/Request/ProjectRequest'
 import { HTTP_CODE } from '../../config/constants'
@@ -141,7 +141,7 @@ class ProjectListPage extends React.Component {
 
   render() {
     return (
-      <div className="project-list">
+      <Page>
         <StyleHeader>
           <h2>Projects</h2>
           <div>
@@ -174,7 +174,7 @@ class ProjectListPage extends React.Component {
           loading={this.loading}
           rowKey="id"
         />
-      </div>
+      </Page>
     )
   }
 }

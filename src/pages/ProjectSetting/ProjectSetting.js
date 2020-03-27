@@ -15,7 +15,7 @@ class ProjectSetting extends React.Component {
     const {match: {params}} = this.props
 
     return (
-      <div className="project-setting">
+      <Box pb='40px'>
         <Box m={3}>
           <Link to={`/projects/${params.projectId}`}>
             <LeftOutlined style={{ fontSize: '16px' }}/>
@@ -31,7 +31,7 @@ class ProjectSetting extends React.Component {
             <BuildSetting/>
           </TabPane>
         </Tabs>
-      </div>
+      </Box>
     )
   }
 }

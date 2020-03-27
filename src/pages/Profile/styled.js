@@ -1,11 +1,28 @@
 import styled from 'styled-components'
 import { space } from 'styled-system'
 import { Card, Avatar } from 'antd'
-import { container } from '../../styles/mixins'
 
-export const StyleContainer = styled.div`
-  ${container.centerBox}
-`
+import styledSystem from '../../styles/styledSystem'
+
+export const AvatarBox = styledSystem(styled.div`
+  position: relative;
+  .ant-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: 0;
+    transform: translate(-50%, -50%);
+    margin: 0 !important;
+    opacity: 0;
+    transition: all .2s ease-in-out;
+  }
+  &:hover .ant-btn {
+    opacity: 1;
+    transition: all .2s ease-in-out;
+    color: #ffa940;
+    border-color: #ffa940;
+  }
+`)
 
 export const StyleCard = styled(Card)`
   padding: 26px !important;
@@ -16,8 +33,14 @@ export const StyleCard = styled(Card)`
 `
 
 export const StyleLink = styled.div`
-  text-align: center;
   ${space}
+  text-align: center;
+  .ant-btn {
+    width: 300px;
+    @media screen and (max-width: 600px) {
+      width: 100%;
+    }
+  }
 `
 
 export const AvatarSelect = styled(Avatar)`

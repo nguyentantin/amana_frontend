@@ -22,7 +22,7 @@ class DashboardPage extends React.Component {
 
   render() {
     return (
-      <div className="dashboard">
+      <div>
         <Row gutter={20}>
           <Col xs={24} md={6}>
             <UserInfoCard/>

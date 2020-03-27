@@ -73,7 +73,7 @@ class PopupSelectAvatar extends React.PureComponent {
     const user = this.user()
 
     return (
-      <Box textAlign='center' mb={3}>
+      <Styled.AvatarBox textAlign='center' mb={3}>
         <UserAvatar size={80} user={user} fontSize={40}/>
 
         <Button size="small" style={{marginLeft: 16, verticalAlign: 'middle'}}
@@ -117,7 +117,7 @@ class PopupSelectAvatar extends React.PureComponent {
             }
           </Row>
         </ModalStyle>
-      </Box>
+      </Styled.AvatarBox>
     )
   }
 }

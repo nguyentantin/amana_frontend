@@ -9,14 +9,6 @@ const ContainerWrap = styled(Card)`
   .ant-card-body {
     padding: 0;
   }
-  .project-list {
-    .ant-table-thead {
-      display: none;
-    }
-  }
-  .app-build, .project-detail, .project-setting {
-    padding-bottom: 40px;
-  }
 `
 
 export default ContainerWrap

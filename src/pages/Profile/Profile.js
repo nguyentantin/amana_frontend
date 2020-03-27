@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import _ from 'lodash'
 
 import { AInput } from '../../components/FormUI'
-import { StyleContainer, StyleCard, StyleLink } from './styled'
+import { StyleCard, StyleLink } from './styled'
 import { confirmPassword, email, required } from '../../utils/validations'
 import UserRequest from '../../api/Request/UserRequest'
 import LocalStorage from '../../utils/localStorage'
@@ -82,9 +82,9 @@ class ProfilePage extends React.PureComponent {
     const {handleSubmit} = this.props
 
     return (
-      <StyleContainer>
+      <div>
         <Row gutter={[16, 24]} justify='center'>
-          <Col span={18} className="gutter-row">
+          <Col span={24} className="gutter-row">
             <StyleCard loading={this.loading}>
               <Typography.Title level={2}>
                 Profile
@@ -93,7 +93,7 @@ class ProfilePage extends React.PureComponent {
               <Divider/>
 
               <Row justify='center'>
-                <Col span={16}>
+                <Col xs={24} md={16}>
                   <Form layout='vertical' onFinish={handleSubmit(this.onSubmit)}>
 
                     <PopupSelectAvatar
@@ -158,9 +158,8 @@ class ProfilePage extends React.PureComponent {
                       size='large'
                     />
 
-                    <StyleLink m={3}>
+                    <StyleLink my={3}>
                       <Button
-                        style={{width: '300px'}}
                         type="primary"
                         size='large'
                         htmlType="submit"
@@ -175,7 +174,7 @@ class ProfilePage extends React.PureComponent {
             </StyleCard>
           </Col>
         </Row>
-      </StyleContainer>
+      </div>
     )
   }
 }
