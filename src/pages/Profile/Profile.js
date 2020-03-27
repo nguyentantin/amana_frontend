@@ -1,6 +1,6 @@
 import React from 'react'
 import { compose } from 'recompose'
-import { Field, initialize, reduxForm, stopSubmit } from 'redux-form'
+import { change, Field, initialize, reduxForm, stopSubmit } from 'redux-form'
 import { Button, Form, Divider, Col, Row, Typography } from 'antd'
 import { observer } from 'mobx-react'
 import { action, observable, toJS } from 'mobx'
@@ -70,6 +70,11 @@ class ProfilePage extends React.PureComponent {
       })
   }
 
+  onChooseAvatar(id) {
+    const {dispatch} = this.props
+    dispatch(change('ProfileForm', 'avatarId', id))
+  }
+
   componentDidMount() {
     this.fetchProfile()
   }
@@ -99,6 +104,12 @@ class ProfilePage extends React.PureComponent {
                         Change
                       </Button>
                     </Box>
+
+                    <Field
+                      name="avatarId"
+                      component='input'
+                      type="hidden"
+                    />
 
                     <Field
                       label="Name"
@@ -171,6 +182,7 @@ class ProfilePage extends React.PureComponent {
           visible={this.visible}
           onToggle={this.onToggleModal}
           avatarId={_.get(toJS(this.profile), 'userId', null)}
+          onChoose={(avatarId) => this.onChooseAvatar(avatarId)}
         />
       </StyleContainer>
     )

@@ -3,7 +3,6 @@ import { Row, Col } from 'antd'
 import _ from 'lodash'
 import { observer } from 'mobx-react'
 import { action, observable } from 'mobx'
-import classNames from 'classnames'
 
 import { Box } from '../../styles/utility'
 import * as Styled from './styled'
@@ -38,6 +37,12 @@ class PopupSelectAvatar extends React.PureComponent {
     this.selected = id
   }
 
+  constructor(props) {
+    super(props);
+
+    this.choose = this.choose.bind(this)
+  }
+
   isActive(id) {
     const {avatarId} = this.props
 
@@ -46,6 +51,12 @@ class PopupSelectAvatar extends React.PureComponent {
     }
 
     return avatarId === id
+  }
+
+  choose() {
+    const {onChoose, onToggle} = this.props
+    onChoose(this.selected)
+    onToggle()
   }
 
   render() {
@@ -58,6 +69,9 @@ class PopupSelectAvatar extends React.PureComponent {
         cancelText='Close'
         onCancel={onToggle}
         width='700px'
+        okButtonProps={{
+          onClick: this.choose
+        }}
       >
         <Row justify='start'>
           {
@@ -66,14 +80,13 @@ class PopupSelectAvatar extends React.PureComponent {
               const style = {}
 
               if(isActive) {
-                style.border = 'border: 2px solid #fa8c16;'
+                style.border = '2px solid #fa8c16'
               }
 
               return (
                 <Col span={8} key={avatar.id}>
                   <Box p={3} textAlign='center'>
                     <Styled.AvatarSelect
-                      className={classNames({ active: isActive })}
                       size={80}
                       src={avatar.imgSrc}
                       onClick={() => this.onSelect(avatar.id)}
