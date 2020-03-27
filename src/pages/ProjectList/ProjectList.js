@@ -16,7 +16,6 @@ import ProjectRequest from '../../api/Request/ProjectRequest'
 import { HTTP_CODE } from '../../config/constants'
 import { PlatformIcon } from '../../components/CoreUI'
 import TableStyle from '../../styles/tableResponsive'
-import { ShowIf } from '../../components/Utils'
 import LocalStorage from '../../utils/localStorage'
 
 const {Search} = Input
@@ -68,11 +67,6 @@ class ProjectListPage extends React.Component {
 
   @action toggleModalCreate() {
     this.modalCreateVisible = !this.modalCreateVisible
-  }
-
-  isSuperAdmin() {
-    const me = LocalStorage.getAuthInfo()
-    return _.get(me, 'isSuperAdmin', false)
   }
 
   componentDidMount() {
@@ -153,15 +147,13 @@ class ProjectListPage extends React.Component {
           </div>
         </StyleHeader>
 
-        <ShowIf condition={this.isSuperAdmin()}>
-          <Button
-            type="dashed"
-            block
-            onClick={() => this.toggleModalCreate()}
-          >
-            <PlusOutlined />Create Project
-          </Button>
-        </ShowIf>
+        <Button
+          type="dashed"
+          block
+          onClick={() => this.toggleModalCreate()}
+        >
+          <PlusOutlined/>Create Project
+        </Button>
 
         <ModalCreateProject
           visible={this.modalCreateVisible}
