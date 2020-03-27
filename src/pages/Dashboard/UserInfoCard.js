@@ -4,17 +4,18 @@ import { Card, Col, Dropdown, Menu, Row } from 'antd'
 import { DownOutlined, LogoutOutlined, MailOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons'
 
 import LocalStorage from '../../utils/localStorage'
-import { StyleTextMuted, StyleAvatarBox } from './styled'
+import { StyleTextMuted } from './styled'
+import { UserAvatar } from '../../components/CoreUI'
 
 const authInfo = () => {
   return LocalStorage.getAuthInfo()
 }
 
-const { Meta } = Card
+const {Meta} = Card
 
 class UserInfoCard extends React.PureComponent {
   constructor(props) {
-    super(props);
+    super(props)
     this.logout = this.logout.bind(this)
   }
 
@@ -43,19 +44,17 @@ class UserInfoCard extends React.PureComponent {
     return (
       <Card
         style={{
-          backgroundColor: 'rgba(240, 242, 245, 1)',
           marginBottom: 20,
           borderColor: 'rgba(217, 217, 217, 1)',
-          borderRadius: 5
+          borderRadius: 5,
         }}
         cover={
-          <StyleAvatarBox
+          <UserAvatar
             size={270}
+            user={authInfo()}
             width={['100%!important', '270px!important']}
             fontSize={'150px!important'}
-            background={authInfo().color}
             shape="square"
-            name={authInfo().name}
           />
         }
       >
@@ -64,24 +63,24 @@ class UserInfoCard extends React.PureComponent {
             padding: 15,
           }}
           title={
-              <Row justify="space-around" align="middle">
-                <Col span={20}>
-                  <div>
-                    <UserOutlined/>
-                    <StyleTextMuted fontSize={15} ml='5px'>{authInfo().name}</StyleTextMuted>
-                  </div>
+            <Row justify="space-around" align="middle">
+              <Col span={20}>
+                <div>
+                  <UserOutlined/>
+                  <StyleTextMuted fontSize={15} ml='5px'>{authInfo().name}</StyleTextMuted>
+                </div>
 
-                  <div>
-                    <MailOutlined/>
-                    <StyleTextMuted fontSize={15} ml='5px' color='rgba(0, 0, 0, 0.45)' >{authInfo().email}</StyleTextMuted>
-                  </div>
-                </Col>
-                <Col span={4} style={{ textAlign: 'right' }}>
-                  <Dropdown overlay={this.dropdownMenu()} placement="bottomRight">
-                    <DownOutlined/>
-                  </Dropdown>
-                </Col>
-              </Row>
+                <div>
+                  <MailOutlined/>
+                  <StyleTextMuted fontSize={15} ml='5px' color='rgba(0, 0, 0, 0.45)'>{authInfo().email}</StyleTextMuted>
+                </div>
+              </Col>
+              <Col span={4} style={{textAlign: 'right'}}>
+                <Dropdown overlay={this.dropdownMenu()} placement="bottomRight">
+                  <DownOutlined/>
+                </Dropdown>
+              </Col>
+            </Row>
           }
         />
       </Card>

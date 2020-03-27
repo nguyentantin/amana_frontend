@@ -13,7 +13,7 @@ const getSrcById = (id) => {
 
 const UserAvatar = ({user, fontSize, ...rest}) => {
   const style = {}
-  if (_.isEmpty(user.avatarId)) {
+  if (_.isNull(user.avatarId)) {
     style.backgroundColor = _.get(user, 'color')
   }
 
