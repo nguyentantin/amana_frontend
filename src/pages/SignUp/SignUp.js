@@ -12,7 +12,7 @@ import injectSaga from '../../store/injectSaga'
 import reducer from '../../store/modules/auth/reducers'
 import saga from '../../store/modules/auth/sagas'
 import { ContainerRow, AuthButton, StyleLink } from '../SignIn/styled'
-import StyleContainer from '../../styles/styledComponent'
+import StyledContainer from '../../styles/styledContainer'
 import { required, email, confirmPassword } from '../../utils/validations'
 import { requestLoginGoogle, requestRegister } from '../../store/modules/auth/actions'
 import ColStyle from '../../styles/colStyle'
@@ -48,7 +48,7 @@ class SignUpPage extends React.PureComponent {
     const {handleSubmit, loading} = this.props
 
     return (
-      <StyleContainer>
+      <StyledContainer>
         <ContainerRow>
           <Col xs={24} md={12}>
             <h1 className="row-title">Create your account<br/>
@@ -135,7 +135,7 @@ class SignUpPage extends React.PureComponent {
             </Card>
           </Col>
         </ContainerRow>
-      </StyleContainer>
+      </StyledContainer>
     )
   }
 }

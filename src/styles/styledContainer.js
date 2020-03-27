@@ -3,7 +3,7 @@ import { Card } from 'antd'
 
 import { container } from './mixins'
 
-const StyleContainer = styled(Card)`
+const StyledContainer = styled(Card)`
   ${container.centerBox}
   padding: 12px !important;
   .ant-card-body {
@@ -19,4 +19,4 @@ const StyleContainer = styled(Card)`
   }
 `
 
-export default StyleContainer
+export default StyledContainer
