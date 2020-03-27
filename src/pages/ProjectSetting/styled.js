@@ -1,13 +1,7 @@
 import styled from 'styled-components'
 import { Select, List } from 'antd'
 
-import { container } from '../../styles/mixins'
 import styledSystem from '../../styles/styledSystem'
-
-export const Container = styled.div`
-  padding-bottom: 40px;
-  ${container.centerBox}
-`
 
 export const StyleList = styled(List.Item)`
   @media screen and (max-width: 600px) {

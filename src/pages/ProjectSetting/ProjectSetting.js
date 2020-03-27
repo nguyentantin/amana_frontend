@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom'
 import { withRouter } from 'react-router'
 
 import { Box } from '../../styles/utility'
-import * as Styled from './styled'
 import MemberSetting from './MemberSetting'
 import BuildSetting from './BuildSetting'
 
@@ -16,25 +15,23 @@ class ProjectSetting extends React.Component {
     const {match: {params}} = this.props
 
     return (
-      <Styled.Container>
-        <Box bg="#fff" p={16} borderColor='#fff'>
-          <Box m={3}>
-            <Link to={`/projects/${params.projectId}`}>
-              <LeftOutlined style={{ fontSize: '16px' }}/>
-              Back
-            </Link>
-          </Box>
-          <Tabs type="card">
-            <TabPane tab='Member Settings' key='1'>
-              <MemberSetting/>
-            </TabPane>
-
-            <TabPane tab='Build Settings' key='2'>
-              <BuildSetting/>
-            </TabPane>
-          </Tabs>
+      <div className="project-setting">
+        <Box m={3}>
+          <Link to={`/projects/${params.projectId}`}>
+            <LeftOutlined style={{ fontSize: '16px' }}/>
+            Back
+          </Link>
         </Box>
-      </Styled.Container>
+        <Tabs type="card">
+          <TabPane tab='Member Settings' key='1'>
+            <MemberSetting/>
+          </TabPane>
+
+          <TabPane tab='Build Settings' key='2'>
+            <BuildSetting/>
+          </TabPane>
+        </Tabs>
+      </div>
     )
   }
 }

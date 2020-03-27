@@ -12,7 +12,6 @@ import _ from 'lodash'
 import { connect } from 'react-redux'
 import { fetchAppBuilds, fetchProject } from './store/actions'
 import UserInfoCard from './UserInfoCard'
-import { StyleContainer, StyleCard } from './styled'
 
 class DashboardPage extends React.Component {
   componentDidMount () {
@@ -23,19 +22,17 @@ class DashboardPage extends React.Component {
 
   render() {
     return (
-      <StyleContainer>
-        <StyleCard>
-          <Row gutter={20}>
-            <Col xs={24} md={6}>
-              <UserInfoCard/>
-              <ListProject data={this.props.projects} loading={this.props.projectLoading}/>
-            </Col>
-            <Col xs={24} md={18}>
-              <ListAppBuild data={this.props.appBuilds} loading={this.props.appBuildLoading}/>
-            </Col>
-          </Row>
-        </StyleCard>
-      </StyleContainer>
+      <div className="dashboard">
+        <Row gutter={20}>
+          <Col xs={24} md={6}>
+            <UserInfoCard/>
+            <ListProject data={this.props.projects} loading={this.props.projectLoading}/>
+          </Col>
+          <Col xs={24} md={18}>
+            <ListAppBuild data={this.props.appBuilds} loading={this.props.appBuildLoading}/>
+          </Col>
+        </Row>
+      </div>
     )
   }
 }

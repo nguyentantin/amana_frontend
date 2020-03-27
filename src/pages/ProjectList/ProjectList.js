@@ -10,7 +10,7 @@ import _ from 'lodash'
 import { PlusOutlined } from '@ant-design/icons'
 
 import { Flex } from '../../styles/utility'
-import { StyleAvatar, StyleCard, StyleContainer, StyleHeader } from './styled'
+import { StyleAvatar, StyleHeader } from './styled'
 import ModalCreateProject from './ModalCreateProject'
 import ProjectRequest from '../../api/Request/ProjectRequest'
 import { HTTP_CODE } from '../../config/constants'
@@ -141,42 +141,40 @@ class ProjectListPage extends React.Component {
 
   render() {
     return (
-      <StyleContainer>
-        <StyleCard>
-          <StyleHeader>
-            <h2>Projects</h2>
-            <div>
-              <Search
-                placeholder="Search project name"
-                style={{width: 200, paddingLeft: '10px'}}
-              />
-            </div>
-          </StyleHeader>
+      <div className="project-list">
+        <StyleHeader>
+          <h2>Projects</h2>
+          <div>
+            <Search
+              placeholder="Search project name"
+              style={{width: 200, paddingLeft: '10px'}}
+            />
+          </div>
+        </StyleHeader>
 
-          <ShowIf condition={this.isSuperAdmin()}>
-            <Button
-              type="dashed"
-              block
-              onClick={() => this.toggleModalCreate()}
-            >
-              <PlusOutlined />Create Project
-            </Button>
-          </ShowIf>
+        <ShowIf condition={this.isSuperAdmin()}>
+          <Button
+            type="dashed"
+            block
+            onClick={() => this.toggleModalCreate()}
+          >
+            <PlusOutlined />Create Project
+          </Button>
+        </ShowIf>
 
-          <ModalCreateProject
-            visible={this.modalCreateVisible}
-            onCreateProject={(values, cb) => this.createProject(values, cb)}
-            onToggle={() => this.toggleModalCreate()}
-          />
+        <ModalCreateProject
+          visible={this.modalCreateVisible}
+          onCreateProject={(values, cb) => this.createProject(values, cb)}
+          onToggle={() => this.toggleModalCreate()}
+        />
 
-          <TableStyle
-            columns={this.columns()}
-            dataSource={this.projects}
-            loading={this.loading}
-            rowKey="id"
-          />
-        </StyleCard>
-      </StyleContainer>
+        <TableStyle
+          columns={this.columns()}
+          dataSource={this.projects}
+          loading={this.loading}
+          rowKey="id"
+        />
+      </div>
     )
   }
 }

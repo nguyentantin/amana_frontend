@@ -113,20 +113,10 @@ class ModalCreateProject extends React.Component {
 
     const formItemLayout = {
       labelCol: {
-        xs: {
-          span: 24
-        },
-        md: {
-          span: 5
-        }
+        span: 24
       },
       wrapperCol: {
-        xs: {
-          span: 24
-        },
-        md: {
-          span: 19
-        }
+        span: 24
       }
     }
 
@@ -146,7 +136,7 @@ class ModalCreateProject extends React.Component {
       >
         <Form {...formItemLayout} layout="vertical" id='create-project-form' onFinish={handleSubmit(this.onSubmit)}>
           <Row>
-            <StyleUpload display='flex' justifyContent='center'>
+            <StyleUpload display='flex' justifyContent='center' width='100%'>
               <Upload
                 accept='image/*'
                 name="logo"

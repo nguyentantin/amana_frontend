@@ -1,10 +1,8 @@
 import styled from 'styled-components'
 import { space } from 'styled-system'
 import { Row } from 'antd'
-import { container } from '../../styles/mixins'
 
 export const ContainerRow = styled(Row)`
-  ${container.centerBox}
   .row-two {
     display: flex !important;
     margin-top: 20px;

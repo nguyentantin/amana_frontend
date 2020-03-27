@@ -21,7 +21,6 @@ import ListAppBuild  from './ListAppBuild'
 import {
   ListBuild,
   StyleImg,
-  Container,
   SmallTitle,
 } from './styled'
 import ProjectBasicInfo from './ProjectBasicInfo'
@@ -87,7 +86,7 @@ class ProjectDetail extends React.Component {
 
   render() {
     return (
-      <Container>
+      <div className="project-detail">
         <Flex flex={['block', 'flex']}>
           <Skeleton active avatar loading={this.loading}>
             <StyleImg pr={[0,20]} pb={20} textAlign={['center', 'left']}>
@@ -162,7 +161,7 @@ class ProjectDetail extends React.Component {
             }
           </Tabs>
         </div>
-      </Container>
+      </div>
     )
   }
 }

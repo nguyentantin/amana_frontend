@@ -12,7 +12,7 @@ import { API_URL, PLATFORM_TYPE } from '../../config/constants'
 import { Box } from '../../styles/utility'
 import { Flex } from '../../styles/utility'
 import { GoBack } from '../../components/CoreUI'
-import { ListBuild, Container, StyleImg, LinkDownload } from './styled'
+import { ListBuild, StyleImg, LinkDownload } from './styled'
 import { ShowIf } from '../../components/Utils'
 import { marginRight, SmallTitle } from '../ProjectDetail/styled'
 import { compose } from 'recompose'
@@ -57,7 +57,7 @@ class AppBuildDetail extends React.Component {
     const { Text } = Typography
 
     return (
-      <Container>
+      <div className="app-build">
         <GoBack/>
 
         <Divider style={{marginTop: 10, marginBottom: 10}}/>
@@ -94,7 +94,7 @@ class AppBuildDetail extends React.Component {
           <h2>Activities <SmallTitle>Recent activities on this app</SmallTitle></h2>
           <Text>coming soon...</Text>
         </div>
-      </Container>
+      </div>
     )
   }
 }

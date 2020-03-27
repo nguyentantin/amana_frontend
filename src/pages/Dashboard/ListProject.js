@@ -25,7 +25,7 @@ const skeletonData = () => {
 export default class ListProject extends React.Component {
   render () {
     return (
-      <ListBuildContainer height={['auto', 400]} mb={[20, 0]}>
+      <ListBuildContainer height={['auto', 396]} mb={[20, 0]}>
         <h4><UnorderedListOutlined /> Build</h4>
         <List
           itemLayout="vertical"
