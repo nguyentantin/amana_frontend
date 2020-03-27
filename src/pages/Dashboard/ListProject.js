@@ -6,7 +6,7 @@ import { PullRequestOutlined, UnorderedListOutlined } from '@ant-design/icons'
 
 import { ListBuildContainer, StyleLink, TextMute } from './styled'
 import { truncate } from '../../utils/helpers'
-import { AvatarBox, PlatformIcon } from '../../components/CoreUI'
+import { PlatformIcon, UserAvatar } from '../../components/CoreUI'
 import { Box } from '../../styles/utility'
 
 const skeletonData = () => {
@@ -51,7 +51,7 @@ export default class ListProject extends React.Component {
                     </StyleLink>
 
                     <Box mt={12}>
-                      <AvatarBox size="small" src={item.avatar} name={item.name} style={{ backgroundColor: item.color }}/> {_.get(item, 'author.name', '')}
+                      <UserAvatar size="small" user={_.get(item, 'author')}/> {_.get(item, 'author.name', '')}
                     </Box>
                   </List.Item>
               }

@@ -11,8 +11,6 @@ import { AInput } from '../../components/FormUI'
 import { StyleContainer, StyleCard, StyleLink } from './styled'
 import { confirmPassword, email, required } from '../../utils/validations'
 import UserRequest from '../../api/Request/UserRequest'
-import { Box } from '../../styles/utility'
-import { UserAvatar } from '../../components/CoreUI'
 import LocalStorage from '../../utils/localStorage'
 import PopupSelectAvatar from './PopupSelectAvatar'
 import { HTTP_CODE } from '../../config/constants'
@@ -97,13 +95,13 @@ class ProfilePage extends React.PureComponent {
               <Row justify='center'>
                 <Col span={16}>
                   <Form layout='vertical' onFinish={handleSubmit(this.onSubmit)}>
-                    <Box textAlign='center' mb={3}>
-                      <UserAvatar size={80} user={toJS(this.profile)} fontSize={40}/>
-                      <Button size="small" style={{marginLeft: 16, verticalAlign: 'middle'}}
-                              onClick={this.onToggleModal}>
-                        Change
-                      </Button>
-                    </Box>
+
+                    <PopupSelectAvatar
+                      visible={this.visible}
+                      onToggle={this.onToggleModal}
+                      user={toJS(this.profile)}
+                      onChoose={(avatarId) => this.onChooseAvatar(avatarId)}
+                    />
 
                     <Field
                       name="avatarId"
@@ -177,13 +175,6 @@ class ProfilePage extends React.PureComponent {
             </StyleCard>
           </Col>
         </Row>
-
-        <PopupSelectAvatar
-          visible={this.visible}
-          onToggle={this.onToggleModal}
-          avatarId={_.get(toJS(this.profile), 'userId', null)}
-          onChoose={(avatarId) => this.onChooseAvatar(avatarId)}
-        />
       </StyleContainer>
     )
   }

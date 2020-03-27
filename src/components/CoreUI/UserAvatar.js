@@ -3,12 +3,17 @@ import { Avatar } from 'antd'
 import _ from 'lodash'
 
 import { ShowIf } from '../Utils'
-import avatar1 from '../../assets/avatar/1.png'
+import avatarList from '../../assets/avatar'
+
 import { getFirstCapitalizedLetter } from '../../utils/helpers'
+
+const getSrcById = (id) => {
+  return _.find(avatarList, {id: id})
+}
 
 const UserAvatar = ({user, fontSize, ...rest}) => {
   const style = {}
-  if (_.isEmpty(user.avatarId)) {
+  if (_.isNull(user.avatarId)) {
     style.backgroundColor = _.get(user, 'color')
   }
 
@@ -24,13 +29,15 @@ const UserAvatar = ({user, fontSize, ...rest}) => {
     }
   }
 
+  const image = getSrcById(user.avatarId)
+
   return (
     <ShowIf condition={!_.isEmpty(user)}>
-      <ShowIf condition={!_.isEmpty(user.avatarId)}>
-        <Avatar {...props} src={avatar1}/>
+      <ShowIf condition={!_.isNull(user.avatarId)}>
+        <Avatar {...props} src={_.get(image, 'imgSrc')}/>
       </ShowIf>
 
-      <ShowIf condition={_.isEmpty(user.avatarId)}>
+      <ShowIf condition={_.isNull(user.avatarId)}>
         <Avatar {...props}>
           {getFirstCapitalizedLetter(user.name)}
         </Avatar>

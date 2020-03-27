@@ -10,7 +10,7 @@ import { observer } from 'mobx-react'
 import { isMobile } from '../../../utils/helpers'
 import LocalStorage from '../../../utils/localStorage'
 import { ShowIf } from '../../Utils'
-import { AvatarBox } from '../../CoreUI'
+import { UserAvatar } from '../../CoreUI'
 
 @observer
 class DashboardHeader extends React.PureComponent {
@@ -96,7 +96,8 @@ class DashboardHeader extends React.PureComponent {
 
           <Dropdown overlay={overlay}>
             <span>
-              <AvatarBox size={30} name={this.username()} style={{backgroundColor: this.color()}}/>
+              {/*<AvatarBox size={30} name={this.username()} style={{backgroundColor: this.color()}}/>*/}
+              <UserAvatar size={30} user={LocalStorage.getAuthInfo()}/>
               <span style={{fontSize: '15px', marginLeft: '5px'}}>{this.username()}</span>
             </span>
           </Dropdown>
