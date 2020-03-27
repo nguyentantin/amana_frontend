@@ -109,13 +109,13 @@ class ProjectDetail extends React.Component {
                 <div>
                   <ProjectBasicInfo project={this.projectDetail}/>
 
-                  {this.projectDetail.isProjectManager && (
+                  <ShowIf condition={this.projectDetail.isProjectManager}>
                     <Box mt={2}>
                       <Link to={`/projects/${_.get(this.projectDetail, 'id')}/settings`}>
                         <SettingFilled/> Settings
                       </Link>
                     </Box>
-                  )}
+                  </ShowIf>
                 </div>
               </ListBuild>
             </ShowIf>
