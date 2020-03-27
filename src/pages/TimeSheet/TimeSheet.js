@@ -76,7 +76,9 @@ class TimeSheet extends React.Component {
         dataIndex: 'neoUser.username',
         key: 'name',
         align: 'center',
-        render: text => <b>{text}</b>
+        render: (text, record) => {
+          return <b>{_.get(record, 'neoUser.username')}</b>
+        }
       },
       {
         title: 'Time check-in',

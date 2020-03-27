@@ -62,6 +62,7 @@ class DashboardHeader extends React.PureComponent {
             <Menu.Item key='/dashboard'><Link to='/dashboard'>Dashboard</Link></Menu.Item>
             <Menu.Item key='/develop-tools'><Link to='/projects'>Projects</Link></Menu.Item>
             {/*<Menu.Item key='/time-sheets'><Link to='/time-sheets'>Time-Sheet</Link></Menu.Item>*/}
+            <Menu.Item key='/profile'><Link to='/profile'>Profile</Link></Menu.Item>
             <Menu.Item key='0' onClick={this.logout}>Logout</Menu.Item>
           </Menu>
         </Drawer>
@@ -76,9 +77,10 @@ class DashboardHeader extends React.PureComponent {
     const overlay = (
       <Menu>
         <Menu.Item key="0">
-          <SettingOutlined/> Profile Settings
+          <Link to='/profile'>
+            <SettingOutlined/> Profile Settings
+          </Link>
         </Menu.Item>
-
         <Menu.Item key="1" onClick={this.logout}>
           <LogoutOutlined/> Log Out
         </Menu.Item>

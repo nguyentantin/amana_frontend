@@ -30,7 +30,7 @@ class UserInfoCard extends React.PureComponent {
     return (
       <Menu>
         <Menu.Item>
-          <Link to="/"><SettingOutlined/> Profile Settings</Link>
+          <Link to="/profile"><SettingOutlined/> Profile Settings</Link>
         </Menu.Item>
         <Menu.Item>
           <Link to="/" onClick={this.logout}><LogoutOutlined/> Log Out</Link>
