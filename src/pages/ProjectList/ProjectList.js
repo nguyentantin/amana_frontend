@@ -16,7 +16,6 @@ import ProjectRequest from '../../api/Request/ProjectRequest'
 import { HTTP_CODE } from '../../config/constants'
 import { PlatformIcon } from '../../components/CoreUI'
 import TableStyle from '../../styles/tableResponsive'
-import LocalStorage from '../../utils/localStorage'
 
 const {Search} = Input
 
