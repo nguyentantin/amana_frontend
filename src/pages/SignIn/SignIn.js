@@ -13,7 +13,7 @@ import injectSaga from '../../store/injectSaga'
 import reducer from '../../store/modules/auth/reducers'
 import saga from '../../store/modules/auth/sagas'
 import { AuthButton, ContainerRow, StyleLink } from './styled'
-import StyledContainer from '../../styles/styledContainer'
+import ContainerWrap from '../../styles/styledContainer'
 import { email, required } from '../../utils/validations'
 import { requestLogin, requestLoginGoogle } from '../../store/modules/auth/actions'
 import ColStyle from '../../styles/colStyle'
@@ -48,7 +48,7 @@ class SignInPage extends React.PureComponent {
     const {handleSubmit, loading} = this.props
 
     return (
-      <StyledContainer>
+      <ContainerWrap>
         <ContainerRow>
           <Col xs={24} md={12}>
             <h1 className="row-title">Log in<br/>
@@ -124,7 +124,7 @@ class SignInPage extends React.PureComponent {
             </Card>
           </Col>
         </ContainerRow>
-      </StyledContainer>
+      </ContainerWrap>
     )
   }
 }
