@@ -82,99 +82,97 @@ class ProfilePage extends React.PureComponent {
     const {handleSubmit} = this.props
 
     return (
-      <div>
-        <Row gutter={[16, 24]} justify='center'>
-          <Col span={24} className="gutter-row">
-            <StyleCard loading={this.loading}>
-              <Typography.Title level={2}>
-                Profile
-              </Typography.Title>
+      <Row gutter={[16, 24]} justify='center'>
+        <Col span={24} className="gutter-row">
+          <StyleCard loading={this.loading}>
+            <Typography.Title level={2}>
+              Profile
+            </Typography.Title>
 
-              <Divider/>
+            <Divider/>
 
-              <Row justify='center'>
-                <Col xs={24} md={16}>
-                  <Form layout='vertical' onFinish={handleSubmit(this.onSubmit)}>
+            <Row justify='center'>
+              <Col xs={24} md={16}>
+                <Form layout='vertical' onFinish={handleSubmit(this.onSubmit)}>
 
-                    <PopupSelectAvatar
-                      visible={this.visible}
-                      onToggle={this.onToggleModal}
-                      user={toJS(this.profile)}
-                      onChoose={(avatarId) => this.onChooseAvatar(avatarId)}
-                    />
+                  <PopupSelectAvatar
+                    visible={this.visible}
+                    onToggle={this.onToggleModal}
+                    user={toJS(this.profile)}
+                    onChoose={(avatarId) => this.onChooseAvatar(avatarId)}
+                  />
 
-                    <Field
-                      name="avatarId"
-                      component='input'
-                      type="hidden"
-                    />
+                  <Field
+                    name="avatarId"
+                    component='input'
+                    type="hidden"
+                  />
 
-                    <Field
-                      label="Name"
-                      name="name"
-                      component={AInput}
-                      type="text"
-                      placeholder="Please enter name"
+                  <Field
+                    label="Name"
+                    name="name"
+                    component={AInput}
+                    type="text"
+                    placeholder="Please enter name"
+                    size='large'
+                    validate={[required]}
+                  />
+
+                  <Field
+                    label="Email Address"
+                    name="email"
+                    component={AInput}
+                    type="email"
+                    placeholder="Please enter email"
+                    disabled={true}
+                    size='large'
+                    validate={[required, email]}
+                  />
+
+                  <Field
+                    label="Current Password"
+                    name="currentPassword"
+                    component={AInput}
+                    type="password"
+                    placeholder="Please enter current password"
+                    size='large'
+                  />
+
+                  <Field
+                    label="New Password"
+                    name="password"
+                    component={AInput}
+                    type="password"
+                    placeholder="Please enter new password"
+                    size='large'
+                  />
+
+                  <Field
+                    label="Password Confirmation"
+                    name="passwordConfirmation"
+                    component={AInput}
+                    type="password"
+                    placeholder="Please enter password confirmation"
+                    validate={[confirmPassword]}
+                    size='large'
+                  />
+
+                  <StyleLink my={3}>
+                    <Button
+                      type="primary"
                       size='large'
-                      validate={[required]}
-                    />
-
-                    <Field
-                      label="Email Address"
-                      name="email"
-                      component={AInput}
-                      type="email"
-                      placeholder="Please enter email"
-                      disabled={true}
-                      size='large'
-                      validate={[required, email]}
-                    />
-
-                    <Field
-                      label="Current Password"
-                      name="currentPassword"
-                      component={AInput}
-                      type="password"
-                      placeholder="Please enter current password"
-                      size='large'
-                    />
-
-                    <Field
-                      label="New Password"
-                      name="password"
-                      component={AInput}
-                      type="password"
-                      placeholder="Please enter new password"
-                      size='large'
-                    />
-
-                    <Field
-                      label="Password Confirmation"
-                      name="passwordConfirmation"
-                      component={AInput}
-                      type="password"
-                      placeholder="Please enter password confirmation"
-                      validate={[confirmPassword]}
-                      size='large'
-                    />
-
-                    <StyleLink my={3}>
-                      <Button
-                        type="primary"
-                        size='large'
-                        htmlType="submit"
-                        loading={this.updating}
-                      >
-                        Save Changes
-                      </Button>
-                    </StyleLink>
-                  </Form>
-                </Col>
-              </Row>
-            </StyleCard>
-          </Col>
-        </Row>
-      </div>
+                      htmlType="submit"
+                      loading={this.updating}
+                    >
+                      Save Changes
+                    </Button>
+                  </StyleLink>
+                </Form>
+              </Col>
+            </Row>
+          </StyleCard>
+        </Col>
+      </Row>
     )
   }
 }

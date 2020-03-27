@@ -22,17 +22,15 @@ class DashboardPage extends React.Component {
 
   render() {
     return (
-      <div>
-        <Row gutter={20}>
-          <Col xs={24} md={6}>
-            <UserInfoCard/>
-            <ListProject data={this.props.projects} loading={this.props.projectLoading}/>
-          </Col>
-          <Col xs={24} md={18}>
-            <ListAppBuild data={this.props.appBuilds} loading={this.props.appBuildLoading}/>
-          </Col>
-        </Row>
-      </div>
+      <Row gutter={20}>
+        <Col xs={24} md={6}>
+          <UserInfoCard/>
+          <ListProject data={this.props.projects} loading={this.props.projectLoading}/>
+        </Col>
+        <Col xs={24} md={18}>
+          <ListAppBuild data={this.props.appBuilds} loading={this.props.appBuildLoading}/>
+        </Col>
+      </Row>
     )
   }
 }
