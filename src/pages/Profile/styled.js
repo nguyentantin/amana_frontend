@@ -22,6 +22,7 @@ export const StyleLink = styled.div`
 
 export const AvatarSelect = styled(Avatar)`
   :hover {
+     cursor: pointer;
      border: 2px solid #fa8c16;
      -webkit-box-shadow: 0px 6px 39px -9px rgba(219,175,109,1);
      -moz-box-shadow: 0px 6px 39px -9px rgba(219,175,109,1);
