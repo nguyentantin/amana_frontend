@@ -53,7 +53,7 @@ class UserInfoCard extends React.PureComponent {
             size={270}
             user={authInfo()}
             width={['100%!important', '270px!important']}
-            fontSize={'150px!important'}
+            fontSize={150}
             shape="square"
           />
         }
