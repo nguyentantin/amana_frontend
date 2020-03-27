@@ -148,7 +148,7 @@ class ProjectListPage extends React.Component {
             <div>
               <Search
                 placeholder="Search project name"
-                style={{width: 200, marginLeft: '10px'}}
+                style={{width: 200, paddingLeft: '10px'}}
               />
             </div>
           </StyleHeader>

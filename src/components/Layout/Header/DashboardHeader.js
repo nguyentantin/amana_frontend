@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import { Button, Drawer, Dropdown, Menu } from 'antd'
 import { Link } from 'react-router-dom'
 import _ from 'lodash'
-import { LogoutOutlined, MenuOutlined, SettingOutlined, ProfileOutlined } from '@ant-design/icons'
+import { LogoutOutlined, MenuOutlined, SettingOutlined } from '@ant-design/icons'
 import { withRouter } from 'react-router'
 import { action, observable } from 'mobx'
 import { observer } from 'mobx-react'
@@ -77,11 +77,10 @@ class DashboardHeader extends React.PureComponent {
     const overlay = (
       <Menu>
         <Menu.Item key="0">
-          <SettingOutlined/> Profile Settings
+          <Link to='/profile'>
+            <SettingOutlined/> Profile Settings
+          </Link>
         </Menu.Item>
-        <Menu.Item key='/profile'><Link to='/profile'>
-          <ProfileOutlined /> Profile
-        </Link></Menu.Item>
         <Menu.Item key="1" onClick={this.logout}>
           <LogoutOutlined/> Log Out
         </Menu.Item>

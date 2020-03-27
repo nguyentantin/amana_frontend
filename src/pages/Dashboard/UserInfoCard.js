@@ -1,24 +1,16 @@
 import React from 'react'
 import { Link, withRouter } from 'react-router-dom'
-import styled from 'styled-components'
 import { Card, Col, Dropdown, Menu, Row } from 'antd'
 import { DownOutlined, LogoutOutlined, MailOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons'
 
 import LocalStorage from '../../utils/localStorage'
-import { AvatarBox } from '../../components/CoreUI'
-
+import { StyleTextMuted, StyleAvatarBox } from './styled'
 
 const authInfo = () => {
   return LocalStorage.getAuthInfo()
 }
 
 const { Meta } = Card
-
-const textStyle = { fontSize: '15px', marginLeft: '5px' }
-
-const TextMuted =  styled.small`
-    color: rgba(0, 0, 0, 0.45);
-  `
 
 class UserInfoCard extends React.PureComponent {
   constructor(props) {
@@ -38,7 +30,7 @@ class UserInfoCard extends React.PureComponent {
     return (
       <Menu>
         <Menu.Item>
-          <Link to="/"><SettingOutlined/> Profile Settings</Link>
+          <Link to="/profile"><SettingOutlined/> Profile Settings</Link>
         </Menu.Item>
         <Menu.Item>
           <Link to="/" onClick={this.logout}><LogoutOutlined/> Log Out</Link>
@@ -54,32 +46,34 @@ class UserInfoCard extends React.PureComponent {
           backgroundColor: 'rgba(240, 242, 245, 1)',
           marginBottom: 20,
           borderColor: 'rgba(217, 217, 217, 1)',
+          borderRadius: 5
         }}
         cover={
-          <AvatarBox
-            size={277}
+          <StyleAvatarBox
+            size={270}
+            width={['100%!important', '270px!important']}
+            fontSize={'150px!important'}
+            background={authInfo().color}
             shape="square"
-            style={{
-              backgroundColor: authInfo().color,
-              fontSize: 150,
-              width: 'auto'
-            }}
             name={authInfo().name}
           />
         }
       >
         <Meta
+          style={{
+            padding: 15,
+          }}
           title={
               <Row justify="space-around" align="middle">
                 <Col span={20}>
                   <div>
                     <UserOutlined/>
-                    <span style={textStyle}>{authInfo().name}</span>
+                    <StyleTextMuted fontSize={15} ml='5px'>{authInfo().name}</StyleTextMuted>
                   </div>
 
                   <div>
                     <MailOutlined/>
-                    <TextMuted style={textStyle}>{authInfo().email}</TextMuted>
+                    <StyleTextMuted fontSize={15} ml='5px' color='rgba(0, 0, 0, 0.45)' >{authInfo().email}</StyleTextMuted>
                   </div>
                 </Col>
                 <Col span={4} style={{ textAlign: 'right' }}>

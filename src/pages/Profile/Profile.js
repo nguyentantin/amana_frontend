@@ -11,12 +11,12 @@ import { AInput } from '../../components/FormUI'
 import { StyleContainer, StyleCard, StyleLink } from './styled'
 import { confirmPassword, email, required } from '../../utils/validations'
 import UserRequest from '../../api/Request/UserRequest'
-import UserInfoCard from '../Dashboard/UserInfoCard'
 import { Box } from '../../styles/utility'
 import { UserAvatar } from '../../components/CoreUI'
 import LocalStorage from '../../utils/localStorage'
 import PopupSelectAvatar from './PopupSelectAvatar'
 import { HTTP_CODE } from '../../config/constants'
+import { success } from '../../utils/toastr'
 
 @observer
 class ProfilePage extends React.PureComponent {
@@ -57,6 +57,7 @@ class ProfilePage extends React.PureComponent {
     UserRequest
       .updateProfile(values)
       .then(() => {
+        success('Updated successfully ')
         this.fetchProfile()
       })
       .catch((e) => {
@@ -80,13 +81,12 @@ class ProfilePage extends React.PureComponent {
     return (
       <StyleContainer>
         <Row gutter={[16, 24]} justify='center'>
-          <Col span={6} className="gutter-row">
-            <UserInfoCard/>
-          </Col>
-
           <Col span={18} className="gutter-row">
             <StyleCard loading={this.loading}>
-              <Typography.Title level={2}>Profile</Typography.Title>
+              <Typography.Title level={2}>
+                Profile
+              </Typography.Title>
+
               <Divider/>
 
               <Row justify='center'>
@@ -167,7 +167,11 @@ class ProfilePage extends React.PureComponent {
           </Col>
         </Row>
 
-        <PopupSelectAvatar visible={this.visible} onToggle={this.onToggleModal}/>
+        <PopupSelectAvatar
+          visible={this.visible}
+          onToggle={this.onToggleModal}
+          avatarId={_.get(toJS(this.profile), 'userId', null)}
+        />
       </StyleContainer>
     )
   }
