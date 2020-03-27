@@ -66,8 +66,8 @@ class PasswordReset extends React.Component {
     const {handleSubmit} = this.props
     return (
       <Row>
-        <Styled.ContainerWrapper pt={[50, 110]}>
-          <Box m='auto' mt={40} width={[1, 500]} px={[10, 0]}>
+        <Styled.ContainerWrapper pt={[0, 110]}>
+          <Box m='auto' width={[1, 500]} px={[10, 0]}>
             <Styled.CardContent>
               <Styled.LogoWrapper m='auto'>
                 <img src={logo} alt="Logo"/>

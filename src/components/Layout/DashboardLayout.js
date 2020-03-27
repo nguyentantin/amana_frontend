@@ -9,6 +9,7 @@ import MasterLayout from './MasterLayout'
 import Footer from './Footer'
 import AppLogo from '../../assets/images/App_logo.png'
 import { LogoWrapper, HeaderWrapper, ContentPage } from './styled'
+import ContainerWrap from '../../styles/styledContainer'
 import DashboardHeader from './Header/DashboardHeader'
 
 class DashboardLayout extends PureComponent {
@@ -61,7 +62,9 @@ class DashboardLayout extends PureComponent {
           </HeaderWrapper>
 
           <ContentPage className={classNames({'active': isActive})}>
-            {childrenWithProps}
+            <ContainerWrap>
+              {childrenWithProps}
+            </ContainerWrap>
           </ContentPage>
 
           <Footer/>
