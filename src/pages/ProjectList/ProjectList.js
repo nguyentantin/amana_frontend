@@ -27,11 +27,11 @@ class ProjectListPage extends React.Component {
   @observable loading = false
   @observable modalCreateVisible = false
 
-  @action fetchProjects() {
+  @action fetchProjects(params = {}) {
     this.loading = true
 
     ProjectRequest
-      .all()
+      .all(params)
       .then((data) => {
         this.projects = data
       })
@@ -148,6 +148,7 @@ class ProjectListPage extends React.Component {
             <Search
               placeholder="Search project name"
               style={{width: 200, paddingLeft: '10px'}}
+              onSearch={value => this.fetchProjects({search: value})}
             />
           </div>
         </StyleHeader>

@@ -6,22 +6,54 @@ import styledSystem from '../../styles/styledSystem'
 
 export const AvatarBox = styledSystem(styled.div`
   position: relative;
-  .ant-btn {
+  display: block;
+  margin: auto;
+  width: 100px;
+  height: 100px;
+  @keyframes popDown{
+    100%{
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  .avatar_bg {
     position: absolute;
     top: 50%;
     left: 50%;
     right: 0;
+    width: 100px;
+    height: 100px;
     transform: translate(-50%, -50%);
-    margin: 0 !important;
+    border-radius: 50%;
+    background: rgba(255,169, 64, 0.2);
+    display: flex;
+    align-items: center;
     opacity: 0;
-    transition: all .2s ease-in-out;
+    transition: opacity 500ms;
   }
-  &:hover .ant-btn {
-    opacity: 1;
-    transition: all .2s ease-in-out;
-    color: #ffa940;
-    border-color: #ffa940;
+  .ant-btn {
+    border-radius: 2px;
+    text-transform: uppercase;
+    margin: auto !important;
+    animation: popDown 300ms 1 forwards;
+    transform: translateY(-10px);
+    display: none;
+    opacity: 0;
+    transition: background 200ms, color 200ms;
+    &:hover {
+      background: #222;
+    }
   }
+  &:hover {
+    .avatar_bg {
+      opacity: 1;
+    }
+    .ant-btn {
+      display: block;
+      color: #ffa940;
+      border-color: #ffa940;
+    }
+  } 
 `)
 
 export const StyleCard = styled(Card)`
