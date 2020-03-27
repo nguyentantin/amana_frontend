@@ -1,7 +1,7 @@
 import QRCode from 'qrcode.react'
-import React  from 'react'
+import React from 'react'
 import _ from 'lodash'
-import { Button, Divider, Skeleton, Typography } from 'antd'
+import { Button, Divider, Skeleton } from 'antd'
 import { action, computed, get, observable, toJS } from 'mobx'
 import { observer } from 'mobx-react'
 import { withRouter } from 'react-router'
@@ -18,6 +18,8 @@ import { marginRight, SmallTitle } from '../ProjectDetail/styled'
 import { compose } from 'recompose'
 import LocalStorage from '../../utils/localStorage'
 import { DownloadOutlined } from '@ant-design/icons'
+import AppBuildRequest from '../../api/Request/AppBuildRequest'
+import DownloadHistory from './DownloadHistory'
 
 @observer
 class AppBuildDetail extends React.Component {
@@ -26,8 +28,9 @@ class AppBuildDetail extends React.Component {
       author: {},
     }
   }
-
   @observable loading = false
+  @observable loadingHistories = false
+  @observable histories = []
 
   @action
   getAppBuild(projectId, appBuildId) {
@@ -36,6 +39,18 @@ class AppBuildDetail extends React.Component {
       .then(({data}) => {
         this.appBuild = data
         this.loading = false
+      })
+  }
+
+  @action fetchDownloadHistories(appBuildId) {
+    this.loadingHistories = true
+    AppBuildRequest
+      .downloadHistories(appBuildId)
+      .then((data) => {
+        this.histories = data.data
+      })
+      .finally(() => {
+        this.loadingHistories = false
       })
   }
 
@@ -48,14 +63,13 @@ class AppBuildDetail extends React.Component {
     return `${API_URL}/app-builds/${get(this.appBuild, 'id')}/download.app?token=${LocalStorage.getAccessToken()}`
   }
 
-  componentDidMount () {
-    const { match: { params } } = this.props
+  componentDidMount() {
+    const {match: {params}} = this.props
     this.getAppBuild(params.projectId, params.appBuildId)
+    this.fetchDownloadHistories(params.appBuildId)
   }
 
   render() {
-    const { Text } = Typography
-
     return (
       <Container>
         <GoBack/>
@@ -64,7 +78,7 @@ class AppBuildDetail extends React.Component {
 
         <Flex flex={['block', 'flex']}>
           <Skeleton active avatar loading={this.loading}>
-            <StyleImg pr={[0,20]} pb={20} textAlign={['center', 'left']}>
+            <StyleImg pr={[0, 20]} pb={20} textAlign={['center', 'left']}>
               <QRCode
                 value={this.downloadUrl}
                 size={250}
@@ -74,11 +88,11 @@ class AppBuildDetail extends React.Component {
             <ShowIf condition={!_.isEmpty(this.appBuild)}>
               <ListBuild display='flex' alignItems='center'>
                 <div className="content-left">
-                  <AppBuildBasicInfo appBuild={this.appBuild} />
+                  <AppBuildBasicInfo appBuild={this.appBuild}/>
 
                   <Box mt={2}>
                     <Button className="btn-right" type="primary" style={marginRight}>
-                      <DownloadOutlined />
+                      <DownloadOutlined/>
                       <LinkDownload href={this.downloadUrl} download> Download </LinkDownload>
                     </Button>
                   </Box>
@@ -92,7 +106,7 @@ class AppBuildDetail extends React.Component {
 
         <div>
           <h2>Activities <SmallTitle>Recent activities on this app</SmallTitle></h2>
-          <Text>coming soon...</Text>
+          <DownloadHistory histories={this.histories} loading={this.loadingHistories}/>
         </div>
       </Container>
     )
