@@ -24,6 +24,14 @@ class AuthRequest extends HttpRequest {
   googleAuthentication(body) {
     return this.post('/auth/google/authentication', body)
   }
+
+  sendMailResetPassword(data) {
+    return this.post('/forgot-password', data)
+  }
+
+  resetPassword(data) {
+    return this.post('/email-confirmation/password', data)
+  }
 }
 
 export default new AuthRequest()
