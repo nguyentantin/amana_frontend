@@ -3,7 +3,7 @@ import { List, Skeleton } from 'antd'
 import _ from 'lodash'
 import moment from 'moment'
 
-import { Box } from '../../styles/utility'
+// import { Box } from '../../styles/utility'
 import { UserAvatar } from '../../components/CoreUI'
 
 const skeletonData = () => {
@@ -35,7 +35,7 @@ class DownloadHistory extends React.PureComponent {
       <List
         itemLayout="horizontal"
         dataSource={loading ? skeletonData() : histories}
-        header={<Box ml={3} fontSize={16}><strong>Total download:</strong> {histories.length} count</Box>}
+        // header={<Box ml={3} fontSize={16}><strong>Total download:</strong> {histories.length} count</Box>}
         renderItem={item => (
           <React.Fragment>
             {
