@@ -28,7 +28,6 @@ import { unregister } from './serviceWorker'
 class Application {
   constructor() {
     this.MOUNT_NODE = document.getElementById('root')
-    unregister()
   }
 
   initStore() {
@@ -70,5 +69,5 @@ class Application {
  * Run application.
  */
 new Application().run()
-
+unregister()
 
