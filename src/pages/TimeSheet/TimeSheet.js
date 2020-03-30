@@ -10,7 +10,7 @@ import _ from 'lodash'
 
 import { AInput } from '../../components/FormUI'
 import TimeTrackingRequest from '../../api/Request/TimeTrackingRequest'
-import { StyleForm, Page } from './styled'
+import { Page, StyleForm } from './styled'
 import TableStyle from '../../styles/tableResponsive'
 
 const valueToMoment = (value, dateFormat) => {

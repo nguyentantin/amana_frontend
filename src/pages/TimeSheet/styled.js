@@ -1,6 +1,12 @@
 import styled from 'styled-components'
 import { Form } from 'antd'
 
+export const Page = styled.div`
+  .ant-table thead {
+    display: none;
+  }
+`
+
 export const StyleForm = styled(Form)`
   justify-content: flex-end;
   align-items: center;
@@ -18,11 +24,5 @@ export const StyleForm = styled(Form)`
       margin: 8px auto 0;
       padding: 0 20%;
     }
-  }
-`
-
-export const Page = styled.div`
-  .ant-table thead {
-    display: none;
   }
 `
