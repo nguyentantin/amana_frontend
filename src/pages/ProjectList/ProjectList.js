@@ -16,6 +16,7 @@ import ProjectRequest from '../../api/Request/ProjectRequest'
 import { HTTP_CODE } from '../../config/constants'
 import { PlatformIcon } from '../../components/CoreUI'
 import TableStyle from '../../styles/tableResponsive'
+import ModalUpdateProject from './ModalUpdateProject'
 
 const {Search} = Input
 
@@ -24,6 +25,8 @@ class ProjectListPage extends React.Component {
   @observable projects = []
   @observable loading = false
   @observable modalCreateVisible = false
+  @observable modalUpdateVisible = false
+  @observable project = {}
 
   @action fetchProjects(params = {}) {
     this.loading = true
@@ -64,8 +67,37 @@ class ProjectListPage extends React.Component {
       })
   }
 
+  @action async updateProject(projectId, data, callback) {
+    message.loading({content: 'Processing...', key: 'update_project'})
+    const {dispatch} = this.props
+
+    try {
+      await ProjectRequest.updateProject(projectId, data)
+      callback()
+
+      message.success({ content: 'Update project successfully!', key: 'update_project', duration: 2 })
+      dispatch(reset('UpdateProjectForm'))
+
+      this.modalUpdateVisible = false
+      this.fetchProjects()
+    } catch (e) {
+      if (_.get(e, 'statusCode') === HTTP_CODE.UNPROCESSABLE_ENTITY) {
+        dispatch(stopSubmit('UpdateProjectForm', e.error))
+      } else {
+        message.error({content: _.get(e, 'message'), key: 'update_project', duration: 2})
+      }
+    } finally {
+      message.destroy()
+    }
+  }
+
   @action toggleModalCreate() {
     this.modalCreateVisible = !this.modalCreateVisible
+  }
+
+  @action toggleModalUpdate(project) {
+    this.modalUpdateVisible = !this.modalUpdateVisible
+    this.project = project
   }
 
   componentDidMount() {
@@ -103,9 +135,9 @@ class ProjectListPage extends React.Component {
         key: 'author',
         render: text => (
           <span>
-        <div>Author</div>
+            <div>Author</div>
             {text}
-      </span>
+          </span>
         ),
       },
       {
@@ -113,9 +145,9 @@ class ProjectListPage extends React.Component {
         key: 'platformType',
         render: text => (
           <span>
-        <div>Platform</div>
+            <div>Platform</div>
             <PlatformIcon platform={text}/>
-      </span>
+          </span>
         ),
       },
       {
@@ -124,10 +156,16 @@ class ProjectListPage extends React.Component {
         width: 200,
         render: text => (
           <span>
-        <div>Description</div>
+            <div>Description</div>
             {text}
-      </span>
+          </span>
         ),
+      },
+      {
+        width: 100,
+        render: (text, record) => (
+          <div><span onClick={() => this.toggleModalUpdate(record)}>edit</span></div>
+        )
       }
     ]
   }
@@ -158,6 +196,13 @@ class ProjectListPage extends React.Component {
           visible={this.modalCreateVisible}
           onCreateProject={(values, cb) => this.createProject(values, cb)}
           onToggle={() => this.toggleModalCreate()}
+        />
+
+        <ModalUpdateProject
+          visible={this.modalUpdateVisible}
+          project={this.project}
+          onToggle={this.toggleModalUpdate}
+          onUpdateProject={(id, data, callback) => this.updateProject(id, data, callback)}
         />
 
         <TableStyle
