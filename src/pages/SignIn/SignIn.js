@@ -48,21 +48,21 @@ class SignInPage extends React.PureComponent {
     const {handleSubmit, loading} = this.props
 
     return (
-      <ContainerWrap>
+      <ContainerWrap px={70} py={40}>
         <ContainerRow>
-          <Col xs={24} md={12}>
+          <Col xs={24} md={12} className="row-one">
             <h1 className="row-title">Log in<br/>
               <small>to Build Automation</small>
             </h1>
 
             <AuthButton>
-              <Col xs={24} md={20} className="auth_button col-sm-10">
+              <Col xs={24} md={21} className="auth_button col-sm-10">
                 <Button type="primary" shape="round" size='large' disabled>
                   Log in with GitHub
                 </Button>
               </Col>
 
-              <ColStyle xs={24} md={20} className="auth_button col-sm-10">
+              <ColStyle xs={24} md={21} className="auth_button col-sm-10">
                 <GoogleLogin
                   clientId={GOOGLE_CLIENT_ID}
                   buttonText="Log in with Google"
@@ -73,7 +73,7 @@ class SignInPage extends React.PureComponent {
                 />
               </ColStyle>
 
-              <Col xs={24} md={20} className="auth_button col-sm-10">
+              <Col xs={24} md={21} className="auth_button col-sm-10">
                 <Button type="primary" shape="round" size='large' disabled>
                   Log in with SAML Authentication
                 </Button>
@@ -82,46 +82,48 @@ class SignInPage extends React.PureComponent {
           </Col>
 
           <Col xs={24} md={12} className="row-two">
-            <Card bordered={false}>
-              <Form style={{padding: 12}} layout="vertical" onFinish={handleSubmit(this.onSubmit)}>
-                <Field
-                  label="Email"
-                  name="email"
-                  component={AInput}
-                  type="email"
-                  placeholder="Please enter email"
-                  size='large'
-                  validate={[required, email]}
-                />
-
-                <Field
-                  label="Password"
-                  name="password"
-                  component={AInput}
-                  type='password'
-                  placeholder="Please enter password"
-                  size='large'
-                  validate={[required]}
-                />
-                <StyleLink pl={[0, 45]}>
-                  <span style={{display: 'block', marginBottom: '15px'}}>
-                    <Link to='/pwd/send-mail'>Forgot your password?</Link>
-                  </span>
-
-                  <Button
-                    style={{width: '300px'}}
-                    shape="round"
-                    type="primary"
+            <Col xs={{span: 24, push: 0}} md={{span: 22, push: 2}}>
+              <Card bordered={false}>
+                <Form style={{padding: 12}} layout="vertical" onFinish={handleSubmit(this.onSubmit)}>
+                  <Field
+                    label="Email"
+                    name="email"
+                    component={AInput}
+                    type="email"
+                    placeholder="Please enter email"
                     size='large'
-                    htmlType="submit"
-                    loading={loading}
-                  >
-                    Sign-In
-                  </Button>
-                  <Link to='/sign-up' style={{display: 'block', marginTop: '15px'}}>No account? Sign up here.</Link>
-                </StyleLink>
-              </Form>
-            </Card>
+                    validate={[required, email]}
+                  />
+
+                  <Field
+                    label="Password"
+                    name="password"
+                    component={AInput}
+                    type='password'
+                    placeholder="Please enter password"
+                    size='large'
+                    validate={[required]}
+                  />
+                  <StyleLink pl={[0, 45]}>
+                    <span style={{display: 'block', marginBottom: '15px'}}>
+                      <Link to='/pwd/send-mail'>Forgot your password?</Link>
+                    </span>
+
+                    <Button
+                      style={{width: '300px'}}
+                      shape="round"
+                      type="primary"
+                      size='large'
+                      htmlType="submit"
+                      loading={loading}
+                    >
+                      Sign-In
+                    </Button>
+                    <Link to='/sign-up' style={{display: 'block', marginTop: '15px'}}>No account? Sign up here.</Link>
+                  </StyleLink>
+                </Form>
+              </Card>
+            </Col>
           </Col>
         </ContainerRow>
       </ContainerWrap>
