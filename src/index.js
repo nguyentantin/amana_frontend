@@ -20,6 +20,7 @@ import i18n from './i18n'
 import AppRoutes from './components/Application/AppRoutes'
 import route from './routes'
 import logo from './assets/images/App_logo.png'
+import { getOriginUrl } from './utils/helpers'
 import { unregister } from './serviceWorker'
 
 /**
@@ -52,7 +53,7 @@ class Application {
                 <meta property="og:type" content="website"/>
                 <meta property="og:site_name" content="SI1 Build Automation"/>
                 <meta property="og:locale" content="en"/>
-                <meta property="og:image" content={window.location + logo}/>
+                <meta property="og:image" content={getOriginUrl() + logo}/>
                 <meta name="twitter:card" content="summary_large_image"/>
               </Helmet>
               <GlobalStyle/>
