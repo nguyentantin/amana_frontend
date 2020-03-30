@@ -10,7 +10,7 @@ import {
   BranchesOutlined,
   CodeOutlined,
   FundProjectionScreenOutlined,
-  SettingFilled,
+  SettingFilled
 } from '@ant-design/icons'
 
 import ProjectRequest from '../../api/Request/ProjectRequest'
@@ -54,7 +54,7 @@ const listBuildEnv = [
 class ProjectDetail extends React.Component {
   @observable projectDetail = {
     appBuilds: [],
-    isProjectManager: false,
+    isProjectManager: false
   }
   @observable loading = false
 
@@ -99,7 +99,7 @@ class ProjectDetail extends React.Component {
                 name={this.projectDetail.name}
                 style={{
                   fontSize: 100,
-                  backgroundColor: this.projectDetail.color,
+                  backgroundColor: this.projectDetail.color
                 }}
               />
             </StyleImg>
