@@ -37,7 +37,7 @@ const skeletonData = () => {
 
 const ListAppBuild = (props) => {
   return (
-    <ScrollContainer height={[600, 762]}>
+    <ScrollContainer height={[600, 760]}>
       <h2>Timeline <SmallTitle>Recent builds</SmallTitle></h2>
       <List
         itemLayout="horizontal"

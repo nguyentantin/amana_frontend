@@ -10,14 +10,12 @@ import _ from 'lodash'
 import { PlusOutlined } from '@ant-design/icons'
 
 import { Flex } from '../../styles/utility'
-import { StyleAvatar, StyleCard, StyleContainer, StyleHeader } from './styled'
+import { Page, StyleAvatar, StyleHeader } from './styled'
 import ModalCreateProject from './ModalCreateProject'
 import ProjectRequest from '../../api/Request/ProjectRequest'
 import { HTTP_CODE } from '../../config/constants'
 import { PlatformIcon } from '../../components/CoreUI'
 import TableStyle from '../../styles/tableResponsive'
-import { ShowIf } from '../../components/Utils'
-import LocalStorage from '../../utils/localStorage'
 
 const {Search} = Input
 
@@ -68,11 +66,6 @@ class ProjectListPage extends React.Component {
 
   @action toggleModalCreate() {
     this.modalCreateVisible = !this.modalCreateVisible
-  }
-
-  isSuperAdmin() {
-    const me = LocalStorage.getAuthInfo()
-    return _.get(me, 'isSuperAdmin', false)
   }
 
   componentDidMount() {
@@ -141,43 +134,39 @@ class ProjectListPage extends React.Component {
 
   render() {
     return (
-      <StyleContainer>
-        <StyleCard>
-          <StyleHeader>
-            <h2>Projects</h2>
-            <div>
-              <Search
-                placeholder="Search project name"
-                style={{width: 200, paddingLeft: '10px'}}
-                onSearch={value => this.fetchProjects({search: value})}
-              />
-            </div>
-          </StyleHeader>
+      <Page>
+        <StyleHeader>
+          <h2>Projects</h2>
+          <div>
+            <Search
+              placeholder="Search project name"
+              style={{width: 200, paddingLeft: '10px'}}
+              onSearch={value => this.fetchProjects({search: value})}
+            />
+          </div>
+        </StyleHeader>
 
-          <ShowIf condition={this.isSuperAdmin()}>
-            <Button
-              type="dashed"
-              block
-              onClick={() => this.toggleModalCreate()}
-            >
-              <PlusOutlined />Create Project
-            </Button>
-          </ShowIf>
+        <Button
+          type="dashed"
+          block
+          onClick={() => this.toggleModalCreate()}
+        >
+          <PlusOutlined/>Create Project
+        </Button>
 
-          <ModalCreateProject
-            visible={this.modalCreateVisible}
-            onCreateProject={(values, cb) => this.createProject(values, cb)}
-            onToggle={() => this.toggleModalCreate()}
-          />
+        <ModalCreateProject
+          visible={this.modalCreateVisible}
+          onCreateProject={(values, cb) => this.createProject(values, cb)}
+          onToggle={() => this.toggleModalCreate()}
+        />
 
-          <TableStyle
-            columns={this.columns()}
-            dataSource={this.projects}
-            loading={this.loading}
-            rowKey="id"
-          />
-        </StyleCard>
-      </StyleContainer>
+        <TableStyle
+          columns={this.columns()}
+          dataSource={this.projects}
+          loading={this.loading}
+          rowKey="id"
+        />
+      </Page>
     )
   }
 }

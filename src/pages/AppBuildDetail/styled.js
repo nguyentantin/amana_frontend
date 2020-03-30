@@ -1,13 +1,7 @@
 import styled from 'styled-components'
-import { container } from '../../styles/mixins'
 import styledSystem from '../../styles/styledSystem'
 
 export const ListBuild = styledSystem(styled.div``)
-
-export const Container = styled.div`
-  padding-bottom: 40px;
-  ${container.centerBox}
-`
 
 export const StyleImg = styledSystem(styled.div``)
 

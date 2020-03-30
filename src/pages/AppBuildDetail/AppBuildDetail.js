@@ -12,7 +12,7 @@ import { API_URL, PLATFORM_TYPE } from '../../config/constants'
 import { Box } from '../../styles/utility'
 import { Flex } from '../../styles/utility'
 import { GoBack } from '../../components/CoreUI'
-import { ListBuild, Container, StyleImg, LinkDownload } from './styled'
+import { ListBuild, StyleImg, LinkDownload } from './styled'
 import { ShowIf } from '../../components/Utils'
 import { marginRight, SmallTitle } from '../ProjectDetail/styled'
 import { compose } from 'recompose'
@@ -31,6 +31,7 @@ class AppBuildDetail extends React.Component {
   @observable loading = false
   @observable loadingHistories = false
   @observable histories = []
+  @observable pagination = {}
 
   @action
   getAppBuild(projectId, appBuildId) {
@@ -42,12 +43,16 @@ class AppBuildDetail extends React.Component {
       })
   }
 
-  @action fetchDownloadHistories(appBuildId) {
+  @action fetchDownloadHistories(queries = {}) {
+    const {match: {params}} = this.props
+
     this.loadingHistories = true
     AppBuildRequest
-      .downloadHistories(appBuildId)
-      .then((data) => {
-        this.histories = data.data
+      .downloadHistories(params.appBuildId, queries)
+      .then((response) => {
+        const {data} = response
+        this.histories = _.concat(this.histories, data.data)
+        this.pagination = data.meta
       })
       .finally(() => {
         this.loadingHistories = false
@@ -63,15 +68,28 @@ class AppBuildDetail extends React.Component {
     return `${API_URL}/app-builds/${get(this.appBuild, 'id')}/download.app?token=${LocalStorage.getAccessToken()}`
   }
 
+  @computed get hasMore() {
+    const meta = toJS(this.pagination)
+    return meta.currentPage !== meta.lastPage
+  }
+
+  @action onLoadMore() {
+    const meta = toJS(this.pagination)
+
+    const page = meta.currentPage + 1
+
+    this.fetchDownloadHistories({page})
+  }
+
   componentDidMount() {
     const {match: {params}} = this.props
     this.getAppBuild(params.projectId, params.appBuildId)
-    this.fetchDownloadHistories(params.appBuildId)
+    this.fetchDownloadHistories()
   }
 
   render() {
     return (
-      <Container>
+      <Box pb='40px'>
         <GoBack/>
 
         <Divider style={{marginTop: 10, marginBottom: 10}}/>
@@ -106,9 +124,18 @@ class AppBuildDetail extends React.Component {
 
         <div>
           <h2>Activities <SmallTitle>Recent activities on this app</SmallTitle></h2>
-          <DownloadHistory histories={this.histories} loading={this.loadingHistories}/>
+
+          <ShowIf condition={!_.isEmpty(this.histories)}>
+            <DownloadHistory histories={this.histories} loading={this.loadingHistories}/>
+
+            <ShowIf condition={this.hasMore}>
+              <Box textAlign='center'>
+                <Button loading={this.loadingHistories} onClick={() => this.onLoadMore()}>Load more</Button>
+              </Box>
+            </ShowIf>
+          </ShowIf>
         </div>
-      </Container>
+      </Box>
     )
   }
 }
