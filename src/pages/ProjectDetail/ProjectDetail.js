@@ -17,7 +17,7 @@ import ProjectRequest from '../../api/Request/ProjectRequest'
 import { API_URL, PLATFORM_TYPE } from '../../config/constants'
 import { Flex } from '../../styles/utility'
 import { ShowIf } from '../../components/Utils'
-import ListAppBuild  from './ListAppBuild'
+import ListAppBuild from './ListAppBuild'
 import {
   ListBuild,
   StyleImg,
@@ -52,7 +52,8 @@ const listBuildEnv = [
 @observer
 class ProjectDetail extends React.Component {
   @observable projectDetail = {
-    appBuilds: []
+    appBuilds: [],
+    isProjectManager: false
   }
   @observable loading = false
 
@@ -81,7 +82,7 @@ class ProjectDetail extends React.Component {
   }
 
   getDataByEnv(envKey) {
-    return _.filter(this.projectDetail.appBuilds, (item) => item.env === envKey )
+    return _.filter(this.projectDetail.appBuilds, (item) => item.env === envKey)
   }
 
   render() {
@@ -89,7 +90,7 @@ class ProjectDetail extends React.Component {
       <Box pb='40px'>
         <Flex flex={['block', 'flex']}>
           <Skeleton active avatar loading={this.loading}>
-            <StyleImg pr={[0,20]} pb={20} textAlign={['center', 'left']}>
+            <StyleImg pr={[0, 20]} pb={20} textAlign={['center', 'left']}>
               <AvatarBox
                 size={250}
                 shape="square"
@@ -107,11 +108,13 @@ class ProjectDetail extends React.Component {
                 <div>
                   <ProjectBasicInfo project={this.projectDetail}/>
 
-                  <Box mt={2}>
-                    <Link to={`/projects/${_.get(this.projectDetail, 'id')}/settings`}>
-                      <SettingFilled/> Settings
-                    </Link>
-                  </Box>
+                  <ShowIf condition={this.projectDetail.isProjectManager}>
+                    <Box mt={2}>
+                      <Link to={`/projects/${_.get(this.projectDetail, 'id')}/settings`}>
+                        <SettingFilled/> Settings
+                      </Link>
+                    </Box>
+                  </ShowIf>
                 </div>
               </ListBuild>
             </ShowIf>
@@ -166,8 +169,6 @@ class ProjectDetail extends React.Component {
   }
 }
 
-const ProjectDetailCompose =  compose(
+export default compose(
   withRouter,
 )(ProjectDetail)
-
-export default ProjectDetailCompose
