@@ -26,11 +26,11 @@ class AuthRequest extends HttpRequest {
   }
 
   sendMailResetPassword(data) {
-    return this.post('/forgot-password', data)
+    return this.post('/pwd/send-mail', data)
   }
 
   resetPassword(data) {
-    return this.post('/email-confirmation/password', data)
+    return this.post('/pwd/reset', data)
   }
 }
 
