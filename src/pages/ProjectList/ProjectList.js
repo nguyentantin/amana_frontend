@@ -17,6 +17,7 @@ import { HTTP_CODE } from '../../config/constants'
 import { PlatformIcon } from '../../components/CoreUI'
 import TableStyle from '../../styles/tableResponsive'
 import ModalUpdateProject from './ModalUpdateProject'
+import EditOutlined from '@ant-design/icons/lib/icons/EditOutlined'
 
 const {Search} = Input
 
@@ -95,9 +96,13 @@ class ProjectListPage extends React.Component {
     this.modalCreateVisible = !this.modalCreateVisible
   }
 
-  @action toggleModalUpdate(project) {
+  @action toggleModalUpdate() {
     this.modalUpdateVisible = !this.modalUpdateVisible
+  }
+
+  @action changeProject(project = {}) {
     this.project = project
+    this.toggleModalUpdate()
   }
 
   componentDidMount() {
@@ -164,7 +169,7 @@ class ProjectListPage extends React.Component {
       {
         width: 100,
         render: (text, record) => (
-          <div><span onClick={() => this.toggleModalUpdate(record)}>edit</span></div>
+          <div><span onClick={() => this.changeProject(record)} style={{color: '#fa8c16', cursor: 'pointer'}}><EditOutlined /></span></div>
         )
       }
     ]
@@ -201,7 +206,7 @@ class ProjectListPage extends React.Component {
         <ModalUpdateProject
           visible={this.modalUpdateVisible}
           project={this.project}
-          onToggle={this.toggleModalUpdate}
+          onToggle={() => this.changeProject()}
           onUpdateProject={(id, data, callback) => this.updateProject(id, data, callback)}
         />
 

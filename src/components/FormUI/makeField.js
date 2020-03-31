@@ -25,6 +25,8 @@ const makeField = Component => ({input, meta, children, hasFeedback, label, layo
       ...layout
     }
   }
+  console.log('input', input)
+  console.log(rest)
 
   return (
     <FormItem
