@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Button, Form, DatePicker } from 'antd'
+import { Button, Form, DatePicker } from 'antd'
 import { Field, reduxForm } from 'redux-form'
 import { compose } from 'recompose'
 import { withRouter } from 'react-router'
@@ -10,7 +10,7 @@ import _ from 'lodash'
 
 import { AInput } from '../../components/FormUI'
 import TimeTrackingRequest from '../../api/Request/TimeTrackingRequest'
-import { Container } from './styled'
+import { Page, StyleForm } from './styled'
 import TableStyle from '../../styles/tableResponsive'
 
 const valueToMoment = (value, dateFormat) => {
@@ -159,43 +159,40 @@ class TimeSheet extends React.Component {
     const {handleSubmit} = this.props
 
     return (
-      <Container>
-        <Card>
-          <Form layout="inline" style={{marginBottom: '30px'}} onFinish={handleSubmit(this.onSearch)}>
-            <Field
-              label="Name"
-              name="username"
-              component={AInput}
-              placeholder="Please enter user name"
-            />
-
-            <Field
-              label="Date"
-              name="date"
-              component={DatePickerField}
-              dateFormat="YYYY-MM-DD"
-              placeholder="Working date"
-            />
-
-            <Button
-              shape="round"
-              type="primary"
-              htmlType="submit"
-              style={{marginTop: '4px'}}
-            >
-              Search
-            </Button>
-          </Form>
-          <TableStyle
-            rowKey='id'
-            loading={this.loading}
-            bordered={true}
-            pagination={false}
-            dataSource={this.timeSheetsData}
-            columns={this.columns()}
+      <Page>
+        <StyleForm layout="inline" onFinish={handleSubmit(this.onSearch)}>
+          <Field
+            label="Name"
+            name="username"
+            component={AInput}
+            placeholder="Please enter user name"
           />
-        </Card>
-      </Container>
+
+          <Field
+            label="Date"
+            name="date"
+            component={DatePickerField}
+            dateFormat="YYYY-MM-DD"
+            placeholder="Working date"
+          />
+
+          <Button
+            shape="round"
+            type="primary"
+            htmlType="submit"
+          >
+            Search
+          </Button>
+        </StyleForm>
+        <TableStyle
+          rowKey='id'
+          loading={this.loading}
+          bordered={true}
+          pagination={false}
+          dataSource={this.timeSheetsData}
+          columns={this.columns()}
+        />
+      </Page>
     )
   }
 }
