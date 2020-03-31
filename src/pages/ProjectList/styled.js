@@ -27,3 +27,14 @@ export const StyleUpload = styledSystem(styled('div')`
     margin: 0;
   }
 `)
+
+export const DivFlex = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+export const ColorBox = styled.div`
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+`
