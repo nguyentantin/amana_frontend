@@ -1,6 +1,6 @@
 import React from 'react'
 import ModalStyle from '../../styles/modal'
-import { Col, Form, Input, Row } from 'antd'
+import { Col, Form, Row } from 'antd'
 import { Field, reduxForm } from 'redux-form'
 import { AInput, ATextarea } from '../../components/FormUI'
 import { maxLength, required } from '../../utils/validations'
@@ -25,32 +25,44 @@ const maxLengthDescription = maxLength(255)
 
 @observer
 class ModalUpdateProject extends React.Component {
+  @observable visible = false;
+
   constructor(props) {
     super(props);
 
-    this.toggleModal = this.toggleModal.bind(this)
+    this.closeModal = this.closeModal.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
   }
 
-  toggleModal() {
-    const {onToggle} = this.props
-    onToggle()
+  @action toggleVisible() {
+    this.visible = !this.visible
   }
 
-  onSubmit(values) {
-    console.log(values)
-    this.toggleModal()
+  closeModal() {
+    const {onCloseModal} = this.props
+    this.toggleVisible()
+    setTimeout(() => {onCloseModal()}, 300)
+  }
+
+  onSubmit(data) {
+    const {onUpdateProject, project} = this.props
+    onUpdateProject(project.id, data)
+    this.closeModal()
+  }
+
+  componentDidMount() {
+    this.toggleVisible()
   }
 
   render() {
-    const {visible, handleSubmit, project} = this.props
+    const {handleSubmit} = this.props
 
     return (
       <ModalStyle
-        visible={visible}
+        visible={this.visible}
         titile={'Update'}
         okText={'Update'}
-        onCancel={this.props.onToggle}
+        onCancel={() => this.closeModal()}
         okButtonProps={{form: 'update-project-form', key: 'submit', htmlType: 'submit'}}
       >
         <Form {...formItemLayout} layout='vertical' id='update-project-form' onFinish={handleSubmit(this.onSubmit)}>
@@ -63,7 +75,6 @@ class ModalUpdateProject extends React.Component {
                 validate={[required]}
                 type="text"
                 placeholder="Please enter the project name."
-                defaultValue={'hey we can\' leave here until 5pm'}
               />
               <Field
                 label="Description"
@@ -73,7 +84,6 @@ class ModalUpdateProject extends React.Component {
                 type="text"
                 placeholder="Please enter the project description."
                 rows={4}
-                defaultValue={project.description}
               />
             </Col>
           </Row>

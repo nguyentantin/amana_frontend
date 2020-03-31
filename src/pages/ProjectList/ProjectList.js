@@ -13,11 +13,12 @@ import { Flex } from '../../styles/utility'
 import { Page, StyleAvatar, StyleHeader } from './styled'
 import ModalCreateProject from './ModalCreateProject'
 import ProjectRequest from '../../api/Request/ProjectRequest'
-import { HTTP_CODE } from '../../config/constants'
+import { HTTP_CODE, PLATFORM_TYPE } from '../../config/constants'
 import { PlatformIcon } from '../../components/CoreUI'
 import TableStyle from '../../styles/tableResponsive'
 import ModalUpdateProject from './ModalUpdateProject'
 import EditOutlined from '@ant-design/icons/lib/icons/EditOutlined'
+import { ShowIf } from '../../components/Utils'
 
 const {Search} = Input
 
@@ -27,7 +28,8 @@ class ProjectListPage extends React.Component {
   @observable loading = false
   @observable modalCreateVisible = false
   @observable modalUpdateVisible = false
-  @observable project = {}
+  @observable initialValues
+  @observable project
 
   @action fetchProjects(params = {}) {
     this.loading = true
@@ -68,18 +70,16 @@ class ProjectListPage extends React.Component {
       })
   }
 
-  @action async updateProject(projectId, data, callback) {
+  @action async updateProject(projectId, data) {
     message.loading({content: 'Processing...', key: 'update_project'})
     const {dispatch} = this.props
 
     try {
       await ProjectRequest.updateProject(projectId, data)
-      callback()
 
       message.success({ content: 'Update project successfully!', key: 'update_project', duration: 2 })
       dispatch(reset('UpdateProjectForm'))
 
-      this.modalUpdateVisible = false
       this.fetchProjects()
     } catch (e) {
       if (_.get(e, 'statusCode') === HTTP_CODE.UNPROCESSABLE_ENTITY) {
@@ -100,7 +100,14 @@ class ProjectListPage extends React.Component {
     this.modalUpdateVisible = !this.modalUpdateVisible
   }
 
-  @action changeProject(project = {}) {
+  @action setInitialValues(project = {}) {
+    this.initialValues = {
+      name: _.get(project, 'name', null),
+      description: _.get(project, 'description', null),
+      platformType: _.get(project, 'platformType', PLATFORM_TYPE.IOS),
+      color: _.get(project, 'color', null)
+    }
+
     this.project = project
     this.toggleModalUpdate()
   }
@@ -169,7 +176,13 @@ class ProjectListPage extends React.Component {
       {
         width: 100,
         render: (text, record) => (
-          <div><span onClick={() => this.changeProject(record)} style={{color: '#fa8c16', cursor: 'pointer'}}><EditOutlined /></span></div>
+          <div>
+            <span
+              onClick={() => this.setInitialValues(record)}
+              style={{color: '#fa8c16', cursor: 'pointer'}}
+            ><EditOutlined />
+            </span>
+          </div>
         )
       }
     ]
@@ -203,12 +216,14 @@ class ProjectListPage extends React.Component {
           onToggle={() => this.toggleModalCreate()}
         />
 
-        <ModalUpdateProject
-          visible={this.modalUpdateVisible}
-          project={this.project}
-          onToggle={() => this.changeProject()}
-          onUpdateProject={(id, data, callback) => this.updateProject(id, data, callback)}
-        />
+        <ShowIf condition={this.modalUpdateVisible}>
+          <ModalUpdateProject
+            onCloseModal={() => this.setInitialValues()}
+            onUpdateProject={(id, data) => this.updateProject(id, data)}
+            project={this.project}
+            initialValues={this.initialValues}
+          />
+        </ShowIf>
 
         <TableStyle
           columns={this.columns()}
