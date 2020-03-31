@@ -1,4 +1,6 @@
 import { Input, Radio, Select, Checkbox, DatePicker } from 'antd'
+
+import FieldSelect from './FieldSelect'
 import makeField from './makeField'
 
 const RadioGroup = Radio.Group
@@ -21,4 +23,5 @@ export {
   ATextarea,
   ARangePicker,
   ADatePicker,
+  FieldSelect
 }
