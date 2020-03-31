@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import { FILE_TYPES, MAX_FILE_SIZE_UPLOADED } from '../config/constants'
 
 const EMAIL_REGEX = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/
 
@@ -59,3 +60,26 @@ const matchPassword = (message) => (value, allValues) => {
 }
 
 export const confirmPassword = matchPassword('Password confirmation does not match password.')
+
+export const fileValidator = (file) => {
+  const invalidFileType = _.values(FILE_TYPES).indexOf(file.type) === -1
+  const isLt2MB = file.size < MAX_FILE_SIZE_UPLOADED
+
+  if (invalidFileType) {
+    return {
+      isValid: false,
+      message: 'You can only upload JPEG/PNG file!'
+    }
+  }
+
+  if (!isLt2MB) {
+    return {
+      isValid: false,
+      message: 'Image must smaller than 2MB!'
+    }
+  }
+
+  return {
+    isValid: true
+  }
+}
