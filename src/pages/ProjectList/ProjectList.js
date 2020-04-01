@@ -144,22 +144,18 @@ class ProjectListPage extends React.Component {
       },
       {
         dataIndex: 'author.name',
-        key: 'author',
-        render: text => (
-          <span>
-            <div>Author</div>
-            {text}
-          </span>
-        ),
+        key: 'author.name',
+        render: (text, record) => {
+          return (
+            <span><div>Author</div>{_.get(record, 'author.name', '')}</span>
+          )
+        },
       },
       {
         dataIndex: 'platformType',
         key: 'platformType',
         render: text => (
-          <span>
-            <div>Platform</div>
-            <PlatformIcon platform={text}/>
-          </span>
+          <span><div>Platform</div><PlatformIcon platform={text}/></span>
         ),
       },
       {
@@ -167,10 +163,7 @@ class ProjectListPage extends React.Component {
         key: 'description',
         width: 200,
         render: text => (
-          <span>
-            <div>Description</div>
-            {text}
-          </span>
+          <span><div>Description</div>{text}</span>
         ),
       },
       {

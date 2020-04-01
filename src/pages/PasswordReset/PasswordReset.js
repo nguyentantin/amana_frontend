@@ -95,7 +95,7 @@ class PasswordReset extends React.Component {
                   label="Password"
                   name="password"
                   component={AInput}
-                  type="email"
+                  type="password"
                   placeholder="Please enter new password."
                   size='large'
                   validate={[required]}

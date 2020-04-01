@@ -10,7 +10,7 @@ import { connect } from 'react-redux'
 import _ from 'lodash'
 
 import { Box } from '../../styles/utility'
-import { ASelect } from '../../components/FormUI'
+import { FieldSelect } from '../../components/FormUI'
 import ProjectRequest from '../../api/Request/ProjectRequest'
 import UserRequest from '../../api/Request/UserRequest'
 import { ROLES } from '../../config/constants'
@@ -211,7 +211,7 @@ class MemberSetting extends React.PureComponent {
             <Field
               name='role'
               style={{width: '222px'}}
-              component={ASelect}
+              component={FieldSelect}
             >
               <Option value={String(ROLES.PROJECT_MEMBER)}>Member</Option>
               <Option value={String(ROLES.PROJECT_ADMIN)}>Administrator</Option>

@@ -12,5 +12,11 @@ export const truncate = (text = '', stop, clamp) => {
 }
 
 export const getFirstCapitalizedLetter = (string) => {
-  return string ? string.charAt(0).toUpperCase(): ''
+  return string ? string.charAt(0).toUpperCase() : ''
+}
+
+export const getOriginUrl = () => {
+  const location = window.location
+
+  return `${location.origin}`
 }

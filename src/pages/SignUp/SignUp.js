@@ -48,19 +48,19 @@ class SignUpPage extends React.PureComponent {
     const {handleSubmit, loading} = this.props
 
     return (
-      <ContainerWrap>
+      <ContainerWrap px={70} py={40}>
         <ContainerRow>
-          <Col xs={24} md={12}>
+          <Col xs={24} md={12} className="row-one">
             <h1 className="row-title">Create your account<br/>
               <small>with Build Automation</small>
             </h1>
             <AuthButton>
-              <Col xs={24} md={20} className="auth_button col-sm-10">
+              <Col xs={24} md={21} className="auth_button col-sm-10">
                 <Button type="primary" shape="round" icon="github" size='large' disabled>
                   Sign up with GitHub
                 </Button>
               </Col>
-              <ColStyle xs={24} md={20} className="auth_button col-sm-10">
+              <ColStyle xs={24} md={21} className="auth_button col-sm-10">
                 <GoogleLogin
                   clientId={GOOGLE_CLIENT_ID}
                   buttonText="Sign up with Google"
@@ -70,7 +70,7 @@ class SignUpPage extends React.PureComponent {
                   className="ant-btn ant-btn-primary ant-btn-round ant-btn-lg btn-google"
                 />
               </ColStyle>
-              <Col xs={24} md={20} className="auth_button col-sm-10">
+              <Col xs={24} md={21} className="auth_button col-sm-10">
                 <Button type="primary" shape="round" size='large' icon='mail' disabled>
                   Sign up with Email
                 </Button>
@@ -78,61 +78,63 @@ class SignUpPage extends React.PureComponent {
             </AuthButton>
           </Col>
           <Col xs={24} md={12} className="row-two">
-            <Card bordered={false}>
-              <Form style={{padding: 12}} layout="vertical" onFinish={handleSubmit(this.onSubmit)}>
-                <Field
-                  label="Name"
-                  name="name"
-                  component={AInput}
-                  type="text"
-                  placeholder="Please enter your name"
-                  size='large'
-                  validate={[required]}
-                />
-                <Field
-                  label="Email"
-                  name="email"
-                  component={AInput}
-                  type="email"
-                  placeholder="Please enter email"
-                  size='large'
-                  validate={[required, email]}
-                />
-
-                <Field
-                  label="Password"
-                  name="password"
-                  component={AInput}
-                  type='password'
-                  placeholder="Please enter password"
-                  size='large'
-                  validate={[required]}
-                />
-
-                <Field
-                  label="Confirm Password"
-                  name="password_confirm"
-                  component={AInput}
-                  type='password'
-                  placeholder="Please enter password confirmation"
-                  size='large'
-                  validate={[required, confirmPassword]}
-                />
-
-                <StyleLink pl={[0, 44]}>
-                  <Button
-                    style={{width: '300px'}}
-                    shape="round"
-                    type="primary"
+            <Col xs={{span: 24, push: 0}} md={{span: 22, push: 2}}>
+              <Card bordered={false}>
+                <Form style={{padding: 12}} layout="vertical" onFinish={handleSubmit(this.onSubmit)}>
+                  <Field
+                    label="Name"
+                    name="name"
+                    component={AInput}
+                    type="text"
+                    placeholder="Please enter your name"
                     size='large'
-                    htmlType="submit"
-                    loading={loading}
-                  >
-                    Sign-up
-                  </Button>
-                </StyleLink>
-              </Form>
-            </Card>
+                    validate={[required]}
+                  />
+                  <Field
+                    label="Email"
+                    name="email"
+                    component={AInput}
+                    type="email"
+                    placeholder="Please enter email"
+                    size='large'
+                    validate={[required, email]}
+                  />
+
+                  <Field
+                    label="Password"
+                    name="password"
+                    component={AInput}
+                    type='password'
+                    placeholder="Please enter password"
+                    size='large'
+                    validate={[required]}
+                  />
+
+                  <Field
+                    label="Confirm Password"
+                    name="password_confirm"
+                    component={AInput}
+                    type='password'
+                    placeholder="Please enter password confirmation"
+                    size='large'
+                    validate={[required, confirmPassword]}
+                  />
+
+                  <StyleLink pl={[0, 44]}>
+                    <Button
+                      style={{width: '300px'}}
+                      shape="round"
+                      type="primary"
+                      size='large'
+                      htmlType="submit"
+                      loading={loading}
+                    >
+                      Sign-up
+                    </Button>
+                  </StyleLink>
+                </Form>
+              </Card>
+            </Col>
           </Col>
         </ContainerRow>
       </ContainerWrap>

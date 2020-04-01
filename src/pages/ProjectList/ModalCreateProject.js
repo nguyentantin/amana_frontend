@@ -9,7 +9,7 @@ import { action, observable } from 'mobx'
 import { CloudUploadOutlined, LoadingOutlined } from '@ant-design/icons'
 import _ from 'lodash'
 
-import { AInput, ASelect, ATextarea } from '../../components/FormUI'
+import { AInput, ATextarea, FieldSelect } from '../../components/FormUI'
 import { maxLength, required } from '../../utils/validations'
 import { PLATFORM_TYPE } from '../../config/constants'
 import StorageRequest from '../../api/Request/StorageRequest'
@@ -177,8 +177,8 @@ class ModalCreateProject extends React.Component {
                 label="Platform"
                 name="platformType"
                 placeholder="Please select platform."
-                component={ASelect}
-                validate={[required, maxLength(255)]}
+                component={FieldSelect}
+                validate={[required]}
               >
                 <Option value={PLATFORM_TYPE.IOS}>IOS</Option>
                 <Option value={PLATFORM_TYPE.ANDROID}>Android</Option>
