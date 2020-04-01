@@ -63,6 +63,14 @@ const PROJECT_ENV_COLOR = {
   PRODUCTION: 'red',
 }
 
+const MAX_FILE_SIZE_UPLOADED = 2 * 1024 * 1024 // byte
+
+const FILE_TYPES = {
+  JPEG: 'image/jpeg',
+  PNG: 'image/png',
+  GIF: 'image/gif',
+}
+
 export {
   REQUEST_HEADER,
   API_URL,
@@ -77,4 +85,6 @@ export {
   ROLES,
   PROJECT_ENV,
   PROJECT_ENV_COLOR,
+  MAX_FILE_SIZE_UPLOADED,
+  FILE_TYPES,
 }

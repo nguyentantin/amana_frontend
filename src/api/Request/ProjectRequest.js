@@ -13,6 +13,10 @@ class ProjectRequest extends HttpRequest {
     return this.post('/projects', params)
   }
 
+  updateProject(projectId, data) {
+    return this.put(`/projects/${projectId}`, data)
+  }
+
   listProject() {
     return this.get('/projects')
   }
