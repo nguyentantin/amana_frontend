@@ -16,7 +16,7 @@ function* fetchProject (action) {
 
 function* fetchAppBuilds (action) {
   try {
-    const data = yield call(AppBuildRequest.all.bind(AppBuildRequest))
+    const { data } = yield call(AppBuildRequest.all.bind(AppBuildRequest), action.params)
     yield put(fetchAppBuildsSuccess(data))
   } catch (err) {
     error('Can not get list app builds')

@@ -23,9 +23,8 @@ class ListAppBuild extends React.Component{
     const { data, loading } = this.props
 
     return (
-      <ScrollContainer height={[600, 760]}>
+      <ScrollContainer>
         <h2>Timeline <SmallTitle>Recent builds</SmallTitle></h2>
-
         <List
           itemLayout="horizontal"
           dataSource={loading ? skeletonData() : data}

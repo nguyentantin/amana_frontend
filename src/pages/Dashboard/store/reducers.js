@@ -5,7 +5,8 @@ const initialState = {
   projects: [],
   appBuilds: [],
   projectLoading: false,
-  appBuildLoading: false
+  appBuildLoading: false,
+  appBuildPagination: {}
 }
 
 const reducer = (state = initialState, action) =>
@@ -22,8 +23,15 @@ const reducer = (state = initialState, action) =>
         draft.appBuildLoading = true
         break
       case FETCH_APP_BUILDS_SUCCESS:
-        draft.appBuilds = action.data
+        const { currentPage, perPage, total, lastPage } = action.data.meta
+        draft.appBuilds = action.data.data
         draft.appBuildLoading = false
+        draft.appBuildPagination = {
+          current: currentPage,
+          pageSize: perPage,
+          total,
+          lastPage,
+        }
         break
       default:
         return state

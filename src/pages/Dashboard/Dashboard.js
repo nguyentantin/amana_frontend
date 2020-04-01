@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col, Row } from 'antd'
+import { Col, Pagination, Row } from 'antd'
 import { compose } from 'redux'
 
 import ListProject from './ListProject'
@@ -12,8 +12,37 @@ import _ from 'lodash'
 import { connect } from 'react-redux'
 import { fetchAppBuilds, fetchProject } from './store/actions'
 import UserInfoCard from './UserInfoCard'
+import { observable, action } from 'mobx'
+import { observer } from 'mobx-react'
+import {
+  getAppBuildLoading,
+  getAppBuildPagination,
+  getAppBuilds,
+  getProjectLoading,
+  getProjects, showPaginate,
+} from './store/selector'
+import ShowIf from '../../components/Utils/ShowIf'
+import { Flex } from '../../styles/utility'
 
+@observer
 class DashboardPage extends React.Component {
+  @observable pagination = {
+    current: 1,
+    pageSize: 10,
+    total: 100,
+    showTitle: false,
+    showSizeChanger: false
+  }
+
+  constructor(props) {
+    super(props);
+    this.handleChangePage = this.handleChangePage.bind(this)
+  }
+
+  @action handleChangePage(page, perPage) {
+    const {fetchAppBuilds} = this.props
+    fetchAppBuilds({ page, perPage})
+  }
   componentDidMount () {
     const { fetchProject, fetchAppBuilds } = this.props
     fetchProject()
@@ -21,7 +50,14 @@ class DashboardPage extends React.Component {
   }
 
   render() {
-    const { projects, projectLoading, appBuilds, appBuildLoading } = this.props
+    const {
+      projects,
+      projectLoading,
+      appBuilds,
+      appBuildLoading,
+      appBuildPagination,
+      showPaginate,
+    } = this.props
 
     return (
       <Row gutter={20}>
@@ -31,6 +67,17 @@ class DashboardPage extends React.Component {
         </Col>
         <Col xs={24} md={18}>
           <ListAppBuild data={appBuilds} loading={appBuildLoading}/>
+
+          <ShowIf condition={showPaginate}>
+            <Flex flex={['flex']} justifyContent={['flex-end']}>
+              <Pagination
+                {...appBuildPagination}
+                onChange={this.handleChangePage}
+                disabled={appBuildLoading}
+                style={{marginLeft: 'auto'}}
+              />
+            </Flex>
+          </ShowIf>
         </Col>
       </Row>
     )
@@ -39,10 +86,12 @@ class DashboardPage extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    projects: _.get(state, 'dashboard.projects', []),
-    projectLoading: _.get(state, 'dashboard.projectLoading', false),
-    appBuilds: _.get(state, 'dashboard.appBuilds', []),
-    appBuildLoading: _.get(state, 'dashboard.appBuildLoading', false),
+    projects: getProjects(state),
+    projectLoading: getProjectLoading(state),
+    appBuilds: getAppBuilds(state),
+    appBuildLoading: getAppBuildLoading(state),
+    appBuildPagination: getAppBuildPagination(state),
+    showPaginate: showPaginate(state),
   }
 }
 
