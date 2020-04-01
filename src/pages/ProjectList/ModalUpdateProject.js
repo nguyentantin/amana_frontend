@@ -2,20 +2,20 @@ import _ from 'lodash'
 import React from 'react'
 import { Button, Col, Form, message, Row, Select, Upload } from 'antd'
 import { Field, reduxForm, change, formValueSelector } from 'redux-form'
+import { LoadingOutlined } from '@ant-design/icons'
 import { action, observable } from 'mobx'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { observer } from 'mobx-react'
 
 import ModalStyle from '../../styles/modal'
-import { AInput, ASelect, ATextarea } from '../../components/FormUI'
+import StorageRequest from '../../api/Request/StorageRequest'
+import { AInput, ATextarea, FieldSelect } from '../../components/FormUI'
 import { ColorBox, DivFlex, StyleAvatar, StyleUpload } from './styled'
+import { ColorPicker } from '../../components/CoreUI'
+import { PLATFORM_TYPE } from '../../config/constants'
 import { ShowIf } from '../../components/Utils'
 import { fileValidator, maxLength, required } from '../../utils/validations'
-import { LoadingOutlined } from '@ant-design/icons'
-import StorageRequest from '../../api/Request/StorageRequest'
-import { PLATFORM_TYPE } from '../../config/constants'
-import ColorPicker from '../../components/CoreUI/ColorPicker'
 
 const formItemLayout = {
   labelCol: {
@@ -160,12 +160,17 @@ class ModalUpdateProject extends React.Component {
 
     return (
       <ModalStyle
+        width={600}
         visible={this.visible}
         titile={'Update'}
         okText={'Update'}
         onCancel={() => this.closeModal()}
-        okButtonProps={{form: 'update-project-form', key: 'submit', htmlType: 'submit'}}
-        width={600}
+        okButtonProps={{
+          form: 'update-project-form',
+          key: 'submit',
+          htmlType: 'submit',
+          disabled: this.uploading || this.colorPickerVisible
+        }}
       >
         <Form {...formItemLayout} layout='vertical' id='update-project-form' onFinish={handleSubmit(this.onSubmit)}>
           <Row>
@@ -207,7 +212,7 @@ class ModalUpdateProject extends React.Component {
                 label="Platform"
                 name="platformType"
                 placeholder="Please select platform."
-                component={ASelect}
+                component={FieldSelect}
                 validate={[required]}
               >
                 <Option value={PLATFORM_TYPE.IOS}>IOS</Option>
@@ -225,7 +230,7 @@ class ModalUpdateProject extends React.Component {
               />
 
               <DivFlex>
-                <Button onClick={() => this.toggleColorPicker()}>Color</Button>
+                <Button disabled={this.colorPickerVisible} onClick={() => this.toggleColorPicker()}>Color</Button>
                 <ColorBox style={{backgroundColor: color}}/>
               </DivFlex>
 
