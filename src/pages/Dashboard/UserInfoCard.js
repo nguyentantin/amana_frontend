@@ -50,7 +50,7 @@ class UserInfoCard extends React.PureComponent {
         }}
         cover={
           <UserAvatar
-            size={270}
+            size={220}
             user={authInfo()}
             width={['100%!important', '270px!important']}
             fontSize={150}

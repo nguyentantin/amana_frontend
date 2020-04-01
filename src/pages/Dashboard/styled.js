@@ -37,3 +37,12 @@ export const StyleLink = styledSystem(styled(Link)`
 
 export const StyleTextMuted = styledSystem(styled.span``)
 export const StyleAvatarBox = styledSystem(styled(AvatarBox)``)
+
+export const SmallTitle =  styled.small`
+    font-size: 69%;
+    color: rgba(0, 0, 0, 0.45);
+  `
+
+export const DescriptionLink = styled(Link)`
+    color: rgba(0, 0, 0, 0.45);
+`

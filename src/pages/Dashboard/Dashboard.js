@@ -21,14 +21,16 @@ class DashboardPage extends React.Component {
   }
 
   render() {
+    const { projects, projectLoading, appBuilds, appBuildLoading } = this.props
+
     return (
       <Row gutter={20}>
         <Col xs={24} md={6}>
           <UserInfoCard/>
-          <ListProject data={this.props.projects} loading={this.props.projectLoading}/>
+          <ListProject data={projects} loading={projectLoading}/>
         </Col>
         <Col xs={24} md={18}>
-          <ListAppBuild data={this.props.appBuilds} loading={this.props.appBuildLoading}/>
+          <ListAppBuild data={appBuilds} loading={appBuildLoading}/>
         </Col>
       </Row>
     )
