@@ -1,19 +1,21 @@
 import _ from 'lodash'
 import React from 'react'
-import { Button, Col, Form, message, Row, Upload } from 'antd'
-import { Field, reduxForm, change } from 'redux-form'
-import { PhotoshopPicker } from 'react-color'
+import { Button, Col, Form, message, Row, Select, Upload } from 'antd'
+import { Field, reduxForm, change, formValueSelector } from 'redux-form'
 import { action, observable } from 'mobx'
 import { compose } from 'redux'
+import { connect } from 'react-redux'
 import { observer } from 'mobx-react'
 
 import ModalStyle from '../../styles/modal'
-import { AInput, ATextarea } from '../../components/FormUI'
+import { AInput, ASelect, ATextarea } from '../../components/FormUI'
 import { ColorBox, DivFlex, StyleAvatar, StyleUpload } from './styled'
 import { ShowIf } from '../../components/Utils'
 import { fileValidator, maxLength, required } from '../../utils/validations'
 import { LoadingOutlined } from '@ant-design/icons'
 import StorageRequest from '../../api/Request/StorageRequest'
+import { PLATFORM_TYPE } from '../../config/constants'
+import ColorPicker from '../../components/CoreUI/ColorPicker'
 
 const formItemLayout = {
   labelCol: {
@@ -28,12 +30,12 @@ const formItemLayout = {
     span: 24
   }
 }
+const {Option} = Select
 const maxLengthDescription = maxLength(255)
 
 @observer
 class ModalUpdateProject extends React.Component {
   @observable visible = false
-  @observable color = undefined
   @observable colorPickerVisible = false
   @observable uploading = false
   @observable fileUrl = undefined
@@ -41,11 +43,10 @@ class ModalUpdateProject extends React.Component {
   constructor(props) {
     super(props);
 
-    this.changeColor = this.changeColor.bind(this)
     this.closeModal = this.closeModal.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
     this.toggleColorPicker = this.toggleColorPicker.bind(this)
-    this.handleCancelColorPicker = this.handleCancelColorPicker.bind(this)
+    this.handleAcceptColor = this.handleAcceptColor.bind(this)
   }
 
   @action toggleVisible() {
@@ -56,15 +57,10 @@ class ModalUpdateProject extends React.Component {
     this.colorPickerVisible = !this.colorPickerVisible
   }
 
-  @action changeColor(value) {
-    this.color = value.hex
-  }
-
   @action closeModal() {
     const {onCloseModal} = this.props
 
     this.toggleVisible()
-    this.color = undefined
     this.colorPickerVisible = false
     setTimeout(() => {onCloseModal()}, 300)
   }
@@ -89,16 +85,12 @@ class ModalUpdateProject extends React.Component {
     StorageRequest
       .uploadFile(formData, file, onProgress)
       .then(data => {
-        console.log(data)
         dispatch(change('UpdateProjectForm', 's3Key', _.get(data, 'data.storageKey')))
         onSuccess(file)
       })
       .catch(e => {
         file.uploadError = true
         onError(e, _.get(e, 'message', ''), file)
-      })
-      .finally(() => {
-        this.uploading = false
       })
   }
 
@@ -122,19 +114,16 @@ class ModalUpdateProject extends React.Component {
     }
   }
 
-  handleCancelColorPicker() {
-    this.color = undefined
+  handleAcceptColor(color) {
+    const {dispatch} = this.props
+    dispatch(change('UpdateProjectForm', 'color', color))
     this.toggleColorPicker()
   }
 
   onSubmit(data) {
     const {onUpdateProject, project} = this.props
-    const updateData = _.clone(data)
-    if (this.color) {
-      updateData.color = this.color
-    }
 
-    onUpdateProject(project.id, updateData)
+    onUpdateProject(project.id, data)
     this.closeModal()
   }
 
@@ -143,8 +132,8 @@ class ModalUpdateProject extends React.Component {
   }
 
   render() {
-    const {handleSubmit, initialValues, project} = this.props
-    const imageUrl = this.fileUrl || _.get(project, 'latestAppBuild.s3Url', false)
+    const {handleSubmit, project, color} = this.props
+    const imageUrl = this.fileUrl || _.get(project, 'avatar', false)
     const Avatar = () => (
       <span>
         {imageUrl
@@ -202,6 +191,11 @@ class ModalUpdateProject extends React.Component {
                 type="hidden"
               />
               <Field
+                name="color"
+                component={AInput}
+                type="hidden"
+              />
+              <Field
                 label="Name"
                 name="name"
                 component={AInput}
@@ -209,6 +203,17 @@ class ModalUpdateProject extends React.Component {
                 type="text"
                 placeholder="Please enter the project name."
               />
+              <Field
+                label="Platform"
+                name="platformType"
+                placeholder="Please select platform."
+                component={ASelect}
+                validate={[required]}
+              >
+                <Option value={PLATFORM_TYPE.IOS}>IOS</Option>
+                <Option value={PLATFORM_TYPE.ANDROID}>Android</Option>
+                <Option value={PLATFORM_TYPE.WEB}>Web</Option>
+              </Field>
               <Field
                 label="Description"
                 name="description"
@@ -220,16 +225,15 @@ class ModalUpdateProject extends React.Component {
               />
 
               <DivFlex>
-                <Button onClick={this.toggleColorPicker}>Color</Button>
-                <ColorBox style={{backgroundColor: this.color ?? initialValues.color}}/>
+                <Button onClick={() => this.toggleColorPicker()}>Color</Button>
+                <ColorBox style={{backgroundColor: color}}/>
               </DivFlex>
 
               <ShowIf condition={this.colorPickerVisible}>
-                <PhotoshopPicker
-                  color={this.color ?? initialValues.color}
-                  onChange={(value) => this.changeColor(value)}
-                  onAccept={() => this.toggleColorPicker()}
-                  onCancel={() => {this.handleCancelColorPicker()}}
+                <ColorPicker
+                  color={color}
+                  onAccept={(color) => this.handleAcceptColor(color)}
+                  onCancel={() => this.toggleColorPicker}
                 />
               </ShowIf>
             </Col>
@@ -240,7 +244,17 @@ class ModalUpdateProject extends React.Component {
   }
 }
 
+const selector = formValueSelector('UpdateProjectForm')
+
+const mapStateToProps = state => {
+  const color  = selector(state, 'color')
+  return {
+    color
+  }
+}
+
 export default compose(
+  connect(mapStateToProps),
   reduxForm({
     form: 'UpdateProjectForm'
   })
