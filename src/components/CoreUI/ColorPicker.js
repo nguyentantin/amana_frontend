@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import React, { Fragment } from 'react'
+import React from 'react'
 import { PhotoshopPicker } from 'react-color'
 import { observer } from 'mobx-react'
 import { action, observable } from 'mobx'
@@ -7,6 +7,12 @@ import { action, observable } from 'mobx'
 @observer
 class ColorPicker extends React.Component{
   @observable color = undefined
+
+  constructor(props) {
+    super(props);
+    this.handleAcceptColor = this.handleAcceptColor.bind(this)
+    this.handleCancelColor = this.handleCancelColor.bind(this)
+  }
 
   @action changeColor(value = undefined) {
     if (_.isUndefined(value)) {
@@ -16,13 +22,14 @@ class ColorPicker extends React.Component{
     }
   }
 
-  @action handleAcceptColor() {
+  handleAcceptColor() {
     const {onAccept} = this.props
     onAccept(this.color)
     this.changeColor()
   }
 
-  @action handleCancelColor() {
+  handleCancelColor() {
+    console.log('clicked cancel button')
     const {onCancel} = this.props
     this.changeColor()
     onCancel()
@@ -32,14 +39,12 @@ class ColorPicker extends React.Component{
     const {color} = this.props
 
     return (
-      <Fragment>
-        <PhotoshopPicker
-          color={this.color || color}
-          onChange={(value) => this.changeColor(value)}
-          onAccept={() => this.handleAcceptColor()}
-          onCancel={() => this.handleCancelColor}
-        />
-      </Fragment>
+      <PhotoshopPicker
+        color={this.color || color}
+        onChange={(value) => this.changeColor(value)}
+        onAccept={() => this.handleAcceptColor()}
+        onCancel={() => this.handleCancelColor()}
+      />
     )
   }
 }

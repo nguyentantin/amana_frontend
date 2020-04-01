@@ -11,10 +11,11 @@ import { observer } from 'mobx-react'
 import ModalStyle from '../../styles/modal'
 import StorageRequest from '../../api/Request/StorageRequest'
 import { AInput, ATextarea, FieldSelect } from '../../components/FormUI'
-import { ColorBox, DivFlex, StyleAvatar, StyleUpload } from './styled'
+import { Box, Flex } from '../../styles/utility'
 import { ColorPicker } from '../../components/CoreUI'
 import { PLATFORM_TYPE } from '../../config/constants'
 import { ShowIf } from '../../components/Utils'
+import { StyleAvatar, StyleUpload } from './styled'
 import { fileValidator, maxLength, required } from '../../utils/validations'
 
 const formItemLayout = {
@@ -190,16 +191,18 @@ class ModalUpdateProject extends React.Component {
             </StyleUpload>
 
             <Col span={24}>
-              <Field
-                name="s3Key"
-                component={AInput}
-                type="hidden"
-              />
-              <Field
-                name="color"
-                component={AInput}
-                type="hidden"
-              />
+              <div style={{display: 'none'}}>
+                <Field
+                  name="s3Key"
+                  component={AInput}
+                  type="hidden"
+                />
+                <Field
+                  name="color"
+                  component={AInput}
+                  type="hidden"
+                />
+              </div>
               <Field
                 label="Name"
                 name="name"
@@ -229,16 +232,16 @@ class ModalUpdateProject extends React.Component {
                 rows={4}
               />
 
-              <DivFlex>
+              <Flex flex={['flex']} alignItems={['center']}>
                 <Button disabled={this.colorPickerVisible} onClick={() => this.toggleColorPicker()}>Color</Button>
-                <ColorBox style={{backgroundColor: color}}/>
-              </DivFlex>
+                <Box width={20} height={20} ml={10} style={{backgroundColor: color}}/>
+              </Flex>
 
               <ShowIf condition={this.colorPickerVisible}>
                 <ColorPicker
                   color={color}
                   onAccept={(color) => this.handleAcceptColor(color)}
-                  onCancel={() => this.toggleColorPicker}
+                  onCancel={() => this.toggleColorPicker()}
                 />
               </ShowIf>
             </Col>
@@ -251,12 +254,9 @@ class ModalUpdateProject extends React.Component {
 
 const selector = formValueSelector('UpdateProjectForm')
 
-const mapStateToProps = state => {
-  const color  = selector(state, 'color')
-  return {
-    color
-  }
-}
+const mapStateToProps = state => ({
+    color: selector(state, 'color')
+})
 
 export default compose(
   connect(mapStateToProps),

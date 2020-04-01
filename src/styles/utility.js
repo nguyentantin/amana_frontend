@@ -7,6 +7,14 @@ export const Flex = styled('div')(
       properties: ['display'],
       defaultScale: ['flex', 'inline-flex', 'block', 'inline-block'],
     },
+    alignItems: {
+      properties: ['align-items'],
+      defaultScale: ['flex-start', 'flex-end', 'center', 'stretch'],
+    },
+    justifyContent: {
+      properties: ['justify-content'],
+      defaultScale: ['flex-start', 'flex-end', 'center', 'space-around', 'space-between', 'space-evenly'],
+    }
   })
 )
 
