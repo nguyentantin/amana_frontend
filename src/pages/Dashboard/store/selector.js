@@ -6,7 +6,7 @@ export const getAppBuilds = state => _.get(state, 'dashboard.appBuilds', []);
 export const getAppBuildLoading = state => _.get(state, 'dashboard.appBuildLoading', false);
 export const getAppBuildPagination = state => _.get(state, 'dashboard.appBuildPagination', false);
 export const showPaginate = state => {
-  const paginate = _.get(state, 'dashboard.appBuildPagination', false)
+  const paginate = getAppBuildPagination(state)
   if (!paginate) {
     return false
   }

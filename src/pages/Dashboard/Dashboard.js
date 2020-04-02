@@ -1,19 +1,18 @@
 import React from 'react'
 import { Col, Pagination, Row } from 'antd'
 import { compose } from 'redux'
-
-import ListProject from './ListProject'
-import ListAppBuild from './ListAppBuild'
-import injectReducer from '../../store/injectReducer'
-import reducer from './store/reducers'
-import injectSaga from '../../store/injectSaga'
-import saga from './store/sagas'
-import _ from 'lodash'
 import { connect } from 'react-redux'
-import { fetchAppBuilds, fetchProject } from './store/actions'
+
+import ListAppBuild from './ListAppBuild'
+import ListProject from './ListProject'
 import UserInfoCard from './UserInfoCard'
-import { observable, action } from 'mobx'
-import { observer } from 'mobx-react'
+import injectReducer from '../../store/injectReducer'
+import injectSaga from '../../store/injectSaga'
+import reducer from './store/reducers'
+import saga from './store/sagas'
+import ShowIf from '../../components/Utils/ShowIf'
+import { Flex } from '../../styles/utility'
+import { fetchAppBuilds, fetchProject } from './store/actions'
 import {
   getAppBuildLoading,
   getAppBuildPagination,
@@ -21,28 +20,18 @@ import {
   getProjectLoading,
   getProjects, showPaginate,
 } from './store/selector'
-import ShowIf from '../../components/Utils/ShowIf'
-import { Flex } from '../../styles/utility'
 
-@observer
 class DashboardPage extends React.Component {
-  @observable pagination = {
-    current: 1,
-    pageSize: 10,
-    total: 100,
-    showTitle: false,
-    showSizeChanger: false
-  }
-
   constructor(props) {
     super(props);
     this.handleChangePage = this.handleChangePage.bind(this)
   }
 
-  @action handleChangePage(page, perPage) {
+  handleChangePage(page, perPage) {
     const {fetchAppBuilds} = this.props
     fetchAppBuilds({ page, perPage})
   }
+
   componentDidMount () {
     const { fetchProject, fetchAppBuilds } = this.props
     fetchProject()
