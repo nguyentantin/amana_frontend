@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col, Pagination, Row } from 'antd'
+import { Col, Row } from 'antd'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 
@@ -10,15 +10,12 @@ import injectReducer from '../../store/injectReducer'
 import injectSaga from '../../store/injectSaga'
 import reducer from './store/reducers'
 import saga from './store/sagas'
-import ShowIf from '../../components/Utils/ShowIf'
-import { Flex } from '../../styles/utility'
 import { fetchAppBuilds, fetchProject } from './store/actions'
 import {
   getAppBuildLoading,
-  getAppBuildPagination,
   getAppBuilds,
   getProjectLoading,
-  getProjects, showPaginate,
+  getProjects,
 } from './store/selector'
 
 class DashboardPage extends React.Component {
@@ -44,8 +41,6 @@ class DashboardPage extends React.Component {
       projectLoading,
       appBuilds,
       appBuildLoading,
-      appBuildPagination,
-      showPaginate,
     } = this.props
 
     return (
@@ -56,33 +51,18 @@ class DashboardPage extends React.Component {
         </Col>
         <Col xs={24} md={18}>
           <ListAppBuild data={appBuilds} loading={appBuildLoading}/>
-
-          <ShowIf condition={showPaginate}>
-            <Flex flex={['flex']} justifyContent={['flex-end']}>
-              <Pagination
-                {...appBuildPagination}
-                onChange={this.handleChangePage}
-                disabled={appBuildLoading}
-                style={{marginLeft: 'auto'}}
-              />
-            </Flex>
-          </ShowIf>
         </Col>
       </Row>
     )
   }
 }
 
-const mapStateToProps = state => {
-  return {
+const mapStateToProps = state => ({
     projects: getProjects(state),
     projectLoading: getProjectLoading(state),
     appBuilds: getAppBuilds(state),
     appBuildLoading: getAppBuildLoading(state),
-    appBuildPagination: getAppBuildPagination(state),
-    showPaginate: showPaginate(state),
-  }
-}
+})
 
 const mapDispatchToProps = { fetchProject, fetchAppBuilds }
 
