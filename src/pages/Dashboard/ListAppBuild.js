@@ -1,5 +1,5 @@
 import React from 'react'
-import { List, Spin } from 'antd'
+import { List } from 'antd'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 
