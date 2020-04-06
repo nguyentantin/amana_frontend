@@ -1,19 +1,36 @@
 import React from 'react'
-import { Col, Row } from 'antd'
+import { Col, Row, Spin } from 'antd'
 import { compose } from 'redux'
-
-import ListProject from './ListProject'
-import ListAppBuild from './ListAppBuild'
-import injectReducer from '../../store/injectReducer'
-import reducer from './store/reducers'
-import injectSaga from '../../store/injectSaga'
-import saga from './store/sagas'
-import _ from 'lodash'
 import { connect } from 'react-redux'
-import { fetchAppBuilds, fetchProject } from './store/actions'
+
+import ListAppBuild from './ListAppBuild'
+import ListProject from './ListProject'
 import UserInfoCard from './UserInfoCard'
+import injectReducer from '../../store/injectReducer'
+import injectSaga from '../../store/injectSaga'
+import reducer from './store/reducers'
+import saga from './store/sagas'
+import { fetchAppBuilds, fetchProject } from './store/actions'
+import {
+  getAppBuildLoading,
+  getAppBuildLoadMoreLoading,
+  getAppBuilds,
+  getProjectLoading,
+  getProjects,
+} from './store/selector'
+import { SpinWrapper } from '../../styles/utility'
 
 class DashboardPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleChangePage = this.handleChangePage.bind(this)
+  }
+
+  handleChangePage(page, perPage) {
+    const {fetchAppBuilds} = this.props
+    fetchAppBuilds({ page, perPage})
+  }
+
   componentDidMount () {
     const { fetchProject, fetchAppBuilds } = this.props
     fetchProject()
@@ -21,28 +38,36 @@ class DashboardPage extends React.Component {
   }
 
   render() {
+    const {
+      projects,
+      projectLoading,
+      appBuilds,
+      appBuildLoading,
+      loadMoreLoading
+    } = this.props
+
     return (
       <Row gutter={20}>
         <Col xs={24} md={6}>
           <UserInfoCard/>
-          <ListProject data={this.props.projects} loading={this.props.projectLoading}/>
+          <ListProject data={projects} loading={projectLoading}/>
         </Col>
         <Col xs={24} md={18}>
-          <ListAppBuild data={this.props.appBuilds} loading={this.props.appBuildLoading}/>
+          <ListAppBuild data={appBuilds} loading={appBuildLoading}/>
+          <SpinWrapper style={{bottom: 50}}><Spin spinning={loadMoreLoading}/></SpinWrapper>
         </Col>
       </Row>
     )
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    projects: _.get(state, 'dashboard.projects', []),
-    projectLoading: _.get(state, 'dashboard.projectLoading', false),
-    appBuilds: _.get(state, 'dashboard.appBuilds', []),
-    appBuildLoading: _.get(state, 'dashboard.appBuildLoading', false),
-  }
-}
+const mapStateToProps = state => ({
+  projects: getProjects(state),
+  projectLoading: getProjectLoading(state),
+  appBuilds: getAppBuilds(state),
+  appBuildLoading: getAppBuildLoading(state),
+  loadMoreLoading: getAppBuildLoadMoreLoading(state),
+})
 
 const mapDispatchToProps = { fetchProject, fetchAppBuilds }
 
