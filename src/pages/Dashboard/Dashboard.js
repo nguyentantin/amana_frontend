@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col, Row } from 'antd'
+import { Col, Row, Spin } from 'antd'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 
@@ -13,10 +13,12 @@ import saga from './store/sagas'
 import { fetchAppBuilds, fetchProject } from './store/actions'
 import {
   getAppBuildLoading,
+  getAppBuildLoadMoreLoading,
   getAppBuilds,
   getProjectLoading,
   getProjects,
 } from './store/selector'
+import { SpinWrapper } from './styled'
 
 class DashboardPage extends React.Component {
   constructor(props) {
@@ -41,6 +43,7 @@ class DashboardPage extends React.Component {
       projectLoading,
       appBuilds,
       appBuildLoading,
+      loadMoreLoading
     } = this.props
 
     return (
@@ -51,6 +54,7 @@ class DashboardPage extends React.Component {
         </Col>
         <Col xs={24} md={18}>
           <ListAppBuild data={appBuilds} loading={appBuildLoading}/>
+          <SpinWrapper style={{bottom: 50}}><Spin spinning={loadMoreLoading}/></SpinWrapper>
         </Col>
       </Row>
     )
@@ -58,10 +62,11 @@ class DashboardPage extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    projects: getProjects(state),
-    projectLoading: getProjectLoading(state),
-    appBuilds: getAppBuilds(state),
-    appBuildLoading: getAppBuildLoading(state),
+  projects: getProjects(state),
+  projectLoading: getProjectLoading(state),
+  appBuilds: getAppBuilds(state),
+  appBuildLoading: getAppBuildLoading(state),
+  loadMoreLoading: getAppBuildLoadMoreLoading(state),
 })
 
 const mapDispatchToProps = { fetchProject, fetchAppBuilds }

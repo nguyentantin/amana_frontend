@@ -1,5 +1,5 @@
 import React from 'react'
-import { List, Spin } from 'antd'
+import { List } from 'antd'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 
@@ -51,19 +51,17 @@ class ListAppBuild extends React.Component{
   }
 
   render() {
-    const { data, loading, loadMoreLoading } = this.props
+    const { data, loading } = this.props
 
     return (
-      <Spin spinning={loadMoreLoading}>
-        <ScrollContainer height={[600, 760]} onScroll={this.handleScroll}>
-          <h2>Timeline <SmallTitle>Recent builds</SmallTitle></h2>
-          <List
-            itemLayout="horizontal"
-            dataSource={loading ? skeletonData() : data}
-            renderItem={item => <ItemRender loading={loading} item={item}/>}
-          />
-        </ScrollContainer>
-      </Spin>
+      <ScrollContainer height={[600, 760]} onScroll={this.handleScroll}>
+        <h2>Timeline <SmallTitle>Recent builds</SmallTitle></h2>
+        <List
+          itemLayout="horizontal"
+          dataSource={loading ? skeletonData() : data}
+          renderItem={item => <ItemRender loading={loading} item={item}/>}
+        />
+      </ScrollContainer>
     )
   }
 }
