@@ -15,7 +15,7 @@ import {
 
 import ProjectRequest from '../../api/Request/ProjectRequest'
 import { API_URL, PLATFORM_TYPE } from '../../config/constants'
-import { Flex, SpinWrapper } from '../../styles/utility'
+import { Flex } from '../../styles/utility'
 import { ShowIf } from '../../components/Utils'
 import ListAppBuild from './ListAppBuild'
 import {
@@ -28,7 +28,6 @@ import CurrentBuildInfo from './CurrentBuildInfo'
 import { Box } from '../../styles/utility'
 import { AvatarBox } from '../../components/CoreUI'
 import LocalStorage from '../../utils/localStorage'
-import Spin from 'antd/es/spin'
 
 const {TabPane} = Tabs
 
@@ -153,15 +152,12 @@ class ProjectDetail extends React.Component {
                     }
                     key={item.envKey}
                   >
-                    <div style={{position: 'relative'}}>
-                      <Skeleton active avatar loading={this.loading}>
-                        <ListAppBuild
-                          data={this.getDataByEnv(item.envKey)}
-                          project={this.projectDetail}
-                        />
-                      </Skeleton>
-                      <SpinWrapper style={{bottom: 50}}><Spin spinning={true}/></SpinWrapper>
-                    </div>
+                    <Skeleton active avatar loading={this.loading}>
+                      <ListAppBuild
+                        data={this.getDataByEnv(item.envKey)}
+                        project={this.projectDetail}
+                      />
+                    </Skeleton>
                   </TabPane>
                 )
               })
