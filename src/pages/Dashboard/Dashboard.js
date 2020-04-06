@@ -18,7 +18,7 @@ import {
   getProjectLoading,
   getProjects,
 } from './store/selector'
-import { SpinWrapper } from './styled'
+import { SpinWrapper } from '../../styles/utility'
 
 class DashboardPage extends React.Component {
   constructor(props) {

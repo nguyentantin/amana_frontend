@@ -24,3 +24,11 @@ export const Box = styled.div(
   layout,
   typography
 )
+
+export const SpinWrapper = styled.div`
+  position: absolute;
+  zIndex: 99;
+  bottom: 50;
+  left: 50%;
+  transform: translateX(-50%);
+`

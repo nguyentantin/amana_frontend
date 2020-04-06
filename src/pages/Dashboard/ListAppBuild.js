@@ -15,7 +15,7 @@ import {
   getAppBuildLoading,
   getAppBuildLoadMoreLoading,
   getAppBuildPagination,
-  hasPaginate
+  hasMore,
 } from './store/selector'
 
 const skeletonData = () => {
@@ -43,9 +43,9 @@ class ListAppBuild extends React.Component{
     const scrollTop = el.scrollTop
     const scrollHeight = el.scrollHeight
     const offsetHeight = el.offsetHeight
-    const { hasPaginate, pagination, fetchMoreAppBuilds, loadMoreLoading } = this.props
+    const { hasMore, pagination, fetchMoreAppBuilds, loadMoreLoading } = this.props
 
-    if (!loadMoreLoading && hasPaginate && scrollHeight === (scrollTop + offsetHeight)) {
+    if (!loadMoreLoading && hasMore && scrollHeight === (scrollTop + offsetHeight)) {
       fetchMoreAppBuilds({ page: pagination.current + 1})
     }
   }
@@ -70,7 +70,7 @@ const mapStateToProps = state => ({
   loading: getAppBuildLoading(state),
   loadMoreLoading: getAppBuildLoadMoreLoading(state),
   pagination: getAppBuildPagination(state),
-  hasPaginate: hasPaginate(state)
+  hasMore: hasMore(state)
 })
 
 const mapDispatchToProps = { fetchMoreAppBuilds }

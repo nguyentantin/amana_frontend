@@ -47,11 +47,3 @@ export const SmallTitle =  styled.small`
 export const DescriptionLink = styled(Link)`
     color: rgba(0, 0, 0, 0.45);
 `
-
-export const SpinWrapper = styled.div`
-  position: absolute;
-  zIndex: 99;
-  bottom: 50;
-  left: 50%;
-  transform: translateX(-50%);
-`

@@ -6,21 +6,9 @@ export const getAppBuilds = state => _.get(state, 'dashboard.appBuilds', []);
 export const getAppBuildLoading = state => _.get(state, 'dashboard.appBuildLoading', false);
 export const getAppBuildLoadMoreLoading = state => _.get(state, 'dashboard.appBuildLoadMoreLoading', false);
 export const getAppBuildPagination = state => _.get(state, 'dashboard.appBuildPagination', false);
-export const hasPaginate = state => {
+export const hasMore = state => {
   const paginate = getAppBuildPagination(state)
   const { current, lastPage } = paginate
 
-  if (!paginate) {
-    return false
-  }
-
-  if (_.isEmpty(paginate)) {
-    return false
-  }
-
-  if (current === lastPage) {
-    return false
-  }
-
-  return paginate.lastPage !== 1;
+  return !_.isEmpty(paginate) && current !== lastPage
 }
