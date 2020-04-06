@@ -14,16 +14,17 @@ class ItemRender extends React.Component{
       <AvatarBox
         size={55}
         src={_.get(item, 'project.avatar', null)}
-        name={item.project.name}
+        name={_.get(item, 'project.name', null)}
         style={{ backgroundColor: _.get(item, 'project.color', null) }}
       />
     )
   }
 
   renderTitle(item) {
+    const {commitChanges} = item
     return (
       <Link to={`/projects/${item.projectId}/app-build/${item.id}`}>
-        <strong># {item.id} { truncate(item.commitChanges, 50) }</strong>
+        <strong># {item.id} { truncate(commitChanges, 50) }</strong>
       </Link>
     )
   }
@@ -36,6 +37,8 @@ class ItemRender extends React.Component{
 
   render() {
     const {loading, item} = this.props
+    const {createdAt} = item
+
     if (loading) {
       return <Skeleton loading avatar active/>
     }
@@ -47,7 +50,7 @@ class ItemRender extends React.Component{
           title={this.renderTitle(item)}
           description={this.renderDescription(item)}
         />
-        <div><TextMute>{ moment(item.createdAt).fromNow() }</TextMute></div>
+        <div><TextMute>{ moment(createdAt).fromNow() }</TextMute></div>
       </List.Item>
     )
   }

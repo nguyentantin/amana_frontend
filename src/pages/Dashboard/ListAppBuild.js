@@ -1,21 +1,26 @@
 import React from 'react'
-import { List } from 'antd'
-
-import ItemRender from './ItemRender'
-import { ScrollContainer } from './styled'
-import { SmallTitle } from './styled'
-import { getAppBuildLoading, getAppBuildPagination, hasPaginate } from './store/selector'
+import { List, Spin } from 'antd'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
+
+import ItemRender from './ItemRender'
 import injectReducer from '../../store/injectReducer'
 import reducer from './store/reducers'
 import injectSaga from '../../store/injectSaga'
 import saga from './store/sagas'
+import { ScrollContainer } from './styled'
+import { SmallTitle } from './styled'
 import { fetchMoreAppBuilds } from './store/actions'
+import {
+  getAppBuildLoading,
+  getAppBuildLoadMoreLoading,
+  getAppBuildPagination,
+  hasPaginate
+} from './store/selector'
 
 const skeletonData = () => {
   const listData = []
-  for(let i = 0; i < 10; i++) {
+  for(let i = 0; i < 6; i++) {
     listData.push({
       id: i,
       name: `Placeholder name ${i}`,
@@ -38,31 +43,34 @@ class ListAppBuild extends React.Component{
     const scrollTop = el.scrollTop
     const scrollHeight = el.scrollHeight
     const offsetHeight = el.offsetHeight
-    const { hasPaginate, pagination, fetchMoreAppBuilds, loading } = this.props
+    const { hasPaginate, pagination, fetchMoreAppBuilds, loadMoreLoading } = this.props
 
-    if (!loading && hasPaginate && scrollHeight === (scrollTop + offsetHeight)) {
+    if (!loadMoreLoading && hasPaginate && scrollHeight === (scrollTop + offsetHeight)) {
       fetchMoreAppBuilds({ page: pagination.current + 1})
     }
   }
 
   render() {
-    const { data, loading } = this.props
+    const { data, loading, loadMoreLoading } = this.props
 
     return (
-      <ScrollContainer height={[600, 760]} onScroll={this.handleScroll}>
-        <h2>Timeline <SmallTitle>Recent builds</SmallTitle></h2>
-        <List
-          itemLayout="horizontal"
-          dataSource={loading ? skeletonData() : data}
-          renderItem={item => <ItemRender loading={loading} item={item}/>}
-        />
-      </ScrollContainer>
+      <Spin spinning={loadMoreLoading}>
+        <ScrollContainer height={[600, 760]} onScroll={this.handleScroll}>
+          <h2>Timeline <SmallTitle>Recent builds</SmallTitle></h2>
+          <List
+            itemLayout="horizontal"
+            dataSource={loading ? skeletonData() : data}
+            renderItem={item => <ItemRender loading={loading} item={item}/>}
+          />
+        </ScrollContainer>
+      </Spin>
     )
   }
 }
 
 const mapStateToProps = state => ({
   loading: getAppBuildLoading(state),
+  loadMoreLoading: getAppBuildLoadMoreLoading(state),
   pagination: getAppBuildPagination(state),
   hasPaginate: hasPaginate(state)
 })

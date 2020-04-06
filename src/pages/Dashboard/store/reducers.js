@@ -14,6 +14,7 @@ const initialState = {
   appBuilds: [],
   projectLoading: false,
   appBuildLoading: false,
+  appBuildLoadMoreLoading: false,
   appBuildPagination: {}
 }
 
@@ -46,12 +47,12 @@ const reducer = (state = initialState, action) =>
         draft.appBuildLoading = false
         break
       case FETCH_MORE_APP_BUILDS:
-        draft.appBuildLoading = true
+        draft.appBuildLoadMoreLoading = true
         break;
       case FETCH_MORE_APP_BUILDS_SUCCESS:
         draft.appBuilds = _.concat(draft.appBuilds, action.data.data)
         setAppBuildPagination(draft, action.data.meta)
-        draft.appBuildLoading = false
+        draft.appBuildLoadMoreLoading = false
         break
       default:
         return state
