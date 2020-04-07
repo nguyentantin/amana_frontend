@@ -1,10 +1,10 @@
-import React from 'react'
 import _ from 'lodash'
+import React from 'react'
+import { Link } from 'react-router-dom'
 import { Tabs, Divider, Empty, Skeleton, Spin } from 'antd'
 import { compose } from 'recompose'
 import { inject, observer, Provider } from 'mobx-react'
 import { withRouter } from 'react-router'
-import { Link } from 'react-router-dom'
 import {
   BranchesOutlined,
   CodeOutlined,
@@ -12,19 +12,19 @@ import {
   SettingFilled
 } from '@ant-design/icons'
 
+import CurrentBuildInfo from './CurrentBuildInfo'
+import ListAppBuild from './ListAppBuild'
+import MobStore from './MobStore'
+import ProjectBasicInfo from './ProjectBasicInfo'
+import { AvatarBox } from '../../components/CoreUI'
+import { Box } from '../../styles/utility'
 import { Flex, SpinWrapper } from '../../styles/utility'
 import { ShowIf } from '../../components/Utils'
-import ListAppBuild from './ListAppBuild'
 import {
   ListBuild,
   StyleImg,
   SmallTitle,
 } from './styled'
-import ProjectBasicInfo from './ProjectBasicInfo'
-import CurrentBuildInfo from './CurrentBuildInfo'
-import { Box } from '../../styles/utility'
-import { AvatarBox } from '../../components/CoreUI'
-import MobStore from './MobStore'
 
 const {TabPane} = Tabs
 
