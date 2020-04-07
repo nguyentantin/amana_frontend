@@ -1,9 +1,8 @@
 import React from 'react'
 import _ from 'lodash'
-import { Tabs, Divider, Empty, Skeleton } from 'antd'
-import { action, computed, observable, get, toJS } from 'mobx'
+import { Tabs, Divider, Empty, Skeleton, Spin } from 'antd'
 import { compose } from 'recompose'
-import { observer } from 'mobx-react'
+import { inject, observer, Provider } from 'mobx-react'
 import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom'
 import {
@@ -13,9 +12,7 @@ import {
   SettingFilled
 } from '@ant-design/icons'
 
-import ProjectRequest from '../../api/Request/ProjectRequest'
-import { API_URL, PLATFORM_TYPE } from '../../config/constants'
-import { Flex } from '../../styles/utility'
+import { Flex, SpinWrapper } from '../../styles/utility'
 import { ShowIf } from '../../components/Utils'
 import ListAppBuild from './ListAppBuild'
 import {
@@ -27,7 +24,7 @@ import ProjectBasicInfo from './ProjectBasicInfo'
 import CurrentBuildInfo from './CurrentBuildInfo'
 import { Box } from '../../styles/utility'
 import { AvatarBox } from '../../components/CoreUI'
-import LocalStorage from '../../utils/localStorage'
+import MobStore from './MobStore'
 
 const {TabPane} = Tabs
 
@@ -49,68 +46,47 @@ const listBuildEnv = [
   },
 ]
 
+@inject('store')
 @observer
 class ProjectDetail extends React.Component {
-  @observable projectDetail = {
-    appBuilds: [],
-    isProjectManager: false
-  }
-  @observable loading = false
-
-  @action
-  getProject(projectId) {
-    this.loading = true
-    ProjectRequest.detail(projectId)
-      .then((data) => {
-        this.projectDetail = data
-        this.loading = false
-      })
-  }
-
-  @computed get isAndroid() {
-    return get(this.projectDetail, 'platformType') === PLATFORM_TYPE.ANDROID
-  }
-
-  @computed get downloadUrl() {
-    const project = toJS(this.projectDetail)
-    return `${API_URL}/app-builds/${_.get(project, 'currentVersion.id')}/download.app?token=${LocalStorage.getAccessToken()}`
-  }
-
   componentDidMount() {
     const {match: {params}} = this.props
-    this.getProject(params.projectId)
+    this.props.store.getProject(params.projectId)
   }
 
   getDataByEnv(envKey) {
-    return _.filter(this.projectDetail.appBuilds, (item) => item.env === envKey)
+    const { appBuilds } = this.props.store
+    return _.filter(appBuilds, (item) => item.env === envKey)
   }
 
   render() {
+    const { project, currentVersion, getProjectLoading, downloadUrl, getMoreAppBuildsLoading } = this.props.store
+
     return (
       <Box pb='40px'>
         <Flex flex={['block', 'flex']}>
-          <Skeleton active avatar loading={this.loading}>
+          <Skeleton active avatar loading={getProjectLoading}>
             <StyleImg pr={[0, 20]} pb={20} textAlign={['center', 'left']}>
               <AvatarBox
                 size={250}
                 shape="square"
                 alt=""
-                name={this.projectDetail.name}
+                name={project.name}
                 style={{
                   fontSize: 100,
-                  backgroundColor: this.projectDetail.color
+                  backgroundColor: project.color
                 }}
               />
             </StyleImg>
 
-            <ShowIf condition={!_.isEmpty(this.projectDetail)}>
+            <ShowIf condition={!_.isEmpty(project)}>
               <ListBuild display='flex' alignItems='center'>
                 <div>
-                  <ProjectBasicInfo project={this.projectDetail}/>
+                  <ProjectBasicInfo project={project}/>
 
-                  <ShowIf condition={this.projectDetail.isProjectManager}>
+                  <ShowIf condition={project.isProjectManager}>
                     <Box mt={2}>
-                      <Link to={`/projects/${_.get(this.projectDetail, 'id')}/settings`}>
+                      <Link to={`/projects/${_.get(project, 'id')}/settings`}>
                         <SettingFilled/> Settings
                       </Link>
                     </Box>
@@ -125,12 +101,12 @@ class ProjectDetail extends React.Component {
 
         <div>
           <h2>Current version <SmallTitle>The latest build</SmallTitle></h2>
-          <Skeleton active avatar loading={this.loading}>
-            <ShowIf condition={!_.isEmpty(_.get(this.projectDetail, 'currentVersion', {}))}>
-              <CurrentBuildInfo build={_.get(this.projectDetail, 'currentVersion', {})} url={this.downloadUrl}/>
+          <Skeleton active avatar loading={getProjectLoading}>
+            <ShowIf condition={!_.isEmpty(currentVersion)}>
+              <CurrentBuildInfo build={currentVersion} url={downloadUrl}/>
             </ShowIf>
 
-            <ShowIf condition={_.isEmpty(_.get(this.projectDetail, 'currentVersion', {}))}>
+            <ShowIf condition={_.isEmpty(currentVersion)}>
               <Empty/>
             </ShowIf>
           </Skeleton>
@@ -145,18 +121,17 @@ class ProjectDetail extends React.Component {
               listBuildEnv.map((item) => {
                 return (
                   <TabPane
-                    tab={
-                      <span>
-                        {item.icon} {item.envName}
-                      </span>
-                    }
+                    tab={<span>{item.icon} {item.envName}</span>}
                     key={item.envKey}
                   >
-                    <Skeleton active avatar loading={this.loading}>
-                      <ListAppBuild
-                        data={this.getDataByEnv(item.envKey)}
-                        project={this.projectDetail}
-                      />
+                    <Skeleton active avatar loading={getProjectLoading}>
+                      <div style={{position: 'relative'}}>
+                        <ListAppBuild
+                          data={this.getDataByEnv(item.envKey)}
+                          project={project}
+                        />
+                        <SpinWrapper style={{bottom: 50}}><Spin spinning={getMoreAppBuildsLoading}/></SpinWrapper>
+                      </div>
                     </Skeleton>
                   </TabPane>
                 )
@@ -169,6 +144,14 @@ class ProjectDetail extends React.Component {
   }
 }
 
-export default compose(
+const ProjectDetailCompose = compose(
   withRouter,
 )(ProjectDetail)
+
+const ProjectDetailContainer = () => (
+  <Provider store={MobStore}>
+    <ProjectDetailCompose/>
+  </Provider>
+)
+
+export default ProjectDetailContainer
