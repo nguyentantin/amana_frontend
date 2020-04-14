@@ -6,7 +6,7 @@ class AppBuildRequest extends HttpRequest {
   }
 
   fetchByProjectId(projectId, params = {}) {
-    return this.get(`/app-builds/${projectId}`, params)
+    return this.get(`/app-builds/projects/${projectId}`, params)
   }
 
   downloadHistories(buildId, params = {}) {

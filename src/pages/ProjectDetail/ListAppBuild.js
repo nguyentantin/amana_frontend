@@ -1,33 +1,43 @@
 import React from 'react'
-import _ from 'lodash'
 import { List } from 'antd'
-import { Link } from 'react-router-dom'
-import { AvatarBox } from '../../components/CoreUI'
 
-export default class ListAppBuild extends React.PureComponent{
+import ItemRender from './ItemRender'
+import { ScrollContainer } from '../Dashboard/styled'
+import { inject, observer } from 'mobx-react'
+
+@inject('store')
+@observer
+class ListAppBuild extends React.PureComponent{
+  constructor() {
+    super();
+    this.handleScroll = this.handleScroll.bind(this)
+  }
+
+  handleScroll(event) {
+    const el = event.target
+    const scrollTop = el.scrollTop
+    const scrollHeight = el.scrollHeight
+    const offsetHeight = el.offsetHeight
+    const { hasMoreAppBuilds, getMoreAppBuildsLoading } = this.props.store
+
+    if (!getMoreAppBuildsLoading && hasMoreAppBuilds && scrollHeight === (scrollTop + offsetHeight)) {
+      this.props.store.getMoreAppBuilds()
+    }
+  }
+
   render() {
     const { project, data } = this.props
+
     return (
-      <List
-        itemLayout="horizontal"
-        dataSource={data}
-        renderItem={item => (
-          <List.Item>
-            <List.Item.Meta
-              avatar={
-                <AvatarBox
-                  size={55}
-                  src={_.get(project, 'avatar', null)}
-                  style={{backgroundColor: _.get(project, 'color', null)}}
-                  name={_.get(project, 'name')}
-                />}
-              title={<Link
-                to={`/projects/${item.projectId}/app-build/${item.id}`}><b># {item.id} {item.commitChanges}</b></Link>}
-              description={item.filename}
-            />
-          </List.Item>
-        )}
-      />
+      <ScrollContainer height={[600, 760]} onScroll={this.handleScroll}>
+        <List
+          itemLayout="horizontal"
+          dataSource={data}
+          renderItem={item => <ItemRender appBuild={item} project={project}/>}
+        />
+      </ScrollContainer>
     )
   }
 }
+
+export default ListAppBuild
