@@ -1,5 +1,6 @@
 import AvatarBox from './AvatarBox'
 import UserAvatar from './UserAvatar'
+import ProjectAvatar from './ProjectAvatar'
 import EnvTag from './EnvTag'
 import GoBack from './GoBack'
 import PlatformIcon from './PlatformIcon'
@@ -12,4 +13,5 @@ export {
   PlatformIcon,
   UserAvatar,
   ColorPicker,
+  ProjectAvatar,
 }

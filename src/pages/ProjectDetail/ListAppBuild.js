@@ -1,15 +1,15 @@
 import React from 'react'
 import { List } from 'antd'
+import { inject, observer } from 'mobx-react'
 
 import ItemRender from './ItemRender'
 import { ScrollContainer } from '../Dashboard/styled'
-import { inject, observer } from 'mobx-react'
 
 @inject('store')
 @observer
 class ListAppBuild extends React.PureComponent{
-  constructor() {
-    super();
+  constructor(props) {
+    super(props)
     this.handleScroll = this.handleScroll.bind(this)
   }
 

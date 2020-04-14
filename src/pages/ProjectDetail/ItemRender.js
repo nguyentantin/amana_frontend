@@ -1,18 +1,17 @@
 import React from 'react'
-import _ from 'lodash'
-import { AvatarBox } from '../../components/CoreUI'
 import { Link } from 'react-router-dom'
 import { List } from 'antd'
+
+import { ProjectAvatar } from '../../components/CoreUI'
+
 class ItemRender extends React.Component{
   renderAvatar() {
     const {project} = this.props
 
     return (
-      <AvatarBox
+      <ProjectAvatar
+        project={project}
         size={55}
-        src={_.get(project, 'avatar', null)}
-        style={{backgroundColor: _.get(project, 'color', null)}}
-        name={_.get(project, 'name')}
       />
     )
   }

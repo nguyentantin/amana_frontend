@@ -16,7 +16,7 @@ import CurrentBuildInfo from './CurrentBuildInfo'
 import ListAppBuild from './ListAppBuild'
 import MobStore from './MobStore'
 import ProjectBasicInfo from './ProjectBasicInfo'
-import { AvatarBox } from '../../components/CoreUI'
+import { ProjectAvatar } from '../../components/CoreUI'
 import { Box } from '../../styles/utility'
 import { Flex, SpinWrapper } from '../../styles/utility'
 import { ShowIf } from '../../components/Utils'
@@ -67,15 +67,12 @@ class ProjectDetail extends React.Component {
         <Flex flex={['block', 'flex']}>
           <Skeleton active avatar loading={getProjectLoading}>
             <StyleImg pr={[0, 20]} pb={20} textAlign={['center', 'left']}>
-              <AvatarBox
+              <ProjectAvatar
+                project={project}
                 size={250}
                 shape="square"
                 alt=""
-                name={project.name}
-                style={{
-                  fontSize: 100,
-                  backgroundColor: project.color
-                }}
+                fontSize={100}
               />
             </StyleImg>
 

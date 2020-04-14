@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { space } from 'styled-system'
 
 import styledSystem from '../../styles/styledSystem'
-import { AvatarBox } from '../../components/CoreUI'
+import { ProjectAvatar } from '../../components/CoreUI'
 
 export const Page = styled.div`
   .ant-table thead {
@@ -10,7 +10,7 @@ export const Page = styled.div`
   }
 `
 
-export const StyleAvatar = styled(AvatarBox)`
+export const StyleAvatar = styled(ProjectAvatar)`
   ${space}
 `
 

@@ -8,6 +8,7 @@ import { action, observable } from 'mobx'
 import { reset, stopSubmit } from 'redux-form'
 import _ from 'lodash'
 import { PlusOutlined } from '@ant-design/icons'
+import EditOutlined from '@ant-design/icons/lib/icons/EditOutlined'
 
 import { Flex } from '../../styles/utility'
 import { Page, StyleAvatar, StyleHeader } from './styled'
@@ -17,7 +18,6 @@ import { HTTP_CODE, PLATFORM_TYPE } from '../../config/constants'
 import { PlatformIcon } from '../../components/CoreUI'
 import TableStyle from '../../styles/tableResponsive'
 import ModalUpdateProject from './ModalUpdateProject'
-import EditOutlined from '@ant-design/icons/lib/icons/EditOutlined'
 import { ShowIf } from '../../components/Utils'
 
 const {Search} = Input
@@ -128,10 +128,9 @@ class ProjectListPage extends React.Component {
               <Flex flex='flex'>
                 <StyleAvatar
                   mr={2}
+                  project={record}
                   shape="square"
                   size="large"
-                  name={text}
-                  style={{backgroundColor: record.color}}
                 />
                 <div>
                   <div>Name</div>

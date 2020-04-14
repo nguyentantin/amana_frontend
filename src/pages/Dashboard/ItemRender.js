@@ -1,21 +1,18 @@
-import _ from 'lodash'
 import React from 'react'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 import { List, Skeleton } from 'antd'
 
-import { AvatarBox } from '../../components/CoreUI'
+import { ProjectAvatar } from '../../components/CoreUI'
 import { truncate } from '../../utils/helpers'
 import { DescriptionLink, TextMute } from './styled'
 
 class ItemRender extends React.Component{
   renderAvatar(item) {
     return (
-      <AvatarBox
+      <ProjectAvatar
         size={55}
-        src={_.get(item, 'project.avatar', null)}
-        name={_.get(item, 'project.name', null)}
-        style={{ backgroundColor: _.get(item, 'project.color', null) }}
+        project={item.project}
       />
     )
   }
