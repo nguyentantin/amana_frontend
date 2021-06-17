@@ -1,5 +1,12 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## UI PAGE
+![Amana](img1.png)
+![Amana](img2.png)
+![Amana](img3.png)
+![Amana](img4.png)
+![Amana](img5.png)
+
 ## Available Scripts
 
 In the project directory, you can run:
